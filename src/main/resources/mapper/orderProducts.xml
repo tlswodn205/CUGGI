@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencoding.CUGGI.repository.interfaces.OrderProductsRepository"> 
+
+	<insert id= "insert">
+		INSERT INTO order_products_tb(quantity, price, product_id, product_name, created_at)
+		values(#{quantity},#{price},#{productId},#{productName},now());
+	</insert>
+	
+	<update id="updateById">
+		UPDATE order_products_tb SET quantity  = #{quantity},
+		price  = #{price}, product_id  = #{productId}, product_name  = #{productName},
+		WHERE id = #{id};
+	</update>
+	
+	<delete id="deleteById">
+		DELETE FROM order_products_tb WHERE id = #{id};
+	</delete>
+	
+	<select id="findById" resultType = "com.tencoding.CUGGI.repository.model.OrderProducts">
+		SELECT * FROM order_products_tb WHERE id = #{id};
+	</select>
+	
+	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.OrderProducts">
+		SELECT * FROM order_products_tb;
+	</select>
+</mapper>

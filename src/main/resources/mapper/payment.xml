@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencoding.CUGGI.repository.interfaces.PaymentRepository"> 
+
+	<insert id= "insert">
+		INSERT INTO payment_tb(tid , order_id, created_at)
+		values(#{tid},#{orderId},now());
+	</insert>
+	
+	<update id="updateById">
+	</update>
+	
+	<delete id="deleteById">
+		DELETE FROM payment_tb WHERE id = #{id};
+	</delete>
+	
+	<select id="findById" resultType = "com.tencoding.CUGGI.repository.model.Payment">
+		SELECT * FROM payment_tb WHERE id = #{id};
+	</select>
+	
+	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.Payment">
+		SELECT * FROM payment_tb;
+	</select>
+</mapper>

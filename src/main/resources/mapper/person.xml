@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencoding.CUGGI.repository.interfaces.PersonRepository"> 
+
+	<insert id= "insert">
+		INSERT INTO person_tb(name , address, email , phone_number, birthday, user_id, created_at)
+		values(#{name},#{address},#{email},#{phoneNumber},#{birthday},#{userId},now());
+	</insert>
+	
+	<update id="updateById">
+		UPDATE person_tb SET name = #{name},
+		address = #{address}, email = #{email}, phone_number = #{phoneNumber},
+		birthday = #{birthday}, user_id = #{userId}
+		WHERE id = #{id};
+	</update>
+	
+	<delete id="deleteById">
+		DELETE FROM person_tb WHERE id = #{id};
+	</delete>
+	
+	<select id="findById" resultType = "com.tencoding.CUGGI.repository.model.Person">
+		SELECT * FROM person_tb WHERE id = #{id};
+	</select>
+	
+	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.Person">
+		SELECT * FROM person_tb;
+	</select>
+</mapper>

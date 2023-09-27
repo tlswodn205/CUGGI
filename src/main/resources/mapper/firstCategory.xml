@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencoding.CUGGI.repository.interfaces.FirstCategoryRepository"> 
+
+	<insert id= "insert">
+		INSERT INTO first_category_tb(first_category_name, created_at)
+		values(#{firstCategoryName},now());
+	</insert>
+	
+	<update id="updateById">
+		UPDATE first_category_tb SET first_category_name = #{firstCategoryName},
+		WHERE id = #{id};
+	</update>
+	
+	<delete id="deleteById">
+		DELETE FROM first_category_tb WHERE id = #{id};
+	</delete>
+	
+	<select id="findById" resultType = "com.tencoding.CUGGI.repository.model.FirstCategory">
+		SELECT * FROM first_category_tb WHERE id = #{id};
+	</select>
+	
+	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.FirstCategory">
+		SELECT * FROM first_category_tb;
+	</select>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencoding.CUGGI.repository.interfaces.UserRepository"> 
+
+	<insert id= "insert">
+		INSERT INTO user_tb(username, password, is_kakao,level, created_at)
+		values(#{username},#{password},#{isKakao},#{level},now());
+	</insert>
+	
+	<update id="updateById">
+		UPDATE user_tb SET username = #{username},
+		password = #{password}, is_kakao = #{isKakao}, level = #{level}
+		WHERE id = #{id};
+	</update>
+	
+	<delete id="deleteById">
+		DELETE FROM user_tb WHERE id = #{id};
+	</delete>
+	
+	<select id="findById" resultType = "com.tencoding.CUGGI.repository.model.User">
+		SELECT * FROM user_tb WHERE id = #{id};
+	</select>
+	
+	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.User">
+		SELECT * FROM user_tb;
+	</select>
+</mapper>

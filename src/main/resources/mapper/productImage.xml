@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencoding.CUGGI.repository.interfaces.ProductImageRepository"> 
+
+	<insert id= "insert">
+		INSERT INTO product_image_tb(product_id, image, is_thumbnail, created_at)
+		values(#{productId},#{image},#{isThumbnail},now());
+	</insert>
+	
+	<update id="updateById">
+		UPDATE product_image_tb SET product_id = #{productId},
+		image = #{image}, is_thumbnail = #{isThumbnail}
+		WHERE id = #{id};
+	</update>
+	
+	<delete id="deleteById">
+		DELETE FROM product_image_tb WHERE id = #{id};
+	</delete>
+	
+	<select id="findById" resultType = "com.tencoding.CUGGI.repository.model.ProductImage">
+		SELECT * FROM product_image_tb WHERE id = #{id};
+	</select>
+	
+	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.ProductImage">
+		SELECT * FROM product_image_tb;
+	</select>
+</mapper>
