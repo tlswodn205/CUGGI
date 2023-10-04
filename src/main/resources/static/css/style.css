@@ -2,15 +2,6 @@ li {
 	list-style: none;
 }
 
-button {
-	background: inherit;
-	border: none;
-	box-shadow: none;
-	border-radius: 0;
-	padding: 0;
-	overflow: visible;
-	cursor: pointer;
-}
 
 a {
 	text-decoration: none;
@@ -36,7 +27,8 @@ header {
 }
 
 nav .logo {
-	text-align: center;
+	display: flex;
+	justify-content: center;
 }
 
 nav .logo img {
@@ -45,7 +37,6 @@ nav .logo img {
 
 .menu {
 	display: flex;
-	flex-direction: row;
 	justify-content: center;
 	position: relative;
 	padding: 0;
@@ -64,12 +55,11 @@ nav .logo img {
 	z-index: 999;
 	padding: 0;
 	display: flex;
-	flex-direction: column;
+	
 }
 
 .subcategory {
 	display: flex;
-	justify-content: center;
 }
 
 .submenu ul {
@@ -90,10 +80,55 @@ nav .logo img {
 
 main {
 	flex: auto;
-	background-color: #ccc;
-	padding: 0;
 }
 
+main .main-column {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 0;
+	height: 100%;
+}
+
+main .main-row {
+	display: flex;
+	padding: 0;
+	justify-content: center;
+}
+
+
+
+main .main-img {
+	display: flex;
+	position: relative;
+}
+
+main .main-img > img {
+	width: -webkit-fill-available;
+}
+
+main .main-img > .see {
+	position: absolute;
+	top: 70%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.main-btn {	
+    background: white;
+    border: none;
+    border-radius: 3px;
+    box-shadow: none;
+    height: 50px;
+    width: 150px;
+}
+
+.btn-sm {
+	cursor: pointer;
+	width: 80px;
+	height: 40px;
+	border: none;
+}
 
 footer {
 	min-height: 100px;
@@ -102,6 +137,10 @@ footer {
 footer div {
 	font-size: 10px;
 	margin: auto 0px auto 50px;
+}
+
+.rt {
+	text-align: right;
 }
 
 .common-gray-bacground {

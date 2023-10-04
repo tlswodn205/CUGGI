@@ -16,7 +16,7 @@
 	<header>
 	    <nav>
 	        <div class="logo">
-	            <img src="/images/logo/logo.png" alt="">
+	            <a href="/"><img src="/images/logo/logo.png" alt=""></a>
 	        </div>
 	        <ul class="menu">
 	            <li>트래블</li>
