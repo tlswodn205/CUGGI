@@ -19,7 +19,7 @@
 		SELECT * FROM payment_tb WHERE id = #{id};
 	</select>
 	
-	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.Payment">
+	<select id="findByAll" resultType = "com.tencoding.CUGGI.repository.model.Payment">
 		SELECT * FROM payment_tb;
 	</select>
 </mapper>

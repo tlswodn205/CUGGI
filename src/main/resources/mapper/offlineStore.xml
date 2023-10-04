@@ -4,26 +4,26 @@
 <mapper namespace="com.tencoding.CUGGI.repository.interfaces.OfflineStoreRepository"> 
 
 	<insert id= "insert">
-		INSERT INTO offlist_store_tb(store_name, store_number,store_address,store_addressDetail, created_at)
+		INSERT INTO offline_store_tb(store_name, store_number,store_address,store_addressDetail, created_at)
 		values(#{storeName},#{storeNumber},#{storeAddress},#{storeAddressDetail},now());
 	</insert>
 	
 	<update id="updateById">
-		UPDATE offlist_store_tb SET store_name = #{storeName},
+		UPDATE offline_store_tb SET store_name = #{storeName},
 		store_number = #{storeNumber}, store_address = #{storeAddress}, store_addressDetail= #{store_addressDetail}
 		WHERE id = #{id};
 	</update>
 	
 	<delete id="deleteById">
-		DELETE FROM offlist_store_tb WHERE id = #{id};
+		DELETE FROM offline_store_tb WHERE id = #{id};
 	</delete>
 	
 	<select id="findById" resultType = "com.tencoding.CUGGI.repository.model.OfflineStore">
-		SELECT * FROM offlist_store_tb WHERE id = #{id};
+		SELECT * FROM offline_store_tb WHERE id = #{id};
 	</select>
 	
-	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.OfflineStore">
-		SELECT * FROM offlist_store_tb;
+	<select id="findByAll" resultType = "com.tencoding.CUGGI.repository.model.OfflineStore">
+		SELECT * FROM offline_store_tb;
 	</select>
 	
 	

@@ -22,7 +22,7 @@
 		SELECT * FROM order_tb WHERE id = #{id};
 	</select>
 	
-	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.Order">
+	<select id="findByAll" resultType = "com.tencoding.CUGGI.repository.model.Order">
 		SELECT * FROM order_tb;
 	</select>
 </mapper>
