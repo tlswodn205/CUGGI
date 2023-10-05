@@ -14,10 +14,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class User {
-	int id;
-	String username;
-	String password;
-	boolean isKaKao;
-	int level;
-	Timestamp createdAt;
+	private int id;
+	private String username;
+	private String password;
+	private Integer level;
+	private Timestamp createdAt;
 }

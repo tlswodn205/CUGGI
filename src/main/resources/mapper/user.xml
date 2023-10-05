@@ -3,14 +3,23 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tencoding.CUGGI.repository.interfaces.UserRepository"> 
 
+	<select id="findByUsername" resultType="com.tencoding.CUGGI.repository.model.User">
+		select * from user_tb where username = #{username}
+	</select>
+
+	<select id="findByUsernameAndPassword" resultType="com.tencoding.CUGGI.repository.model.User">
+		select * from user_tb 
+		where username = #{username} and password = #{password}
+	</select>
+	
 	<insert id= "insert">
-		INSERT INTO user_tb(username, password, is_kakao,level, created_at)
-		values(#{username},#{password},#{isKakao},#{level},now());
+		INSERT INTO user_tb(username, password, level, created_at)
+		values(#{username},#{password},#{level},now());
 	</insert>
 	
 	<update id="updateById">
 		UPDATE user_tb SET username = #{username},
-		password = #{password}, is_kakao = #{isKakao}, level = #{level}
+		password = #{password}, level = #{level}
 		WHERE id = #{id};
 	</update>
 	
