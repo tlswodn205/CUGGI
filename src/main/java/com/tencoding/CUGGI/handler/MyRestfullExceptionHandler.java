@@ -17,12 +17,12 @@ import com.tencoding.CUGGI.handler.exception.UnAuthorizedException;
 @Order(1)
 public class MyRestfullExceptionHandler {
 	
-	@ExceptionHandler(Exception.class)
-	public void exception(Exception e) {
-		System.out.println("======== 예외 발생 확인 =======");
-		System.out.println(e.getMessage());
-		System.out.println("---------------------------");
-	}
+//	@ExceptionHandler(Exception.class)
+//	public void exception(Exception e) {
+//		System.out.println("======== 예외 발생 확인 =======");
+//		System.out.println(e.getMessage());
+//		System.out.println("---------------------------");
+//	}
 	
 	@ExceptionHandler(CustomRestfulException.class)
 	public String basicException(CustomRestfulException e) {

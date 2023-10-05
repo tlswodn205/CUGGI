@@ -1,5 +1,5 @@
 server: 
-  port: 80
+  port: 90
   servlet:
     encoding:
       charset: utf-8
@@ -34,3 +34,7 @@ mybatis:
   - classpath:mapper/**.xml
   configuration:
     map-underscore-to-camel-case: true
+    
+# 초기 파라미터 설정    
+tenco:
+  key: 85135F3C6BFE9DF1735F8806F045AE73CECE7219F7840D8E7E9297A7F846B48A
