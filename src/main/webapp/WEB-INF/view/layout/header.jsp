@@ -17,6 +17,7 @@
 	    <nav>
 	        <div class="logo">
 	            <a href="/"><img src="/images/logo/logo.png" alt=""></a>
+
 	        </div>
 	        <ul class="menu">
 	            <li>트래블</li>
