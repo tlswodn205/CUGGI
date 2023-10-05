@@ -21,7 +21,7 @@
 		SELECT * FROM first_category_tb WHERE id = #{id};
 	</select>
 	
-	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.FirstCategory">
+	<select id="findByAll" resultType = "com.tencoding.CUGGI.repository.model.FirstCategory">
 		SELECT * FROM first_category_tb;
 	</select>
 </mapper>

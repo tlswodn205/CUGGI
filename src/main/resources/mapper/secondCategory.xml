@@ -22,7 +22,7 @@
 		SELECT * FROM second_category_tb WHERE id = #{id};
 	</select>
 	
-	<select id="findByALL" resultType = "com.tencoding.CUGGI.repository.model.SecondCategory">
+	<select id="findByAll" resultType = "com.tencoding.CUGGI.repository.model.SecondCategory">
 		SELECT * FROM second_category_tb;
 	</select>
 </mapper>
