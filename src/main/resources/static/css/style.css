@@ -9,73 +9,83 @@ a {
 	cursor: pointer;
 }
 
-html,
-body {
-	height: 100%;
-	width: 100%;
-	padding: 0;
-	margin: 0;
-}
 
 body {
+	width: 100%;
+	height: 100%;
+	padding: 125px 0 0 0;
+	margin: 0;
 	display: flex;
 	flex-direction: column;
 }
 
+
+
 header {
 	min-height: 125px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 999;
+	background-color: white;
 }
 
-nav .logo {
+header nav .logo {
 	display: flex;
 	justify-content: center;
 }
 
-nav .logo img {
+header nav .logo img {
 	width: 190px;
 }
 
-.menu {
+header nav .menu {
 	display: flex;
 	justify-content: center;
 	position: relative;
 	padding: 0;
-
 }
 
-.menu>li {
+header nav .menu>li {
 	margin: 0 80px;
 }
 
-.submenu {
+header nav .submenu {
 	background-color: white;
 	width: 100%;
 	position: absolute;
 	top: 100%;
 	z-index: 999;
 	padding: 0;
+	margin-top: 30px;
 	display: flex;
-	
+	flex-direction: column;
+	align-items: center;
 }
 
-.subcategory {
+header nav .submenu-div{
+	display: flex;
+	flex-direction: column;
+}
+
+header nav .subcategory {
 	display: flex;
 }
 
-.submenu ul {
+header nav .submenu ul {
 	margin: 0 7rem;
 }
 
-.submenu li {
+header nav .submenu li {
 	margin: 40px 0;
 }
 
-.close {
-	cursor: pointer;
-	display: flex;
-	justify-content: right;
-	margin-right: 20rem;
 
+
+header nav .close {
+	cursor: pointer;
+	margin-left: 75rem;
 }
 
 main {
@@ -114,13 +124,14 @@ main .main-img > .see {
 	transform: translate(-50%, -50%);
 }
 
-.main-btn {	
+main .main-btn {	
     background: white;
     border: none;
     border-radius: 3px;
     box-shadow: none;
     height: 50px;
     width: 150px;
+    cursor: pointer;
 }
 
 .btn-sm {
