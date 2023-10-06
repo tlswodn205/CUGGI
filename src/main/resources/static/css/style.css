@@ -2,13 +2,19 @@ li {
 	list-style: none;
 }
 
-
 a {
 	text-decoration: none;
 	outline: none;
 	cursor: pointer;
 }
 
+html,
+body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
 
 body {
 	width: 100%;
@@ -18,8 +24,6 @@ body {
 	display: flex;
 	flex-direction: column;
 }
-
-
 
 header {
 	min-height: 125px;
@@ -81,8 +85,6 @@ header nav .submenu li {
 	margin: 40px 0;
 }
 
-
-
 header nav .close {
 	cursor: pointer;
 	margin-left: 75rem;
@@ -105,8 +107,6 @@ main .main-row {
 	padding: 0;
 	justify-content: center;
 }
-
-
 
 main .main-img {
 	display: flex;

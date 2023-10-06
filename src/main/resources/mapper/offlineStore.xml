@@ -4,13 +4,13 @@
 <mapper namespace="com.tencoding.CUGGI.repository.interfaces.OfflineStoreRepository"> 
 
 	<insert id= "insert">
-		INSERT INTO offline_store_tb(store_name, store_number,store_address,store_addressDetail, created_at)
+		INSERT INTO offline_store_tb(store_name, store_number,store_address,store_address_detail, created_at)
 		values(#{storeName},#{storeNumber},#{storeAddress},#{storeAddressDetail},now());
 	</insert>
 	
 	<update id="updateById">
 		UPDATE offline_store_tb SET store_name = #{storeName},
-		store_number = #{storeNumber}, store_address = #{storeAddress}, store_addressDetail= #{store_addressDetail}
+		store_number = #{storeNumber}, store_address = #{storeAddress}, store_address_detail= #{storeAddressDetail}
 		WHERE id = #{id};
 	</update>
 	

@@ -14,12 +14,12 @@ import com.tencoding.CUGGI.handler.exception.CustomPageException;
 @ControllerAdvice  // IoC 대상 
 public class MyPageExceptionHandler {
 
-	@ExceptionHandler(Exception.class)
-	public void exception(Exception e) {
-		System.out.println("==== 예외 발생 확인 ====");
-		System.out.println(e.getMessage());
-		System.out.println("------------------------");
-	}
+//	@ExceptionHandler(Exception.class)
+//	public void exception(Exception e) {
+//		System.out.println("==== 예외 발생 확인 ====");
+//		System.out.println(e.getMessage());
+//		System.out.println("------------------------");
+//	}
 	
 	// 사용자 정의 클래스 활용 
 	@ExceptionHandler(CustomPageException.class)

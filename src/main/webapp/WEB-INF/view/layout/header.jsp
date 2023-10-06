@@ -24,10 +24,7 @@
 	            <li>지갑</li>
 	            <li>쥬얼리&시계</li>
 	            <div class="submenu">
-		            	
-		            		
 		                	<span class="close">X</span>
-		                
 		                <div class="subcategory">
 			                <ul>
 			                    <li>더블백</li>
