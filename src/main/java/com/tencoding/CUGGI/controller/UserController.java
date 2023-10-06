@@ -73,7 +73,7 @@ public class UserController {
 			throw new CustomRestfulException("생년월일을 입력하세요", HttpStatus.BAD_REQUEST);
 		}
 		userService.signUp(signUpDto);
-		return "redirect:/user/sign-in";
+		return "redirect:/user/signIn";
 	}
 	
 	@PostMapping("/signIn")
@@ -90,13 +90,13 @@ public class UserController {
 		principal.setPassword(null);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		
-		return "redirect:/index";
+		return "redirect:/main";
 	}
 	
 	@GetMapping("/logout")
 	public String logout() {
 		session.invalidate();
-		return "redirect:/user/sign-in";
+		return "redirect:/user/signIn";
 	}
 	
 	@GetMapping("/kakao/callback")
