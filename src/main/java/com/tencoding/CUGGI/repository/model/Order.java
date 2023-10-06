@@ -15,10 +15,9 @@ import lombok.Setter;
 @Getter
 public class Order {
 	int id;
-	int userId;
-	String state;
-	String productFeature ;
+	int userId;	
 	Timestamp purchaseDate;
 	Timestamp cancelDate;
 	Timestamp createdAt;
+	
 }

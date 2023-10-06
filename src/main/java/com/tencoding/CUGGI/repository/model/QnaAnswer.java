@@ -13,9 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Payment {
-	int id;
-    int  tid;
-	int orderId;
-	Timestamp createdAt;
+public class QnaAnswer {
+	private int id;
+	private int qnaId;
+	private String title;
+	private String content;
+	private Timestamp createdAt;
 }

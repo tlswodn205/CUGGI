@@ -4,8 +4,8 @@
 <mapper namespace="com.tencoding.CUGGI.repository.interfaces.QnaRepository"> 
 
 	<insert id= "insert">
-		INSERT INTO qna_tb(title, content, user_id, created_at)
-		values(#{title},#{content},#{userId},now());
+		INSERT INTO qna_tb(title, content, user_id, state, created_at)
+		values(#{title},#{content},#{userId},'확인중',now());
 	</insert>
 	
 	<update id="updateById">
@@ -18,11 +18,24 @@
 		DELETE FROM qna_tb WHERE id = #{id};
 	</delete>
 	
-	<select id="findById" resultType = "com.tencoding.CUGGI.repository.model.Qna">
-		SELECT * FROM qna_tb WHERE id = #{id};
+	<select id="findById" resultType = "com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto">
+		select qt.id, qt.title, qt.content, qat.content qat_content
+		from qna_tb qt
+		left join qna_answer_tb qat
+		on qt.id = qat.qna_id
+		where qt.id = #{id};
 	</select>
 	
 	<select id="findByAll" resultType = "com.tencoding.CUGGI.repository.model.Qna">
-		SELECT * FROM qna_tb;
+		SELECT * FROM qna_tb order by id desc;
 	</select>
+	
+	<insert id="insertAnswer">
+		insert into qna_answer_tb (qna_id, title, content, created_at)
+		values(#{qnaId},#{title},#{content},now())
+	</insert>
+	
+	<update id="updateByQnaid">
+		update qna_tb set state = '답변 완료' where id = ${qnaId};
+	</update>
 </mapper>

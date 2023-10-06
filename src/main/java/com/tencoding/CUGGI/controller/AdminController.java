@@ -13,15 +13,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
+import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
+import com.tencoding.CUGGI.repository.model.Qna;
 import com.tencoding.CUGGI.service.AdminService;
 
 @Controller
@@ -96,4 +100,28 @@ System.out.println(adminPageListDto.getKeyword());
 	}
 
 	//offlinestore end
+	
+	//qna start
+	
+	@GetMapping("/qnaList")
+	public String qnaList문의사항리스트(Model model) {
+		List<Qna> qnaList = adminService.qnaList();
+		model.addAttribute("qnaList", qnaList);
+		return "admin/qna/qnaList";
+	}
+	
+	@GetMapping("/qnaDetail/{id}")
+	public String qnaDetail문의사항상세보기(@PathVariable int id, Model model) {
+		QnaAnswerResponseDto qnaDetail = adminService.qnlDetail(id);
+		model.addAttribute("qnaDetail", qnaDetail);
+		return "admin/qna/qnaDetail";
+	}
+	
+	@PostMapping("/qnaAnswer")
+	public String qnaAswer문의사항답변(InsertQnaAnswerDto insertQnaAnswerDto) {
+		int result = adminService.insertQnaAnswer(insertQnaAnswerDto);
+		return "redirect:/admin/qnaList";
+	}
+	
+	//qna end
 }

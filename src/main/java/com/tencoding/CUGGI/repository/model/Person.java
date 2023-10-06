@@ -18,7 +18,7 @@ public class Person {
 	String name;
 	String address;
 	String email;
-	int phoneNumber;
+	String phoneNumber;
 	Timestamp birthday;
 	int userId;
 	Timestamp createdAt;

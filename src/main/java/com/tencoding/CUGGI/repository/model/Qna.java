@@ -17,6 +17,7 @@ public class Qna {
 	int id;
 	String title;
 	String content;
+	String state;
 	int userId;
 	Timestamp createdAt;
 }
