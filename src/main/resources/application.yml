@@ -1,5 +1,5 @@
 server: 
-  port: 80
+  port: 90
   servlet:
     encoding:
       charset: utf-8
@@ -15,6 +15,20 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: asd1234
+    
+  mail:
+    host: smtp.gmail.com # 1
+    port: 587 # 2
+    username: cuggiateam # 3
+    password: ooie ooxh mxxw gxxn # 4
+    properties:
+      mail:
+        smtp:
+          auth: true # 5
+          timeout: 5000 # 6
+          starttls:
+            enable: true # 7
+
 #  sql:  
 #    init:
 #      schema-locations:
@@ -34,3 +48,7 @@ mybatis:
   - classpath:mapper/**.xml
   configuration:
     map-underscore-to-camel-case: true
+    
+# 초기 파라미터 설정    
+tenco:
+  key: 85135F3C6BFE9DF1735F8806F045AE73CECE7219F7840D8E7E9297A7F846B48A

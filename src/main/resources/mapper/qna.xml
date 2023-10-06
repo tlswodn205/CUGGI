@@ -4,8 +4,8 @@
 <mapper namespace="com.tencoding.CUGGI.repository.interfaces.QnaRepository"> 
 
 	<insert id= "insert">
-		INSERT INTO qna_tb(title, content, user_id, created_at)
-		values(#{title},#{content},#{userId},now());
+		INSERT INTO qna_tb(title, content, user_id, state, created_at)
+		values(#{title},#{content},#{userId},'확인중',now());
 	</insert>
 	
 	<update id="updateById">
