@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>오프라인 매장</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<%@ include file ="/WEB-INF/view/layout/header.jsp" %>
 <style>
 	.offlineStore{
 		padding: 5px;
@@ -97,11 +92,7 @@
 	        background-color: #fff;
 	    }
 	}
-
 </style>
-</head>
-	
-<body>
 	<c:forEach var="offlineStore" items="${offlineStoreList}">
 		<div id="${offlineStore.id}" class = "offlineStore">
 			<input type ="hidden" id="storeName" name="storeName" value="${offlineStore.storeName}">
@@ -175,5 +166,4 @@
 	}
 </script>
 
-</body>
-</html>
+<%@ include file ="/WEB-INF/view/layout/footer.jsp" %>

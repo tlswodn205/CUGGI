@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file ="/WEB-INF/view/admin/layout/header.jsp" %>
-				<div class="listTableForm">
+				<div class="list-table-form">
 					<h2>지점 관리 페이지</h2>
 					<input type="button" class="insertButton" onclick="location.href='./insertOfflineStore'" value="지점 추가">
-					<table class = "listTable">
+					<table class = "list-table">
 					    <thead>
 					        <tr>
 					            <th>지점아이디</th>
@@ -35,10 +35,9 @@
 				</div>
 
 <script type="text/javascript">
+//delete 확인 자바스크립트
 function isDelete(form){
 	const response = confirm("정말 삭제하시겠습니까?");
-	console.log(form.method);
-	console.log(form.action);
 	if(response){
 		form.submit();
 	}
