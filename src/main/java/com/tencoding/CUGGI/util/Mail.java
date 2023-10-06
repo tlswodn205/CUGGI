@@ -117,5 +117,8 @@ public class Mail {
 
         javaMailSender.send(preparatory);
 	}
-
+	
+	public void sendAuthEmail() {
+		
+	}
 }
