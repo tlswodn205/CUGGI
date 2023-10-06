@@ -11,5 +11,6 @@ public interface PersonRepository {
 	public int updateById(Person person);
 	public int deleteById(int personId);
 	public Person findById(int personId);
+	public Person findByUserId(int userId);
 	public List<Person> findByAll();
 }
