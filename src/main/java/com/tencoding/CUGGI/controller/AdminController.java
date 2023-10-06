@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
@@ -36,11 +38,13 @@ public class AdminController {
 	//offlinestore start
 	
 	@GetMapping(""+"offlineStoreManagement")
-	public String offlineStoreManagement오프라인스토어관리(Model model) {
-		List<OfflineStoreListResponseDto> offlineStoreResponseDtoList = adminService.OfflineStoreList();
-		model.addAttribute("offlineStoreList", offlineStoreResponseDtoList);
+	public String offlineStoreManagement(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page, Model model) {
+		AdminPageListDto<OfflineStoreListResponseDto> adminPageListDto = adminService.OfflineStoreList(type, keyword, page);
+		model.addAttribute("adminPageListDto", adminPageListDto);
+System.out.println(adminPageListDto.getKeyword());
 		return "admin/offlineStore/offlineStoreManagement"; 
 	}	
+	
 	
 	@GetMapping("insertOfflineStore")
 	public String insertOfflineStore오프라인스토어추가(Model model) {
@@ -90,7 +94,6 @@ public class AdminController {
 		int result = adminService.deleteOfflineStore(id);
 		return "redirect:admin	/offlineStoreManagement"; 
 	}
-
 
 	//offlinestore end
 }

@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
+import com.tencoding.CUGGI.dto.response.PagingResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.interfaces.FirstCategoryRepository;
 import com.tencoding.CUGGI.repository.interfaces.OfflineStoreRepository;
@@ -60,15 +62,21 @@ public class AdminService {
 	//offlineStore start
 
 	@Transactional
-	public List<OfflineStoreListResponseDto> OfflineStoreList(){
-		List<OfflineStore> offlineStoreList = offlineStoreRepository.findByAll();
+	public AdminPageListDto<OfflineStoreListResponseDto> OfflineStoreList(String type,String kerword,Integer page){
+		if(page <= 0) {
+			page = 1;
+		}
+		PagingResponseDto PagingResponseDto = offlineStoreRepository.findPaging(type, kerword, page);
+		int startNum = (page-1)*10;
+		List<OfflineStore> offlineStoreList = offlineStoreRepository.findByKeywordAndCurrentPage(type, kerword, startNum);
 		
-		List<OfflineStoreListResponseDto> offlineStoreResponseDtoList = new ArrayList<OfflineStoreListResponseDto>();
+		List<OfflineStoreListResponseDto> offlineStoreListResponseDto = new ArrayList<OfflineStoreListResponseDto>();
 		for(int i = 0; i< offlineStoreList.size(); i++) {
-			offlineStoreResponseDtoList.add(OfflineStoreListResponseDto.fromEntity(
+			offlineStoreListResponseDto.add(OfflineStoreListResponseDto.fromEntity(
 					offlineStoreList.get(i))); 
 		}
-		return offlineStoreResponseDtoList; 
+		AdminPageListDto<OfflineStoreListResponseDto> adminPageListDto = new AdminPageListDto<OfflineStoreListResponseDto>(PagingResponseDto, kerword, type, null ,offlineStoreListResponseDto);
+		return adminPageListDto; 
 	}
 
 	@Transactional
