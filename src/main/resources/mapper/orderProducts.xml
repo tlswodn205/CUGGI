@@ -1,28 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tencoding.CUGGI.repository.interfaces.OrderProductsRepository"> 
+<mapper
+	namespace="com.tencoding.CUGGI.repository.interfaces.OrderProductsRepository">
 
-	<insert id= "insert">
-		INSERT INTO order_products_tb(quantity, price, product_id, product_name, created_at)
+	<insert id="insert">
+		INSERT INTO order_products_tb(quantity, price,
+		product_id, product_name, created_at)
 		values(#{quantity},#{price},#{productId},#{productName},now());
 	</insert>
-	
+
 	<update id="updateById">
-		UPDATE order_products_tb SET quantity  = #{quantity},
-		price  = #{price}, product_id  = #{productId}, product_name  = #{productName},
+		UPDATE order_products_tb SET quantity = #{quantity},
+		price = #{price}, product_id = #{productId}, product_name =
+		#{productName},
 		WHERE id = #{id};
 	</update>
-	
+
 	<delete id="deleteById">
 		DELETE FROM order_products_tb WHERE id = #{id};
 	</delete>
-	
-	<select id="findById" resultType = "com.tencoding.CUGGI.repository.model.OrderProducts">
+
+	<select id="findById"
+		resultType="com.tencoding.CUGGI.repository.model.OrderProducts">
 		SELECT * FROM order_products_tb WHERE id = #{id};
 	</select>
-	
-	<select id="findByAll" resultType = "com.tencoding.CUGGI.repository.model.OrderProducts">
+
+	<select id="findByAll"
+		resultType="com.tencoding.CUGGI.repository.model.OrderProducts">
 		SELECT * FROM order_products_tb;
 	</select>
+
+	<select id="findByDetailList"
+		resultType="com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto">
+		select pi.image, op.price, op.quantity, op.product_name, s.second_category_name
+from    order_products_tb op
+left join product_tb p
+on      op.product_id = p.id
+left join product_image_tb pi
+on        p.id = pi.product_id
+left join second_category_tb s
+on        p.category_id = s.id
+left join first_category_tb f
+on        s.category_id = f.id
+where   op.order_id = #{orderId};
+	</select>
+
+	<select id="findByDetailPerson"
+		resultType="com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto">
+		select p.name, p.address, p.phone_number, p.email
+		from person_tb p
+		left join user_tb u on p.user_id = u.id
+		left join order_tb o on u.id = o.user_id
+		where o.id = #{orderId}
+	</select>
+
+
 </mapper>

@@ -4,8 +4,8 @@
 <mapper namespace="com.tencoding.CUGGI.repository.interfaces.PaymentRepository"> 
 
 	<insert id= "insert">
-		INSERT INTO payment_tb(tid , order_id, created_at)
-		values(#{tid},#{orderId},now());
+		INSERT INTO payment_tb(id, tid , order_id, created_at)
+		values(#{id},#{tid},#{orderId},now());
 	</insert>
 	
 	<update id="updateById">
