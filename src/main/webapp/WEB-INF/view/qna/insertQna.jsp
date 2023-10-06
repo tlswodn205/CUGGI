@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
           <%@ include file="/WEB-INF/view/layout/header.jsp" %>
 <style>
 
@@ -66,10 +65,39 @@
 	            		<textarea rows="10" id="content" name="content" placeholder="Q&A" required></textarea>
 	            	</div>
 	            	<div class="form-group rt">
-	            		<button class="btn-sm common-black-background common-white-font">문의하기</button>
+	            		<button class="btn-sm common-black-background common-white-font" type="button">문의하기</button>
 	            	</div>
 	            </form>
             </div>
         </main>
+		<script>
+		
+		
+		function validationForm() {
+			let title = $("form #title")
+			let content = $("form #content")
 
+			// 이름과 연락처의 유효성 검사
+			if (!title.val()) {
+				alert("제목을 입력하세요.");
+				title.focus();
+				return;
+			}
+
+			if (content.val().length < 10) {
+				alert("내용을 10글자 이상 입력해주세요.");
+				content.focus();
+				return;
+			}
+			
+			return true; // 모든 유효성 검사를 통과하면 true를 반환
+		}
+			
+		$("form button").on('click', ()=>{
+			if(validationForm()) {
+				$("form").submit();
+			}
+		});
+			
+		</script>
           <%@ include file="/WEB-INF/view/layout/footer.jsp" %>

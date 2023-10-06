@@ -9,11 +9,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" href="/css/style.css">
 <style>
 
 .admin-wrap{
 	height: 100%;
+	padding: 0;
+	margin: 0;
 }
 
 .admin-wrap .top-bar{
@@ -49,9 +50,13 @@
 	margin-left: 30px;
 }
 
-.admin-wrap .insert-btn{
+.admin-wrap .top-menu{
+	display: flex;
+	justify-content: space-between;
 }
 
+.admin-wrap .insert-btn{
+}
 .admin-wrap .list-table{
 	margin-top: 4px;
 	
@@ -110,6 +115,21 @@
 	margin-top:4px;
 	float: left;
 }
+
+.admin-wrap .pagination{
+	display: flex;
+	justify-content: center;
+}
+.admin-wrap .pagination li{
+	border: 1px solid #000;
+	margin-left:4px;
+	margin-right:4px;
+}
+
+.admin-wrap .pagination a, label{
+	padding: 4px;
+}
+
 </style>
 </head>
 <body>
@@ -122,7 +142,8 @@
 		<div class="container">
 			<div class="side-bar">
 				<div>
-					<a href="#">오프라인매장관리</a>
+					<a href="#">오프라인매장관리</a><br>
+					<a href="/admin/qnaList">문의사항관리</a>
 				</div>
 			</div>
 			<div class= "main-console">

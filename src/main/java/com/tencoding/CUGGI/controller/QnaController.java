@@ -29,9 +29,6 @@ public class QnaController {
 	@Autowired
 	HttpSession session;
 	
-	@Resource(name="mail")
-	private Mail mail;
-	
 	@GetMapping("/qnaList")
 	public String qnaList문의리스트() {
 		return "qna/qnaList";
@@ -49,7 +46,6 @@ public class QnaController {
 	@PostMapping("/insertQna")
 	public String insertQnaProc문의등록(QnaFormRequestDto qnaFormRequestDto) {
 		qnaService.qnaInsert(qnaFormRequestDto);
-		mail.sendSimpleEmail(qnaFormRequestDto);
 		return "redirect:/";
 	}
 }

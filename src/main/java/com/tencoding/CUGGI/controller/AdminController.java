@@ -13,16 +13,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
+import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
+import com.tencoding.CUGGI.repository.model.User;
+import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
-import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
+import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
-import com.tencoding.CUGGI.repository.model.User;
+import com.tencoding.CUGGI.repository.model.Qna;
 import com.tencoding.CUGGI.service.AdminService;
 
 @Controller
@@ -39,11 +45,13 @@ public class AdminController {
 	//offlinestore start
 	
 	@GetMapping(""+"offlineStoreManagement")
-	public String offlineStoreManagement오프라인스토어관리(Model model) {
-		List<OfflineStoreListResponseDto> offlineStoreResponseDtoList = adminService.OfflineStoreList();
-		model.addAttribute("offlineStoreList", offlineStoreResponseDtoList);
+	public String offlineStoreManagement(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page, Model model) {
+		AdminPageListDto<OfflineStoreListResponseDto> adminPageListDto = adminService.OfflineStoreList(type, keyword, page);
+		model.addAttribute("adminPageListDto", adminPageListDto);
+System.out.println(adminPageListDto.getKeyword());
 		return "admin/offlineStore/offlineStoreManagement"; 
 	}	
+	
 	
 	@GetMapping("insertOfflineStore")
 	public String insertOfflineStore오프라인스토어추가(Model model) {
@@ -94,9 +102,7 @@ public class AdminController {
 		return "redirect:admin	/offlineStoreManagement"; 
 	}
 
-
 	//offlinestore end
-	
 	
 	// order start
 	@GetMapping("orderListManagement")
@@ -141,4 +147,28 @@ public class AdminController {
 	
 	
 	// order end
+  
+	//qna start
+	
+	@GetMapping("/qnaList")
+	public String qnaList문의사항리스트(Model model) {
+		List<Qna> qnaList = adminService.qnaList();
+		model.addAttribute("qnaList", qnaList);
+		return "admin/qna/qnaList";
+	}
+	
+	@GetMapping("/qnaDetail/{id}")
+	public String qnaDetail문의사항상세보기(@PathVariable int id, Model model) {
+		QnaAnswerResponseDto qnaDetail = adminService.qnlDetail(id);
+		model.addAttribute("qnaDetail", qnaDetail);
+		return "admin/qna/qnaDetail";
+	}
+	
+	@PostMapping("/qnaAnswer")
+	public String qnaAswer문의사항답변(InsertQnaAnswerDto insertQnaAnswerDto) {
+		int result = adminService.insertQnaAnswer(insertQnaAnswerDto);
+		return "redirect:/admin/qnaList";
+	}
+	
+	//qna end
 }

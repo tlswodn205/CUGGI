@@ -1,4 +1,4 @@
-	package com.tencoding.CUGGI.repository.model;
+package com.tencoding.CUGGI.repository.model;
 
 import java.sql.Timestamp;
 
@@ -13,11 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Qna {
-	int id;
-	String title;
-	String content;
-	String state;
-	int userId;
-	Timestamp createdAt;
+public class QnaAnswer {
+	private int id;
+	private int qnaId;
+	private String title;
+	private String content;
+	private Timestamp createdAt;
 }

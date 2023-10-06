@@ -9,11 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
+import com.tencoding.CUGGI.dto.request.QnaFormRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
+import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
+import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
-import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
+import com.tencoding.CUGGI.dto.response.PagingResponseDto;
+import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.interfaces.FirstCategoryRepository;
 import com.tencoding.CUGGI.repository.interfaces.OfflineStoreRepository;
@@ -26,6 +31,7 @@ import com.tencoding.CUGGI.repository.interfaces.QnaRepository;
 import com.tencoding.CUGGI.repository.interfaces.UserRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
 import com.tencoding.CUGGI.repository.model.Order;
+import com.tencoding.CUGGI.repository.model.Qna;
 
 @Service
 public class AdminService {
@@ -63,15 +69,21 @@ public class AdminService {
 	//offlineStore start
 
 	@Transactional
-	public List<OfflineStoreListResponseDto> OfflineStoreList(){
-		List<OfflineStore> offlineStoreList = offlineStoreRepository.findByAll();
+	public AdminPageListDto<OfflineStoreListResponseDto> OfflineStoreList(String type,String kerword,Integer page){
+		if(page <= 0) {
+			page = 1;
+		}
+		PagingResponseDto PagingResponseDto = offlineStoreRepository.findPaging(type, kerword, page);
+		int startNum = (page-1)*10;
+		List<OfflineStore> offlineStoreList = offlineStoreRepository.findByKeywordAndCurrentPage(type, kerword, startNum);
 		
-		List<OfflineStoreListResponseDto> offlineStoreResponseDtoList = new ArrayList<OfflineStoreListResponseDto>();
+		List<OfflineStoreListResponseDto> offlineStoreListResponseDto = new ArrayList<OfflineStoreListResponseDto>();
 		for(int i = 0; i< offlineStoreList.size(); i++) {
-			offlineStoreResponseDtoList.add(OfflineStoreListResponseDto.fromEntity(
+			offlineStoreListResponseDto.add(OfflineStoreListResponseDto.fromEntity(
 					offlineStoreList.get(i))); 
 		}
-		return offlineStoreResponseDtoList; 
+		AdminPageListDto<OfflineStoreListResponseDto> adminPageListDto = new AdminPageListDto<OfflineStoreListResponseDto>(PagingResponseDto, kerword, type, null ,offlineStoreListResponseDto);
+		return adminPageListDto; 
 	}
 
 	@Transactional
@@ -132,4 +144,26 @@ public class AdminService {
 	
 
 	//offlineStore end
+	
+	//qna start
+	
+	@Transactional
+	public List<Qna> qnaList() {
+		List<Qna> qnaList = qnaRepository.findByAll();
+		return qnaList;
+	}
+	
+	@Transactional
+	public QnaAnswerResponseDto qnlDetail(int id) {
+		QnaAnswerResponseDto qnaAnswerResponseDto = qnaRepository.findById(id);
+		return qnaAnswerResponseDto;
+	}
+
+	@Transactional
+	public int insertQnaAnswer(InsertQnaAnswerDto insertQnaAnswerDto) {
+		qnaRepository.updateByQnaid(insertQnaAnswerDto.getQnaId());
+		return qnaRepository.insertAnswer(insertQnaAnswerDto);
+	}
+	
+	//qna end
 }
