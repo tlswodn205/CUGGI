@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
+import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
+import com.tencoding.CUGGI.repository.model.User;
 import com.tencoding.CUGGI.service.AdminService;
 
 @Controller
@@ -93,4 +96,49 @@ public class AdminController {
 
 
 	//offlinestore end
+	
+	
+	// order start
+	@GetMapping("orderListManagement")
+	public String orderListManagent관리자주문내역(Model model) {
+
+		
+
+		List<OrderListResponseDto> orderList = adminService.readOrderList();
+		if(orderList.isEmpty()) {
+			model.addAttribute("orderList", null);
+		} else {
+			model.addAttribute("orderList",orderList);
+			System.out.println("여기");
+		}
+		System.out.println(orderList);
+		System.out.println("컨트롤러");
+		
+		
+
+		return "admin/order/orderManagement";
+	}
+	
+	
+	
+	
+	@GetMapping("updateOrderList/{id}")
+	public String updateOrderList주문내역수정(@PathVariable("id") int id, Model model) {
+		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(id);
+		model.addAttribute("orderListResponseDto", orderListResponseDto);
+		System.out.println(orderListResponseDto);
+		
+
+		
+		return "admin/order/orderListUpdate";
+	}
+	
+	@PutMapping("updateOrderList/{id}")
+	public String updateOrderListProc주문내역수정(UpdateOrderListRequestDto updateOrderListRequestDto) {
+		int result = adminService.updateOrderList(updateOrderListRequestDto);		
+		return "redirect: orderManagement"; 
+	}
+	
+	
+	// order end
 }

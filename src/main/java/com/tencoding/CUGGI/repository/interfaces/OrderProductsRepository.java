@@ -16,4 +16,5 @@ public interface OrderProductsRepository {
 	public List<OrderProducts> findByAll();
 	public List<OrderDetailProductResponseDto> findByDetailList(int orderId);
 	public OrderDetailProductResponseDto findByDetailPerson(int orderId);
+	public OrderDetailProductResponseDto findByDetailPayment(int orderId);
 }

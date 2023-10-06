@@ -88,11 +88,11 @@
 				<table class="order">
 					<tr>
 						<td><span>결제금액</span></td>
-						<td><input type="text" name="" readonly value="결제금액"></td>
+						<td><input type="text" name="price" readonly value="${orderDetailPayment.price} "></td>
 					</tr>
 					<tr>
 						<td><span>결제방법</span></td>
-						<td><input type="text" name="" readonly value="결제방법"></td>
+						<td><input type="text" name="" readonly value="nicepay"></td>
 						<td>
 					</tr>
 

@@ -10,9 +10,9 @@
 	</insert>
 
 	<update id="updateById">
-		UPDATE order_tb SET cancelDate = #{cancel_date},
-		state = #{state}, purchaseDate = #{purchase_date}
-		WHERE id = #{id}
+		UPDATE order_tb SET cancel_date = now()
+		WHERE id =
+		#{id};
 	</update>
 
 	<delete id="deleteById">
@@ -34,13 +34,36 @@
 		select o.created_at , ot.product_name ,p.product_feature,
 		ot.product_name, ot. price, pi.image
 		from order_tb o
-		left join order_products_tb ot
+		left join
+		order_products_tb ot
 		on o.id = ot.order_id
 		left join product_tb p
-		on ot.product_id = p.id
+		on
+		ot.product_id = p.id
 		left join product_image_tb pi
-		on p.id = pi.product_id
+		on p.id =
+		pi.product_id
 		where o.user_id = #{id}
 		and pi.is_thumbnail = 1
+	</select>
+
+	<select id="findByListAdmin"
+		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
+		select o.id, o.created_at,
+		o.user_id, op.product_name,
+		op.price,o.cancel_date
+		from order_tb o
+		left join order_products_tb op
+		on
+		o.id = op.order_id;
+
+	</select>
+
+	<select id="findByDetailId"
+		resultType="com.tencoding.CUGGI.repository.model.Order">
+		select *
+		from order_tb o
+		left join order_products_tb op
+		on o.id = op.order_id;
 	</select>
 </mapper>

@@ -83,6 +83,18 @@ public class OrderController {
 			
 		}
 		
+		// 결제 금액
+		OrderDetailProductResponseDto orderDetailPayment = orderService.readOrderDetaiPayment(order.getId());
+		if(orderDetailPerson==null) {
+			model.addAttribute("orderDetailPayment", null);
+		} else {
+			model.addAttribute("orderDetailPayment",orderDetailPayment);
+			
+			System.out.println("여가 마지막으로타나");
+			System.out.println("Payment:" + orderDetailPayment);
+			
+		}
+		
 		return "/payment/orderDetail";
 	}
 

@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
+import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.interfaces.FirstCategoryRepository;
 import com.tencoding.CUGGI.repository.interfaces.OfflineStoreRepository;
@@ -23,6 +25,7 @@ import com.tencoding.CUGGI.repository.interfaces.ProductImageRepository;
 import com.tencoding.CUGGI.repository.interfaces.QnaRepository;
 import com.tencoding.CUGGI.repository.interfaces.UserRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
+import com.tencoding.CUGGI.repository.model.Order;
 
 @Service
 public class AdminService {
@@ -99,6 +102,34 @@ public class AdminService {
 		int result = offlineStoreRepository.deleteById(id);
 		return result;
 	}
+	
+	
+	//    주문 내역 
+	public List<OrderListResponseDto> readOrderList() {
+		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
+		return orderList;
+	}
+
+	@Transactional
+	public OrderListResponseDto findOrderListById(int id) {
+		Order orderEntity = orderRepository.findByDetailId(id);	
+		
+		if(orderEntity == null) {
+			throw new CustomRestfulException("등록되지 않은 주문 내역입니다.", HttpStatus.BAD_REQUEST);
+		}
+		OrderListResponseDto orderListResponseDto = OrderListResponseDto.fromEntity(orderEntity);
+		
+		return orderListResponseDto;
+	}
+
+	@Transactional
+	public int updateOrderList(UpdateOrderListRequestDto updateOrderListRequestDto) {
+		Order orderEntity = updateOrderListRequestDto.toEntity();
+		int result = orderRepository.updateById(orderEntity);
+		return result;
+	}
+	
+	
 
 	//offlineStore end
 }

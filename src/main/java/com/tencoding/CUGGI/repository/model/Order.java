@@ -20,4 +20,8 @@ public class Order {
 	Timestamp cancelDate;
 	Timestamp createdAt;
 	
+	String image;
+	String productName;
+	int price;
+	
 }
