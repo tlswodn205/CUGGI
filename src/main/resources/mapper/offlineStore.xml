@@ -26,5 +26,42 @@
 		SELECT * FROM offline_store_tb;
 	</select>
 	
+	<select  id="findPaging" resultType = "com.tencoding.CUGGI.dto.response.PagingResponseDto">
+		SELECT totalCount, totalPage, currentPage,	
+				CASE
+					WHEN currentPage = 1
+					THEN 1
+					ELSE 0 
+				END AS isFirst,
+			   CASE
+					WHEN currentPage = totalPage
+					THEN 1
+					ELSE 0 
+				END AS isLast
+			FROM(
+				SELECT count(*) totalCount, ceil(count(*)/10) totalPage,#{page} currentPage, 0 isFirst, 0 isLast
+				FROM offline_store_tb
+				<if test="type == 'storeAddress' and keyword != null">
+					WHERE store_address like CONCAT('%',#{keyword},'%')
+				</if>
+				<if test="type == 'storeName' and keyword != null" >
+					WHERE store_name like CONCAT('%',#{keyword},'%')
+				</if>
+			) ost;
+	
+	</select>
+	
+	<select id="findByKeywordAndCurrentPage" resultType = "com.tencoding.CUGGI.repository.model.OfflineStore">
+		SELECT * FROM offline_store_tb
+				<if test="type == 'storeAddress' and keyword != null">
+					WHERE store_address like CONCAT('%',#{keyword},'%')
+				</if>
+				<if test="type == 'storeName' and keyword != null" >
+					WHERE store_name like CONCAT('%',#{keyword},'%')
+				</if>
+		ORDER BY id DESC
+		LIMIT #{startNum}, 10;
+	</select>
+	
 	
 </mapper>

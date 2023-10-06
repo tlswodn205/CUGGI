@@ -50,9 +50,13 @@
 	margin-left: 30px;
 }
 
-.admin-wrap .insert-btn{
+.admin-wrap .top-menu{
+	display: flex;
+	justify-content: space-between;
 }
 
+.admin-wrap .insert-btn{
+}
 .admin-wrap .list-table{
 	margin-top: 4px;
 	
@@ -111,6 +115,21 @@
 	margin-top:4px;
 	float: left;
 }
+
+.admin-wrap .pagination{
+	display: flex;
+	justify-content: center;
+}
+.admin-wrap .pagination li{
+	border: 1px solid #000;
+	margin-left:4px;
+	margin-right:4px;
+}
+
+.admin-wrap .pagination a, label{
+	padding: 4px;
+}
+
 </style>
 </head>
 <body>
