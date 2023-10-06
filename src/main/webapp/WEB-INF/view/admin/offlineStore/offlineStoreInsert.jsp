@@ -2,25 +2,25 @@
 
 <%@ include file ="/WEB-INF/view/admin/layout/header.jsp" %>
 
-				<form class="oneTableForm" method="post" action="insertOfflineStore">
+				<form class="one-table-form" method="post" action="insertOfflineStore">
 					<h2>지점 등록 페이지</h2>
-					<table class = "oneTable">
+					<table class = "one-table">
 					    <tbody>
 					        <tr>
 					            <td>지점 이름</td>
-					            <td><input type="text" id="storeName" name="storeName" placeholder="지점 이름을 입력하세요."></td>
+					            <td><input type="text" id="store-name" name="storeName" placeholder="지점 이름을 입력하세요."></td>
 					        </tr>
 					        <tr>
 					            <td>지점 번호</td>
-					            <td><input type="text" id="storeNumber" name="storeNumber" placeholder="지점 번호를 입력하세요."></td>
+					            <td><input type="text" id="store-number" name="storeNumber" placeholder="지점 번호를 입력하세요."></td>
 					        </tr>
 					        <tr>
 					            <td>지점 주소</td>
-					            <td><input type="text" id="storeAddress" name="storeAddress" placeholder="지점 주소를 입력하세요." readonly> <input type="button" onclick="openZipSearch()" value="주소입력" ></td>
+					            <td><input type="text" id="store-address" name="storeAddress" placeholder="지점 주소를 입력하세요." readonly> <input type="button" onclick="openZipSearch()" value="주소입력" ></td>
 					        </tr>
 					        <tr>
 					            <td>지점 상세주소</td>
-					            <td><input type="text" id="storeAddressDetail" name="storeAddressDetail" placeholder="지점 상세주소를 입력하세요."></td>
+					            <td><input type="text" id="store-address-detail" name="storeAddressDetail" placeholder="지점 상세주소를 입력하세요."></td>
 					        </tr>
 					    </tbody>
 					</table>
@@ -42,9 +42,9 @@ function openZipSearch() {
 		}
 
 		//$("#zip_code").val(data.zonecode);
-		$("#storeAddress").val(addr);
-		$("#storeAddressDetail").val("");
-		$("#storeAddressDetail").focus();
+		$("#store-address").val(addr);
+		$("#store-address-detail").val("");
+		$("#store-address-detail").focus();
         }
     }).open();
 }

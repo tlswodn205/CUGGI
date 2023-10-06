@@ -2,28 +2,28 @@
 
 <%@ include file ="/WEB-INF/view/admin/layout/header.jsp" %>
 
-				<form class="oneTableForm" method="put" action="../updateOfflineStore">
+				<form class="one-table-form" method="put" action="../updateOfflineStore">
 					<h2>지점 수정 페이지</h2>
-					<table class = "oneTable">
+					<table class = "one-table">
 					    <tbody>
 					    	<input type="hidden" id="id" name="id"value="${offlineStoreResponseDto.id}"></td>
 					        </tr>
 					    
 					        <tr>
 					            <td>지점 이름</td>
-					            <td><input type="text" id="storeName" name="storeName" placeholder="지점 이름을 입력하세요." value="${offlineStoreResponseDto.storeName}"></td>
+					            <td><input type="text" id="store-name" name="storeName" placeholder="지점 이름을 입력하세요." value="${offlineStoreResponseDto.storeName}"></td>
 					        </tr>
 					        <tr>
 					            <td>지점 번호</td>
-					            <td><input type="text" id="storeNumber" name="storeNumber" placeholder="지점 번호를 입력하세요." value="${offlineStoreResponseDto.storeNumber}"></td>
+					            <td><input type="text" id="store-number" name="storeNumber" placeholder="지점 번호를 입력하세요." value="${offlineStoreResponseDto.storeNumber}"></td>
 					        </tr>
 					        <tr>
 					            <td>지점 주소</td>
-					            <td><input type="text" id="storeAddress" name="storeAddress" placeholder="지점 주소를 입력하세요." value="${offlineStoreResponseDto.storeAddress}" readonly><input type="button" onclick="openZipSearch()" value="주소입력" ></td>
+					            <td><input type="text" id="store-address" name="storeAddress" placeholder="지점 주소를 입력하세요." value="${offlineStoreResponseDto.storeAddress}" readonly><input type="button" onclick="openZipSearch()" value="주소입력" ></td>
 					        </tr>
 					        <tr>
 					            <td>지점 상세주소</td>
-					            <td><input type="text" id="storeAddressDetail" name="storeAddressDetail" placeholder="지점 상세주소를 입력하세요." value="${offlineStoreResponseDto.storeAddressDetail}"></td>
+					            <td><input type="text" id="store-address-detail" name="storeAddressDetail" placeholder="지점 상세주소를 입력하세요." value="${offlineStoreResponseDto.storeAddressDetail}"></td>
 					        </tr>
 					    </tbody>
 					</table>
@@ -34,6 +34,7 @@
 
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>	
 <script>
+//주소 api
 function openZipSearch() {
     new daum.Postcode({
     	oncomplete: function(data) {     
@@ -45,8 +46,8 @@ function openZipSearch() {
 		}
 
 		//$("#zip_code").val(data.zonecode);
-		$("#storeAddress").val(addr);
-		$("#storeAddressDetail").focus();
+		$("#store-address").val(addr);
+		$("#store-address-detail").focus();
         }
     }).open();
 }

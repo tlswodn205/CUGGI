@@ -11,30 +11,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link rel="stylesheet" href="/css/style.css">
 <style>
-html,body{
+
+.admin-wrap{
 	height: 100%;
 }
 
-.wrap{
-	height: 100%;
-}
-
-.topBar{
+.admin-wrap .top-bar{
 	background-color: #ccc;
 	border: 1px solid; 
 	height: 50px;
 }
 
-.logo{
+.admin-wrap .logo{
 	height : 40px;
 }
 
-.container{
+.admin-wrap .container{
 	display: flex;
 	height: 100%;
 }
 
-.sideBar{
+.admin-wrap .side-bar{
 	background-color: #ccc;
 	border-right: 1px solid; 
 	border-left: 1px solid; 
@@ -43,19 +40,19 @@ html,body{
 	height: 100%;
 }
 
-.mainConsole{
+.admin-wrap .main-console{
 	flex-grow:1;
 }
 
-.listTableForm{
+.admin-wrap .list-table-form{
 	margin-top: 50px;
 	margin-left: 30px;
 }
 
-.insertButton{
+.admin-wrap .insert-btn{
 }
 
-.listTable{
+.admin-wrap .list-table{
 	margin-top: 4px;
 	
 	
@@ -65,7 +62,7 @@ html,body{
 	text-align: center;
 }
 
-.listTable th {
+.admin-wrap .list-table th {
     border: 1px solid #444444;
     
 	background-color: #ccc;
@@ -73,59 +70,59 @@ html,body{
     padding: 10px;
 }
   
-.listTable td {
+.admin-wrap .list-table td {
     border: 1px solid #444444;
     padding: 10px;
 }
 
-.oneTableForm{
+.admin-wrap .one-table-form{
 	margin-top: 54px;
 	margin-left: 30px;
 }
 
-.oneTable{
+.admin-wrap .one-table{
 	
 	border: 1px solid; 	
     border-collapse: collapse;
 }
 
-.oneTable td {
+.admin-wrap .one-table td {
     border: 1px solid #444444;
     padding: 10px;
 }
 
 
-.oneTable td:first-child{
+.admin-wrap .one-table td:first-child{
 	text-align: center;
 	background-color: #ccc;
 }
   
-.oneTable td:last-child{
+.admin-wrap .one-table td:last-child{
 	background-color: #fff;
 	width: 500px;
 }
   
-.oneTable input[type=text] {
+.admin-wrap .one-table input[type=text] {
 	width: 300px;
 }
 
-.oneTableForm input[type=submit] {
+.admin-wrap .one-table-form input[type=submit] {
 	margin-top:4px;
 	float: left;
 }
 </style>
 </head>
 <body>
-	<div class="wrap">
-		<div class = "topBar">
+	<div class="admin-wrap">
+		<div class = "top-bar">
 			<a href="#">
 				<img class = "logo" src="/image/logo.png">admin
 			</a>
 		</div>
 		<div class="container">
-			<div class="sideBar">
+			<div class="side-bar">
 				<div>
 					<a href="#">오프라인매장관리</a>
 				</div>
 			</div>
-			<div class= "mainConsole">
+			<div class= "main-console">
