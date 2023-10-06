@@ -9,10 +9,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link rel="stylesheet" href="/css/style.css">
 <style>
 html,body{
 	height: 100%;
+	padding: 0;
+	margin: 0;
 }
 
 .wrap{
@@ -125,7 +126,8 @@ html,body{
 		<div class="container">
 			<div class="sideBar">
 				<div>
-					<a href="#">오프라인매장관리</a>
+					<a href="#">오프라인매장관리</a><br>
+					<a href="/admin/qnaList">문의사항관리</a>
 				</div>
 			</div>
 			<div class= "mainConsole">

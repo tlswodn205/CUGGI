@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
+import com.tencoding.CUGGI.dto.request.QnaFormRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
+import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.interfaces.FirstCategoryRepository;
 import com.tencoding.CUGGI.repository.interfaces.OfflineStoreRepository;
@@ -23,6 +26,7 @@ import com.tencoding.CUGGI.repository.interfaces.ProductImageRepository;
 import com.tencoding.CUGGI.repository.interfaces.QnaRepository;
 import com.tencoding.CUGGI.repository.interfaces.UserRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
+import com.tencoding.CUGGI.repository.model.Qna;
 
 @Service
 public class AdminService {
@@ -101,4 +105,26 @@ public class AdminService {
 	}
 
 	//offlineStore end
+	
+	//qna start
+	
+	@Transactional
+	public List<Qna> qnaList() {
+		List<Qna> qnaList = qnaRepository.findByAll();
+		return qnaList;
+	}
+	
+	@Transactional
+	public QnaAnswerResponseDto qnlDetail(int id) {
+		QnaAnswerResponseDto qnaAnswerResponseDto = qnaRepository.findById(id);
+		return qnaAnswerResponseDto;
+	}
+
+	@Transactional
+	public int insertQnaAnswer(InsertQnaAnswerDto insertQnaAnswerDto) {
+		qnaRepository.updateByQnaid(insertQnaAnswerDto.getQnaId());
+		return qnaRepository.insertAnswer(insertQnaAnswerDto);
+	}
+	
+	//qna end
 }
