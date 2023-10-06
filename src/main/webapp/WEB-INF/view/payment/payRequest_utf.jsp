@@ -39,6 +39,24 @@ String hashString 		= sha256Enc.encrypt(ediDate + merchantID + price + merchantK
 		outline:none;
 	}
 	form {overflow: hidden;}
+	table {
+        
+        border-collapse: collapse;
+        text-align: center;
+      }
+      
+    th, td {
+     	padding: 10px;
+  	}
+  	 	
+  	
+ 	 th {
+  	
+  	}
+  	
+    th:first-child, td:first-child {
+    	border-left: none;
+  	}
 </style>
 <!-- 아래 js는 PC 결제창 전용 js입니다.(모바일 결제창 사용시 필요 없음) -->
 <script src="https://web.nicepay.co.kr/v3/webstd/js/nicepay-3.0.js" type="text/javascript"></script>
@@ -104,8 +122,9 @@ function checkPlatform(ua) {
 }
 </script>
 <main>
-<div style="display: flex; justify-content: center;">
+<div class="main-column" >
 <form name="payForm" method="post" action="payResult_utf.jsp">
+<h2 style="text-align: center">결제 Page</h2>
 	<table class="payment">	
 		<tr>
 			<th><span>결제 상품명</span></th>

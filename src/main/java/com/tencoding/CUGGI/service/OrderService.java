@@ -40,4 +40,11 @@ public class OrderService {
 		System.out.println(detailPerson.toString());
 		return detailPerson;
 	}
+
+
+	public OrderDetailProductResponseDto readOrderDetaiPayment(int orderId) {
+		OrderDetailProductResponseDto detailPayment = orderProductsRepository.findByDetailPayment(orderId);
+		System.out.println(detailPayment.toString());
+		return detailPayment;
+	}
 }

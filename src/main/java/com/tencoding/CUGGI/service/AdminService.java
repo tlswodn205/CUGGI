@@ -12,6 +12,8 @@ import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.QnaFormRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
+import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
@@ -28,6 +30,7 @@ import com.tencoding.CUGGI.repository.interfaces.ProductImageRepository;
 import com.tencoding.CUGGI.repository.interfaces.QnaRepository;
 import com.tencoding.CUGGI.repository.interfaces.UserRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
+import com.tencoding.CUGGI.repository.model.Order;
 import com.tencoding.CUGGI.repository.model.Qna;
 
 @Service
@@ -111,6 +114,34 @@ public class AdminService {
 		int result = offlineStoreRepository.deleteById(id);
 		return result;
 	}
+	
+	
+	//    주문 내역 
+	public List<OrderListResponseDto> readOrderList() {
+		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
+		return orderList;
+	}
+
+	@Transactional
+	public OrderListResponseDto findOrderListById(int id) {
+		Order orderEntity = orderRepository.findByDetailId(id);	
+		
+		if(orderEntity == null) {
+			throw new CustomRestfulException("등록되지 않은 주문 내역입니다.", HttpStatus.BAD_REQUEST);
+		}
+		OrderListResponseDto orderListResponseDto = OrderListResponseDto.fromEntity(orderEntity);
+		
+		return orderListResponseDto;
+	}
+
+	@Transactional
+	public int updateOrderList(UpdateOrderListRequestDto updateOrderListRequestDto) {
+		Order orderEntity = updateOrderListRequestDto.toEntity();
+		int result = orderRepository.updateById(orderEntity);
+		return result;
+	}
+	
+	
 
 	//offlineStore end
 	

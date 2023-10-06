@@ -33,27 +33,41 @@
 
 	<select id="findByDetailList"
 		resultType="com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto">
-		select pi.image, op.price, op.quantity, op.product_name, s.second_category_name
-from    order_products_tb op
-left join product_tb p
-on      op.product_id = p.id
-left join product_image_tb pi
-on        p.id = pi.product_id
-left join second_category_tb s
-on        p.category_id = s.id
-left join first_category_tb f
-on        s.category_id = f.id
-where   op.order_id = #{orderId};
+		select pi.image, op.price, op.quantity, op.product_name,
+		s.second_category_name
+		from order_products_tb op
+		left join product_tb p
+		on op.product_id = p.id
+		left join product_image_tb pi
+		on p.id = pi.product_id
+		left join second_category_tb s
+		on p.category_id = s.id
+		left join first_category_tb f
+		on s.category_id = f.id
+		where op.order_id = #{orderId};
 	</select>
 
 	<select id="findByDetailPerson"
 		resultType="com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto">
 		select p.name, p.address, p.phone_number, p.email
-		from person_tb p
+		from
+		person_tb p
 		left join user_tb u on p.user_id = u.id
-		left join order_tb o on u.id = o.user_id
+		left join order_tb o
+		on u.id = o.user_id
 		where o.id = #{orderId}
 	</select>
+
+	<select id="findByDetailPayment"
+		resultType="com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto">
+		select price
+		from order_products_tb op
+		left join order_tb o
+		on op.order_id = o.id
+		where op.order_id = #{orderId};
+	</select>
+
+
 
 
 </mapper>
