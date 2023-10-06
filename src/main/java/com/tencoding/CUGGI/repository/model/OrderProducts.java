@@ -11,14 +11,11 @@ import lombok.Setter;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
 public class OrderProducts {
 	int id;
 	int quantity;
+	int orderId;
 	int price;
 	int productId;
-	int orderId;
 	String productName;
-	Timestamp createdAt;
 }

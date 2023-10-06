@@ -1,19 +1,19 @@
 li {
-	list-style: none;
+    list-style: none;
 }
 
 a {
-	text-decoration: none;
-	outline: none;
-	cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
 }
 
 html,
 body {
-	height: 100%;
-	width: 100%;
-	padding: 0;
-	margin: 0;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 body {
@@ -142,12 +142,12 @@ main .main-btn {
 }
 
 footer {
-	min-height: 100px;
+    min-height: 100px;
 }
 
 footer div {
-	font-size: 10px;
-	margin: auto 0px auto 50px;
+    font-size: 10px;
+    margin: auto 0px auto 50px;
 }
 
 .rt {
@@ -155,21 +155,21 @@ footer div {
 }
 
 .common-gray-bacground {
-	background-color: #B3B3B3;
+    background-color: #B3B3B3;
 }
 
 .common-gray-font {
-	color: #B3B3B3;
+    color: #B3B3B3;
 }
 
 .common-black-background {
-	background-color: black;
+    background-color: black;
 }
 
 .common-black-font {
-	color: black;
+    color: black;
 }
 
 .common-white-font {
-	color: white;
+    color: white;
 }

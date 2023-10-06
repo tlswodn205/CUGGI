@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 public class Payment {
 	int id;
-	int tid;
+    int  tid;
 	int orderId;
 	Timestamp createdAt;
 }
