@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -67,127 +68,33 @@
         />
       </div>
       <div class="detail-filter">
-        <div>여성 / 핸드백</div>
+        <div>핸드백</div>
         <div>
-          <div>카테고리</div>
-          <div>라인</div>
-          <div>필터</div>
-          <div>정렬기준 : 신상품</div>
+          <div class="detail-filter-current">정렬기준 : <span>신상품</span></div>
+        </div>
+        <div class="detail-filter-option">
+          <ul>
+            <li class="option-list createAt on"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&filter=createAt">신상품</a></li>
+            <li class="option-list priceDESC"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&filter=priceDESC">가격 - 높은 가격순</a></li>
+            <li class="option-list priceASC"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&filter=priceASC">가격 - 낮은 가격순</a></li>
+          </ul>
         </div>
       </div>
       <div class="detail-main">
-        <div class="product-one" id="productId">
-          <div class="slide">
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013604/739682_AABZC_6832_001_058_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679699727/443497_AABZC_6832_003_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679104803/443497_AABZC_6832_006_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013603/443497_AABZC_6832_001_063_0000_Light-GG.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1677610806/443497_AABZC_6832_002_063_0000_Light.jpg" alt="" />
-          </div>
-          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
-          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
-        </div>
-        <div class="product-one">
-          <div class="slide">
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1659600047/446744_DTDIT_1000_001_055_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1659600055/446744_DTDIT_1000_003_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1659600056/446744_DTDIT_1000_004_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1526920205/446744_DTDIT_1000_006_055_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1659600052/446744_DTDIT_1000_002_055_0000_Light.jpg" alt="" />
-          </div>
-          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
-          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
-        </div>
-        <div class="product-one">
-          <div class="slide">
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013604/739682_AABZC_6832_001_058_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679699727/443497_AABZC_6832_003_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679104803/443497_AABZC_6832_006_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013603/443497_AABZC_6832_001_063_0000_Light-GG.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1677610806/443497_AABZC_6832_002_063_0000_Light.jpg" alt="" />
-          </div>
-          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
-          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
-        </div>
-        <div class="product-one">
-          <div class="slide">
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013604/739682_AABZC_6832_001_058_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679699727/443497_AABZC_6832_003_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679104803/443497_AABZC_6832_006_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013603/443497_AABZC_6832_001_063_0000_Light-GG.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1677610806/443497_AABZC_6832_002_063_0000_Light.jpg" alt="" />
-          </div>
-          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
-          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
-        </div>
-        <div class="product-one">
-          <div class="slide">
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013604/739682_AABZC_6832_001_058_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679699727/443497_AABZC_6832_003_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679104803/443497_AABZC_6832_006_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013603/443497_AABZC_6832_001_063_0000_Light-GG.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1677610806/443497_AABZC_6832_002_063_0000_Light.jpg" alt="" />
-          </div>
-          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
-          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
-        </div>
-        <div class="product-one">
-          <div class="slide">
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013604/739682_AABZC_6832_001_058_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679699727/443497_AABZC_6832_003_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679104803/443497_AABZC_6832_006_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013603/443497_AABZC_6832_001_063_0000_Light-GG.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1677610806/443497_AABZC_6832_002_063_0000_Light.jpg" alt="" />
-          </div>
-          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
-          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
-        </div>
-        <div class="product-one">
-          <div class="slide">
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013604/739682_AABZC_6832_001_058_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679699727/443497_AABZC_6832_003_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679104803/443497_AABZC_6832_006_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013603/443497_AABZC_6832_001_063_0000_Light-GG.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1677610806/443497_AABZC_6832_002_063_0000_Light.jpg" alt="" />
-          </div>
-          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
-          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
-        </div>
-        <div class="product-one">
-          <div class="slide">
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013604/739682_AABZC_6832_001_058_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679699727/443497_AABZC_6832_003_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679104803/443497_AABZC_6832_006_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013603/443497_AABZC_6832_001_063_0000_Light-GG.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1677610806/443497_AABZC_6832_002_063_0000_Light.jpg" alt="" />
-          </div>
-          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
-          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
-        </div>
-        <div class="product-one">
-          <div class="slide">
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013604/739682_AABZC_6832_001_058_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679699727/443497_AABZC_6832_003_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679104803/443497_AABZC_6832_006_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013603/443497_AABZC_6832_001_063_0000_Light-GG.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1677610806/443497_AABZC_6832_002_063_0000_Light.jpg" alt="" />
-          </div>
-          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
-          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
-        </div>
-        <div class="product-one">
-          <div class="slide">
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013604/739682_AABZC_6832_001_058_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679699727/443497_AABZC_6832_003_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1679104803/443497_AABZC_6832_006_100_0000_Light.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1682013603/443497_AABZC_6832_001_063_0000_Light-GG.jpg" alt="" />
-            <img src="https://media.gucci.com/style/White_South_0_160_316x316/1677610806/443497_AABZC_6832_002_063_0000_Light.jpg" alt="" />
-          </div>
-          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
-          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
-        </div>
-        <div class="product-all-btn">모두 보기</div>
+        <c:forEach items="${productMap}" var="productList">
+	        <div class="product-one" id="${productList.key}">
+	          <div class="slide">
+	          	<c:forEach items="${productList.value}" var="item">
+	            	<img src="${item.image}" alt="" />
+	            </c:forEach>
+	          </div>
+	          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
+	          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
+	        </div>
+		</c:forEach>
+        
       </div>
+      <div class="product-all-btn">모두 보기</div>
     </main>
 
     <footer class="common-black-background common-white-font">
