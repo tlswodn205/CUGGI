@@ -26,4 +26,12 @@ public class OfflineStoreService {
 		}
 		return offlineStoreResponseDtoList; 
 	}
+	
+
+	public List<String> OfflineStoreLocator(){
+
+		List<String> locator = offlineStoreRepository.findLocator();
+		
+		return locator;
+	}
 }

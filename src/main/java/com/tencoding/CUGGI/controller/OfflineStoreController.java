@@ -26,7 +26,9 @@ public class OfflineStoreController {
 	@GetMapping("")
 	public String offLineStore오프라인(Model model) {
 		List<OfflineStoreListResponseDto> offlineStoreResponseDtoList = offlineStoreService.OfflineStoreList();
+		List<String> locator = offlineStoreService.OfflineStoreLocator();
 		model.addAttribute("offlineStoreList", offlineStoreResponseDtoList);
+		model.addAttribute("locator", locator);
 		return "offlineStore/offlineStoreList";
 	}
 }

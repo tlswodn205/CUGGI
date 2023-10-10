@@ -63,5 +63,9 @@
 		LIMIT #{startNum}, 10;
 	</select>
 	
+	<select id="findLocator" resultType = "String">
+		SELECT substring(store_address, 1, locate(' ', store_address)) as location FROM offline_store_tb GROUP BY location ORDER BY count(*) desc;
+	</select>
+	
 	
 </mapper>
