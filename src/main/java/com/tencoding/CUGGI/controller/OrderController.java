@@ -8,8 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tencoding.CUGGI.dto.request.NicepayRequestDto;
+import com.tencoding.CUGGI.dto.response.NicepayResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.repository.model.Order;
@@ -17,6 +22,7 @@ import com.tencoding.CUGGI.repository.model.OrderProducts;
 import com.tencoding.CUGGI.repository.model.User;
 import com.tencoding.CUGGI.service.OrderService;
 import com.tencoding.CUGGI.service.UserService;
+import com.tencoding.CUGGI.util.DataEncrypt;
 
 
 @Controller
@@ -97,5 +103,16 @@ public class OrderController {
 		
 		return "/payment/orderDetail";
 	}
-
+	@GetMapping("/payment")
+	public String payment() {
+		return "/payment/payRequest_utf2";
+	}
+	
+	
+	@PostMapping("/nicepayInfo")
+	@ResponseBody
+	public NicepayResponseDto nicepayAjax(@RequestBody NicepayRequestDto nicepayRequestDto) {
+		NicepayResponseDto nicepayResponseDto = new NicepayResponseDto(nicepayRequestDto); 
+		return  nicepayResponseDto;
+	}
 }
