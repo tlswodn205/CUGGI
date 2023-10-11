@@ -25,4 +25,12 @@
 	<select id="findByAll" resultType = "com.tencoding.CUGGI.repository.model.ProductImage">
 		SELECT * FROM product_image_tb;
 	</select>
+	
+	<select id="findByProductId" resultType = "com.tencoding.CUGGI.repository.model.ProductImage">
+		select pit.id, pit.image
+		from product_image_tb pit 
+		where pit.product_id = #{productId} and is_thumbnail = 1
+		LIMIT 1;
+	</select>
+	
 </mapper>
