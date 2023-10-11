@@ -18,4 +18,5 @@ public interface OfflineStoreRepository {
 	public PagingResponseDto findPaging(@Param("type")String type, @Param("keyword")String keyword, @Param("page")Integer page);
 	public List<OfflineStore> findByKeywordAndCurrentPage(@Param("type")String type, @Param("keyword")String keyword, @Param("startNum")Integer startNum);
 	public List<String> findLocator();
+	public List<OfflineStore> findByAddress(String location);
 }
