@@ -14,49 +14,7 @@
   </head>
 
   <body>
-    <header>
-      <nav>
-        <div class="logo">
-          <a href="/"><img src="/images/logo/logo.png" alt="" /></a>
-        </div>
-        <ul class="menu">
-          <li>트래블</li>
-          <li>핸드백</li>
-          <li>지갑</li>
-          <li>쥬얼리&시계</li>
-          <div class="submenu">
-            <span class="close">X</span>
-            <div class="subcategory">
-              <ul>
-                <li>더블백</li>
-                <li>캐리어</li>
-                <li>하드쉘</li>
-              </ul>
-              <ul>
-                <li>탑 핸들백</li>
-                <li>토트백</li>
-                <li>숄더백</li>
-                <li>크로스백</li>
-                <li>미니백</li>
-                <li>클러치</li>
-              </ul>
-              <ul>
-                <li>카드 지갑</li>
-                <li>반지갑</li>
-                <li>장지갑</li>
-                <li>체인지갑</li>
-              </ul>
-              <ul>
-                <li>패션 주얼리</li>
-                <li>파인 주얼리</li>
-                <li>실버 주얼리</li>
-                <li>시계</li>
-              </ul>
-            </div>
-          </div>
-        </ul>
-      </nav>
-    </header>
+	<%@ include file="/WEB-INF/view/product/header.jsp" %>
 
     <main id="product-list">
       <div class="detail-category">
@@ -97,14 +55,7 @@
       <div class="product-all-btn">모두 보기</div>
     </main>
 
-    <footer class="common-black-background common-white-font">
-      <div>
-        <p>구찌 코리아 유한책임회사</p>
-        <p>대표자: 실뱅 꼴라델 / 서울시 강남구 영동대로 517, 35층(삼성동, 아셈타워) / 사업자등록번호: 120-81-79834</p>
-        <p>통신판매업 신고번호 제 2015-서울강남-00052 호 (사업자 정보 확인)</p>
-        <p>개인정보보호책임자: 한소희 / 호스팅 서비스: Rackspace Hosting</p>
-      </div>
-    </footer>
+<%@ include file="/WEB-INF/view/product/footer.jsp" %>
   </body>
   <script src="/js/script.js"></script>
   <script src="/js/product/list.js"></script>

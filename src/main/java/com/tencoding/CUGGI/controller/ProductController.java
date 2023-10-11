@@ -40,16 +40,20 @@ public class ProductController {
 	 * @return 제품목록 페이지
 	 */
 	@GetMapping("list")
-	public String productList(Integer secondCategoryId, @RequestParam(defaultValue = "createAt", required = true )String filter, Model model) {
+	public String productList(Integer secondCategoryId, 
+			@RequestParam(defaultValue = "createAt", required = true )String filter, 
+			@RequestParam(required = false) String searchData, 
+			Model model) {
 		// 서비스 호출
 		// 제품 목록 가져오기
 		// 필터 설정시 매개변수 추가
 		secondCategoryId = 1; // 임시 변수
 //		log.info("filter : " + filter);
-		Map<Integer , List<ProductListDto>> productMap = productService.productList(secondCategoryId, filter);
 //		log.info("scCateId : " + secondCategoryId);
+//		log.info("searchData : " + searchData);
 //		log.info("list : " + productMap);
 		
+		Map<Integer , List<ProductListDto>> productMap = productService.productList(secondCategoryId, filter, searchData);
 		model.addAttribute("productMap", productMap);
 		
 		return "product/list";

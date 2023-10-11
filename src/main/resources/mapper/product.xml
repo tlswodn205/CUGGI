@@ -29,14 +29,22 @@
 	
 	<select id="findByAllForCateOrderByDesc" resultType = "com.tencoding.CUGGI.dto.response.ProductListDto">
 		select pt.id productId, pt.second_category_id secondCategoryId,	pt.product_name productName, 
-		pt.price, pt.created_at createdAt, pit.image, sct.second_category_name secondCategoryName
+		pt.price, pt.created_at createdAt, pit.image, sct.second_category_name secondCategoryName  
 		from product_tb pt
 		join product_image_tb pit 
 		on pt.id = pit.product_id 
 		join second_category_tb sct 
-		on pt.second_category_id = sct.id 
-		where second_category_id = #{secondCategoryId} 
-		and pit.is_thumbnail = 1 
+		on pt.second_category_id = sct.id
+		<where>
+			pit.is_thumbnail = 1
+			<if test="secondCategoryId != null">
+				and second_category_id = #{secondCategoryId}
+			</if>
+			<if test="searchData != null">
+				and pt.product_name like concat('%', #{searchData}, '%')
+			</if>
+		</where> 
+		  
 		<choose>
 			<when test="filter == 'priceDESC'">
 				order by(pt.price) DESC

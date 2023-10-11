@@ -25,9 +25,9 @@ public class ProductService {
 	 * @param filter
 	 * @return 상품아이디별로 묶인 map
 	 */
-	public Map<Integer , List<ProductListDto>> productList(Integer secondCategoryId, String filter) {
+	public Map<Integer , List<ProductListDto>> productList(Integer secondCategoryId, String filter, String searchData) {
 		
-		List<ProductListDto> productList = productRepository.findByAllForCateOrderByDesc(secondCategoryId, filter); // sql 결과
+		List<ProductListDto> productList = productRepository.findByAllForCateOrderByDesc(secondCategoryId, filter, searchData); // sql 결과
 		
 		// 맵 변환, 상품아이디 별로 이미지를 묶어야함
 		Map<Integer , List<ProductListDto>> resultMap = new LinkedHashMap<>(); // . LinkedHashMap 맵을 만드는 순서대로 저장해주려면
