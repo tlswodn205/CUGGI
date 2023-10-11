@@ -4,9 +4,14 @@
 <%@ include file ="/WEB-INF/view/layout/header.jsp" %>
 <style>
 	.offline-store{
-		padding: 5px;
+		padding: 20px;
+		width : 760px;
+		border : 1px solid #000;
+		border-radius: 10px;
+		margin-bottom: 20px;
 	}
 	
+/*	
 	.offline-store:nth-child(even) {
 		background : #ccc;
 	}
@@ -14,17 +19,23 @@
 	.offline-store:nth-child(odd) {
 		background : #fff;
 	}
+*/
 		
-	.offline-store-container{
+	.offline-store .offline-store-container{
 		display: flex;
 	    justify-content: space-between;
 	}
-	.store-name{
+	
+	.offline-store .offline-store-container div{
+		margin-bottom: 10px;
+	}
+	
+	.offline-store .store-name{
 		font-size: 20px;
 		font-weight: bold;
 	}
 	
-	.load-map{
+	.offline-store .load-map{
 		background: inherit ; 
 		border:none; 
 		box-shadow:none; 
@@ -36,11 +47,14 @@
 		margin-right : 20px;
 	}
 	
-	
+	.offline-store .load-map:hover {
+    	animation: animateButtonBackgroundEven 0.5s forwards;
+	}
+/*
 	.offline-store:nth-child(even) .load-map:hover {
     	animation: animateButtonBackgroundEven 0.5s forwards;
 	}
- 
+*/
 	@keyframes animateButtonBackgroundEven {
 	    0% {
 	        background-color: #ccc;
@@ -64,7 +78,8 @@
 	        background-color: #ccc;
 	    }
 	}
-	
+
+/*	
 	.offline-store:nth-child(odd) .load-map:hover {
     	animation: animateButtonBackgroundOdd 0.5s forwards;
 	}
@@ -92,42 +107,58 @@
 	        background-color: #fff;
 	    }
 	}
+*/
+.offline-store #map{
+	margin-top: 10px;
+}
+
 </style>
 <main>
-    <div class="main-column">
+    <div class="main-column" id="main-column">
+    	<select id="locator" class="locator" >
+			<option value="">모두보기</option>
+			<c:forEach var="locator" items="${locator}">
+				<option value=${locator}>${locator}</option>
+			</c:forEach>
+    	</select>
 		<c:forEach var="offlineStore" items="${offlineStoreList}">
-			<div id="${offlineStore.id}" class = "offline-store">
+			<div id="offline-store-${offlineStore.id}" class = "offline-store">
 				<input type ="hidden" id="store-name" name="storeName" value="${offlineStore.storeName}">
 				<input type ="hidden" id="store-address" name="storeAddress" value="${offlineStore.storeAddress}">
-			    <div class = "offlineStoreContainer">
-					<div>
-						<span class ="store-name">${offlineStore.storeName}</span>
-						<br>
-						<span class ="store-address">${offlineStore.storeAddress} ${offlineStore.storeAddressDetail}</span>
-						<br>
-						<span class ="store-number">${offlineStore.storeNumber}</span>
+			    <div class = "offline-store-container">
+					<div class = "offline-store-info">
+						<div class ="store-name">${offlineStore.storeName}</div>
+						<div class ="store-address">${offlineStore.storeAddress} ${offlineStore.storeAddressDetail}</div>
+						<div class ="store-number">tel: ${offlineStore.storeNumber}</div> 
 					</div>
-					<input type ="button" class="load-map" onclick="loadMap(${offlineStore.id})" value="지도보기">
+						<input type ="button" class="load-map" onclick="loadMap(${offlineStore.id})" value="지도보기">
 				</div>
 			</div>
 		</c:forEach>
 	</div>
 </main>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=09ac6df625984823e4707926c0c624be&libraries=services"></script>
+
 <script>
 	let mapId = 0;
 	function loadMap(id){
-		let storeName = $("#"+id).children("#storeName").val();
+		let storeName = $("#offline-store-"+id).children("#store-name").val();
 	
-		let storeAddress = $("#"+id).children("#storeAddress").val();
+		let storeAddress = $("#offline-store-"+id).children("#store-address").val();
 		
-		if(mapId > 0){
-			$("#"+mapId).children("#map").remove();
-		}
-		mapId = id;
+		if(mapId != id){
+			if(mapId > 0){
+				$("#offline-store-"+mapId).children("#map").remove();
+			}
+			mapId = id;
 
-		$("#"+id).append('<div id="map" style="width:100%;height:350px;"></div>');
-		createMap(storeName,storeAddress);
+			$("#offline-store-"+id).append('<div id="map" style="width:100%;height:350px;"></div>');
+			createMap(storeName,storeAddress);
+		}else{
+			$("#offline-store-"+mapId).children("#map").remove();
+			mapId = 0;
+		}
 	}
 	
 	function createMap(storeName,storeAddress){
@@ -167,6 +198,42 @@
 		    } 
 		});    
 	}
+	
+	
+	
+	$("#locator").change((val) => {
+		let locator = $("#locator").val();
+
+           $.ajax("/offlineStore/location", {
+               type: "Post",
+               dataType: "json",
+               data: JSON.stringify(locator),
+               headers: {
+                   "Content-Type": "application/json"
+               }
+           }).done((res) => {
+            	   $('#main-column div').remove('.offline-store');
+            	   console.log($('#main-column'));
+            	   res.forEach((offlineStore) => {
+            			   let html = '<div id="offline-store-'+offlineStore.id +'" class = "offline-store">';
+				               html += '<input type ="hidden" id="store-name" name="storeName" value="'+ offlineStore.storeName +'">';
+				               html += '<input type ="hidden" id="store-address" name="storeAddress" value="'+offlineStore.storeAddress+'">';
+				               html += '<div class = "offline-store-container">';
+				               html += '<div class = "offline-store-info">';
+				               html += '<div class ="store-name">'+ offlineStore.storeName +'</div>';
+				               html += '<div class ="store-address">'+offlineStore.storeAddress+' '+offlineStore.storeAddressDetail+'</div>';
+				               html += '<div class ="store-number">tel:'+offlineStore.storeNumber+'</div> ';
+				               html += '</div>';
+				               html += '<input type ="button" class="load-map" onclick="loadMap('+offlineStore.id +')" value="지도보기">';
+				               html += '</div>';
+				               html += '</div>';
+				               
+				               $('#main-column').append(html);
+            	   });
+           });
+       });
+
 </script>
+
 
 <%@ include file ="/WEB-INF/view/layout/footer.jsp" %>
