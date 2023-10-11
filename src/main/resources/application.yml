@@ -11,10 +11,10 @@ spring:
       prefix: /WEB-INF/view/
       suffix: .jsp
   datasource:
-    url: jdbc:mysql://localhost:3306/CUGGI?serverTimeZone=Asia/Seoul
+    url: jdbc:mysql://15.164.49.38:3306/cuggi?serverTimeZone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: asd1234
+    username: awskjh
+    password: 7193asd
     
   mail:
     host: smtp.gmail.com # 1

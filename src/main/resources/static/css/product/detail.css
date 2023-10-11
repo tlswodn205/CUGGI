@@ -155,3 +155,11 @@
     margin-top: 50px;
     font-weight: bold;
   }
+  main#product-detail .product-info > ul {
+  	padding-left: 20px;
+  }
+  main#product-detail .product-info > ul > li {
+  	list-style-type: disc;
+  	font-size: 14px;
+  	line-height: 20px;
+  }
