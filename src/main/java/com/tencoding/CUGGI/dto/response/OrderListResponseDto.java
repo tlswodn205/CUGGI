@@ -17,13 +17,13 @@ public class OrderListResponseDto {
 	String image;
 	String productName;
 	int price;
-	
-	
 	int id;
 	int userId;	
 	Timestamp purchaseDate;
 	Timestamp cancelDate;
 	Timestamp createdAt;
+	String name;
+	String status;
 	
 	public static OrderListResponseDto fromEntity(Order order){
 		System.out.println(order.getPrice());
@@ -35,7 +35,8 @@ public class OrderListResponseDto {
 				order.getUserId(), 
 				order.getPurchaseDate(), 
 				order.getCancelDate(), 
-				order.getCreatedAt()
+				order.getCreatedAt(), "",
+				order.getStatus()
 				);
 	}
 	

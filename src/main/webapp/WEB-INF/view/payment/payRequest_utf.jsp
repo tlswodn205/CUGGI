@@ -15,11 +15,11 @@
 String merchantKey 		= "EYzu8jGGMfqaDEp76gSckuvnaHHu+bC4opsSN6lHv3b2lurNYkVXrZ7Z1AoqQnXI3eLuaUFyoRNC6FkrzVjceg=="; // 상점키
 String merchantID 		= "nicepay00m"; 				// 상점아이디
 String goodsName 		= (String)request.getAttribute("goodsName"); 					// 결제상품명
-String price            = "2000"; 						// 결제상품금액	
-String buyerName 		= (String)request.getAttribute("buyerName"); 						// 구매자명
-String buyerTel 		= (String)request.getAttribute("buyerTel"); 				// 구매자연락처
+String price            = "1000"; 						// 결제상품금액	
+String buyerName 		= (String)request.getAttribute("buyerName"); 			// 구매자명
+String buyerTel 		= (String)request.getAttribute("buyerTel"); 			// 구매자연락처
 String buyerEmail 		= (String)request.getAttribute("buyerEmail"); 			// 구매자메일주소
-String moid 			= (String)request.getAttribute("moid"); 			// 상품주문번호	
+String moid 			= (String)request.getAttribute("moid"); 			   // 상품주문번호	
 String returnURL 		= "http://localhost:8080/nicepay3.0_utf-8/payResult_utf.jsp"; // 결과페이지(절대경로) - 모바일 결제창 전용
 
 /*

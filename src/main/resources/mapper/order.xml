@@ -5,14 +5,20 @@
 	namespace="com.tencoding.CUGGI.repository.interfaces.OrderRepository">
 
 	<insert id="insert">
-		INSERT INTO order_tb(user_id, state, created_at)
-		values(#{userId},#{state},now())
+		INSERT INTO order_tb(user_id, status, created_at)
+		values(#{userId},"결제완료",now())
 	</insert>
 
 	<update id="updateById">
-		UPDATE order_tb SET cancel_date = now()
+		UPDATE order_tb SET cancel_date = now(),
+		status="결제 취소 완료"
 		WHERE id =
 		#{id};
+	</update>
+	
+	<update id="orderDetailUpdate">
+		UPDATE order_tb SET status="취소 요청"
+		WHERE id = #{id};
 	</update>
 
 	<delete id="deleteById">
@@ -26,13 +32,13 @@
 
 	<select id="findByAll"
 		resultType="com.tencoding.CUGGI.repository.model.Order">
-		SELECT * FROM order_tb
+		SELECT * FROM order_tb 
 	</select>
 
 	<select id="findByList"
 		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
 		select o.created_at , ot.product_name ,p.product_feature,
-		ot.product_name, ot. price, pi.image
+		ot.product_name, ot. price, pi.image, o.id
 		from order_tb o
 		left join
 		order_products_tb ot
@@ -46,6 +52,8 @@
 		where o.user_id = #{id}
 		and pi.is_thumbnail = 1
 	</select>
+	
+	
 
 	<select id="findByListAdmin"
 		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
@@ -64,6 +72,54 @@
 		select *
 		from order_tb o
 		left join order_products_tb op
-		on o.id = op.order_id;
+		on o.id = op.order_id
+		where o.id = #{id};
 	</select>
+	
+		<select  id="findPaging" resultType = "com.tencoding.CUGGI.dto.response.PagingResponseDto">
+		SELECT totalCount, totalPage, currentPage,	
+				CASE
+					WHEN currentPage = 1
+					THEN 1
+					ELSE 0 
+				END AS isFirst,
+			   CASE
+					WHEN currentPage = totalPage
+					THEN 1
+					ELSE 0 
+				END AS isLast
+			FROM(
+				SELECT count(*) totalCount, ceil(count(*)/10) totalPage,#{page} currentPage, 0 isFirst, 0 isLast
+				FROM order_tb o 
+				<if test="type == 'id' and keyword != null">
+					WHERE o.id like CONCAT('%',#{keyword},'%')
+				</if>
+				<if test="type == 'name' and keyword != null" >
+					LEFT JOIN person_tb p ON p.user_id = o.user_id 
+					WHERE p.name like CONCAT('%',#{keyword},'%')
+				</if>
+			) order_total;
+	
+	</select>
+	
+	<select id="findByKeywordAndCurrentPage" resultType = "com.tencoding.CUGGI.dto.response.OrderListResponseDto">
+		SELECT o.*, p.name, t.product_name,price 
+		FROM order_products_tb t
+		
+		LEFT JOIN order_tb o 
+		ON t.order_id = o.id
+		
+		LEFT JOIN person_tb p 
+		ON p.user_id = o.user_id   
+				<if test="type == 'id' and keyword != null">
+					WHERE o.id like CONCAT('%',#{keyword},'%')
+				</if>
+				<if test="type == 'name' and keyword != null" >
+					WHERE p.name like CONCAT('%',#{keyword},'%')
+				</if>
+		ORDER BY id DESC
+		LIMIT #{startNum}, 10
+	</select>
+	
+	
 </mapper>

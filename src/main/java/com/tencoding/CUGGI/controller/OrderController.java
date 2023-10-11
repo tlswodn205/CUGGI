@@ -8,8 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
+import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.repository.model.Order;
@@ -30,7 +36,7 @@ public class OrderController {
 	HttpSession session;
 
 	@GetMapping("/orderList")
-	public String orderList주문내역(Model model) {
+	public String orderList주문내역( Model model) {
 
 
 		User user = new User();
@@ -51,19 +57,12 @@ public class OrderController {
 		return "/payment/orderList";
 	}
 
-	@GetMapping("/orderDetail")
-	public String orderDetail주문상세내역(Model model) {
-		
-		
-		
-		
-		
-		Order order = new Order();
-		
-		order.setId(1);
+	@GetMapping("/orderDetail/{id}")
+	public String orderDetail주문상세내역(@PathVariable("id") int id,Model model) {
+							
 		
 		// 상세보기 상품
-		List<OrderDetailProductResponseDto> orderDetailList = orderService.readOrderDetailList(order.getId());
+		List<OrderDetailProductResponseDto> orderDetailList = orderService.readOrderDetailList(id);
 		if(orderDetailList.isEmpty()) {
 			model.addAttribute("orderDetailList", null);
 		} else {
@@ -72,7 +71,7 @@ public class OrderController {
 		}
 		
 //		// 상세보기 주문자
-		OrderDetailProductResponseDto orderDetailPerson = orderService.readOrderDetaiPerson(order.getId());
+		OrderDetailProductResponseDto orderDetailPerson = orderService.readOrderDetaiPerson(id);
 		if(orderDetailPerson==null) {
 			model.addAttribute("orderDetailPerson", null);
 		} else {
@@ -84,7 +83,7 @@ public class OrderController {
 		}
 		
 		// 결제 금액
-		OrderDetailProductResponseDto orderDetailPayment = orderService.readOrderDetaiPayment(order.getId());
+		OrderDetailProductResponseDto orderDetailPayment = orderService.readOrderDetaiPayment(id);
 		if(orderDetailPerson==null) {
 			model.addAttribute("orderDetailPayment", null);
 		} else {
@@ -95,7 +94,40 @@ public class OrderController {
 			
 		}
 		
+
+		Order order = orderService.findById(id);	
+		if(order==null) {
+			model.addAttribute("order", null);
+		} else {
+			model.addAttribute("order",order);
+			System.out.println("오더 아이디 여기서도 못 받아옴?");
+			System.out.println("id:" + order.getId());
+		}
+		
+		
+
 		return "/payment/orderDetail";
 	}
+	
+
+	@PostMapping("orderDetail/{id}")
+	public String updateOrderListProc주문내역수정(@PathVariable("id") int id, UpdateOrderListRequestDto updateOrderListRequestDto) {
+		int result = orderService.orderDetailUpdate(updateOrderListRequestDto);	
+		
+		return "redirect:/order/orderDetail/{id}"; 
+	}
+	
+//	@GetMapping("/basket")
+//	public String basket장바구니(Model model) {
+//		
+//		List<OrderBasketResponseDto> orderBasketResponseDto = orderService.readOrderBasketList();
+//		if(orderBasketResponseDto.isEmpty()) {
+//			model.addAttribute("orderBasketResponseDto", null);
+//		} else {
+//			model.addAttribute("orderBasketResponseDto",orderBasketResponseDto);
+//			System.out.println("List:" + orderBasketResponseDto);
+//		}
+//	}
+	
 
 }

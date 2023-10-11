@@ -42,7 +42,7 @@
 				SELECT count(*) totalCount, ceil(count(*)/10) totalPage,#{page} currentPage, 0 isFirst, 0 isLast
 				FROM offline_store_tb
 				<if test="type == 'storeAddress' and keyword != null">
-					WHERE store_address like CONCAT('%',#{keyword},'%')
+					WHERE store_address like CONCAT('%',#{keyword},'%') 
 				</if>
 				<if test="type == 'storeName' and keyword != null" >
 					WHERE store_name like CONCAT('%',#{keyword},'%')

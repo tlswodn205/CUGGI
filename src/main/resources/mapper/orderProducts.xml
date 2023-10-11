@@ -7,28 +7,33 @@
 	<insert id="insert">
 		INSERT INTO order_products_tb(quantity, price,
 		product_id, product_name, created_at)
-		values(#{quantity},#{price},#{productId},#{productName},now());
+		values(#{quantity},#{price},#{productId},#{productName},now())
 	</insert>
 
 	<update id="updateById">
 		UPDATE order_products_tb SET quantity = #{quantity},
 		price = #{price}, product_id = #{productId}, product_name =
 		#{productName},
+		WHERE id = #{id}
+	</update>
+	
+	<update id="orderDetailUpdate">
+		UPDATE order_tb SET status="취소 요청"
 		WHERE id = #{id};
 	</update>
 
 	<delete id="deleteById">
-		DELETE FROM order_products_tb WHERE id = #{id};
+		DELETE FROM order_products_tb WHERE id = #{id}
 	</delete>
 
 	<select id="findById"
 		resultType="com.tencoding.CUGGI.repository.model.OrderProducts">
-		SELECT * FROM order_products_tb WHERE id = #{id};
+		SELECT * FROM order_products_tb WHERE id = #{id}
 	</select>
 
 	<select id="findByAll"
 		resultType="com.tencoding.CUGGI.repository.model.OrderProducts">
-		SELECT * FROM order_products_tb;
+		SELECT * FROM order_products_tb
 	</select>
 
 	<select id="findByDetailList"
@@ -44,7 +49,7 @@
 		on p.category_id = s.id
 		left join first_category_tb f
 		on s.category_id = f.id
-		where op.order_id = #{orderId};
+		where op.order_id = #{orderId}
 	</select>
 
 	<select id="findByDetailPerson"
@@ -64,7 +69,7 @@
 		from order_products_tb op
 		left join order_tb o
 		on op.order_id = o.id
-		where op.order_id = #{orderId};
+		where op.order_id = #{orderId}
 	</select>
 
 
