@@ -17,5 +17,5 @@ public interface ProductRepository {
 	public Product findById(int productId);
 	public List<Product> findByAll();
 	public List<ProductListDto>findByAllForCateOrderByDesc(@Param("secondCategoryId") Integer secondCategoryId, @Param("filter") String filter);
-	public ProductDto findByIdForCate(String productId);
+	public List<ProductDto> findByIdForCate(int productId);
 }

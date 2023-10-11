@@ -52,11 +52,12 @@
 	</select>
 	
 	<select id="findByIdForCate" resultType = "com.tencoding.CUGGI.dto.response.ProductDto">
-		select * from product_tb pt 
+		select pt.* , pit.image , sct.second_category_name 
+		from product_tb pt 
 		join product_image_tb pit 
 		on pt.id = pit.product_id 
 		join second_category_tb sct 
 		on pt.second_category_id = sct.id
-		where pt.id = 3 and pit.is_thumbnail = 0;
+		where pt.id = #{productId} and pit.is_thumbnail = 0;
 	</select>
 </mapper>

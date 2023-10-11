@@ -12,4 +12,5 @@ public interface ProductImageRepository {
 	public int deleteById(int productImageId);
 	public ProductImage findById(int productImageId);
 	public List<ProductImage> findByAll();
+	public ProductImage findByProductId(int productImageId);
 }

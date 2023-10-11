@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -70,34 +71,18 @@
 <!-- main -->
     <main id="product-detail">
       <div class="variable-width">
+      	<c:forEach var="product" items="${productList}">
         <div class="slider">
-          <img src="https://media.gucci.com/style/DarkGray_Center_0_0_800x800/1685033127/760123_FACLK_1094_003_100_0000_Light-GG.jpg" alt="" />
+          <img src="${product.image}" alt="" />
         </div>
-        <div class="slider">
-          <img src="https://media.gucci.com/style/DarkGray_Center_0_0_800x800/1685033125/760123_FACLK_1094_001_083_0000_Light-GG.jpg" alt="" />
-        </div>
-        <div class="slider">
-          <img src="https://media.gucci.com/style/DarkGray_Center_0_0_800x800/1685033126/760123_FACLK_1094_002_083_0000_Light-GG.jpg" alt="" />
-        </div>
-        <div class="slider">
-          <img src="https://media.gucci.com/style/DarkGray_Center_0_0_800x800/1685033128/760123_FACLK_1094_009_083_0000_Light-GG.jpg" alt="" />
-        </div>
-        <div class="slider">
-          <img src="https://media.gucci.com/style/DarkGray_Center_0_0_800x800/1685033129/760123_FACLK_1094_010_083_0000_Light-GG.jpg" alt="" />
-        </div>
-        <div class="slider">
-          <img src="https://media.gucci.com/style/DarkGray_Center_0_0_800x800/1685033130/760123_FACLK_1094_012_083_0000_Light-GG.jpg" alt="" />
-        </div>
-        <div class="slider">
-          <img src="https://media.gucci.com/style/DarkGray_Center_0_0_800x800/1685033130/760123_FACLK_1094_013_083_0000_Light-GG.jpg" alt="" />
-        </div>
+        </c:forEach>
       </div>
       <div class="detail">
-        <h4>[구찌 사보이] 스몰 더플백</h4>
-        <div>\3,200,000</div>
+        <h4>${productList[0].productName}</h4>
+        <div>\ ${productList[0].price}</div>
         <p>재고보유</p>
         <p>1~3일 이내 발송 가능한 상품입니다.</p>
-        <div class="add-cart">쇼핑백에 담기</div>
+        <div class="add-cart" id="${productList[0].id}">쇼핑백에 담기</div>
       </div>
       <div class="detail-info">
         <div class="info-1">
@@ -158,12 +143,22 @@
         </div>
         <div class="info-2">
           <div class="product-info">
-            <img src="https://media.gucci.com/style/White_Center_0_0_250x170/1685033125/760123_FACLK_1094_001_083_0000_Light-GG.jpg" alt="상품사진" />
+            <img src="${productImage.image}" alt="상품사진" />
             <p>상품정보</p>
             <p>
               광택 있는 표면과 뛰어난 내구성이 특징인 GG 크리스털 캔버스가 남성 패션소품 라인에 어우러져 기존 하우스 디자인에 현대적인 감각을 더함. 상징적인 그린/레드 웹(Web)으로
               한층 돋보이는 메신저백.
             </p>
+            <ul>
+              <li>제조자: 구찌</li>
+              <li>제조국: 이태리</li>
+              <li>수입자: 구찌코리아</li>
+              <li>
+                품질보증기준: A/S 보증기간 2년<br />
+                (상품 이상 시 무상수선, 고객의 부주의로 판단되는 경우 유상수선)
+              </li>
+              <li>AS 유선접수: 클라이언트서비스 02-3452-1921 / clientservice.kr@gucci.com</li>
+            </ul>
           </div>
         </div>
       </div>
