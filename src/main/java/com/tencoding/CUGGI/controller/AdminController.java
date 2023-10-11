@@ -106,17 +106,18 @@ System.out.println(adminPageListDto.getKeyword());
 	
 	// order start
 	@GetMapping("orderListManagement")
-	public String orderListManagent관리자주문내역(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,Model model) {
+	public String orderListManagent관리자주문내역(Model model) {
 
-		AdminPageListDto<OrderListResponseDto> OrderadminPageListDto = adminService.OrderList(type, keyword, page);
-		model.addAttribute("OrderadminPageListDto", OrderadminPageListDto);
-		System.out.println(OrderadminPageListDto.getKeyword());
 		
-		
+
+		List<OrderListResponseDto> orderList = adminService.readOrderList();
+		if(orderList.isEmpty()) {
+			model.addAttribute("orderList", null);
+		} else {
+			model.addAttribute("orderList",orderList);
+		}
 		return "admin/order/orderManagement";
 	}
-	
-	
 	
 	@GetMapping("updateOrderList/{id}")
 	public String updateOrderList주문내역수정(@PathVariable("id") int id, Model model) {

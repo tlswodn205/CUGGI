@@ -72,7 +72,4 @@
 		where op.order_id = #{orderId}
 	</select>
 
-
-
-
 </mapper>

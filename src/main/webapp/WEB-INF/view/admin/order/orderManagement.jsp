@@ -15,7 +15,6 @@
 						<input type="button" id="search-btn" value="검색하기" onclick="search()">
 						</div>	
 					</div>
-										
 					<table class = "list-table">
 					    <thead>
 					        <tr>
@@ -84,4 +83,4 @@ function search(){
 //	}
 }
 </script>
-<%@ include file ="/WEB-INF/view/admin/layout/footer.jsp" %>\
+<%@ include file ="/WEB-INF/view/admin/layout/footer.jsp" %>

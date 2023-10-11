@@ -35,12 +35,9 @@ public class OrderListResponseDto {
 				order.getUserId(), 
 				order.getPurchaseDate(), 
 				order.getCancelDate(), 
-				order.getCreatedAt(), "",
+				order.getCreatedAt(), 
+        "",
 				order.getStatus()
 				);
 	}
-	
-
-
-	
 }

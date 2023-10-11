@@ -55,7 +55,6 @@ public class OrderService {
 		return detailPayment;
 	}
 
-
 	@Transactional
 	public int orderDetailUpdate(UpdateOrderListRequestDto updateOrderListRequestDto) {
 		Order orderEntity = updateOrderListRequestDto.toEntity();
@@ -69,14 +68,10 @@ public class OrderService {
 		return order;
 	}
 
-	
 //	public List<OrderBasketResponseDto> readOrderBasketList() {
 //		List<OrderBasketResponseDto> basketList = orderRepository.findByBasketList();
 //
 //		return basketList;
 //	}
-
-	
-
-
+  
 }

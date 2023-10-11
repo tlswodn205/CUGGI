@@ -52,8 +52,6 @@
 		where o.user_id = #{id}
 		and pi.is_thumbnail = 1
 	</select>
-	
-	
 
 	<select id="findByListAdmin"
 		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
@@ -64,7 +62,6 @@
 		left join order_products_tb op
 		on
 		o.id = op.order_id;
-
 	</select>
 
 	<select id="findByDetailId"
@@ -120,6 +117,5 @@
 		ORDER BY id DESC
 		LIMIT #{startNum}, 10
 	</select>
-	
-	
+  
 </mapper>
