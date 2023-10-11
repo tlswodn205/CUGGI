@@ -58,8 +58,8 @@
 								</td>
 								<td><a >상태</a>
 								</td>
-								<td><a href="/order/orderDetail/" >상세보기</a>
-								</td>
+								<td><a href="/order/orderDetail/${order.id}" >상세보기</a>
+								</td>						
 							</tr>
 						</c:forEach>
 					</tbody>
