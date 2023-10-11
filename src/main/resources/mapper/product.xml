@@ -68,4 +68,15 @@
 		on pt.second_category_id = sct.id
 		where pt.id = #{productId} and pit.is_thumbnail = 0;
 	</select>
+	
+	<select id="findByFirstCategoryId" resultType = "com.tencoding.CUGGI.dto.response.ProductListDto">	
+		SELECT * FROM product_tb pt
+		JOIN product_image_tb pit 
+		ON pt.id = pit.product_id 
+		WHERE pit.is_thumbnail = 1
+		AND pt.second_category_id 
+		IN (
+			SELECT sct.id FROM second_category_tb sct 
+			WHERE sct.category_id = #{firstCategoryId});
+	</select>
 </mapper>

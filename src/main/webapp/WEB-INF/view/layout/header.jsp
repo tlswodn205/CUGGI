@@ -49,7 +49,7 @@
              </ul>
              <ul>
                <li>탑 핸들백</li>
-               <li>토트백</li>
+               <li><a href="/product/list?secondCategoryId=7">토트백</a></li>
                <li>숄더백</li>
                <li>크로스백</li>
                <li>미니백</li>

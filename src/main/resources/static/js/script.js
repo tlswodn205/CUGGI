@@ -2,6 +2,7 @@ $(".submenu").hide();
 
 $(".menu").on('click', ()=>{
     $(".submenu").slideDown("slow")
+    $('.search-area').css('display', 'none');
 });
 
 $(".close").on('click', (e)=>{
@@ -12,7 +13,8 @@ $(".close").on('click', (e)=>{
 /* logo nav바 */
 // 검색 영역 토글 이벤트
 $('.searchBtn').on('click', function () {
-  $('.search-area').toggle();
+  $('.search-area').slideToggle();
+  $(".submenu").slideUp("fast");
 });
 // 회원 이벤트
 $('.profileBtn').on('click', function () {
@@ -35,3 +37,5 @@ $('#searchForm').on('submit', function (e) {
     input.css('border', '1px solid #000');
   }
 });
+
+// TODO 검색어 입력시 ajax 로 유사단어 출력

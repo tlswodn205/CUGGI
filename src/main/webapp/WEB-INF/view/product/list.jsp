@@ -17,24 +17,32 @@
 	<%@ include file="/WEB-INF/view/product/header.jsp" %>
 
     <main id="product-list">
+    <c:if test="${!empty firstCategoryId}">
       <div class="detail-category">
-        <div class="detail-category-title">핸드백</div>
+        <div class="detail-category-title">검색 결과가 없습니다.</div>
         <img
           class="detail-category-img"
           src="https://media.gucci.com/content/HeroRegularStandard_3200x1350/1693406735/HeroRegularStandard_FW-Tier2-Anticipated-Aug23-01_001_Default.jpg"
-          alt=""
+          alt="1차 카테고리 이미지"
         />
       </div>
+	</c:if>      
       <div class="detail-filter">
-        <div>핸드백</div>
+      	<div>${secondCategoryName}</div>
         <div>
-          <div class="detail-filter-current">정렬기준 : <span>신상품</span></div>
+          <div class="detail-filter-current">정렬기준 : <span>
+          <c:choose>
+          	<c:when test="${filter == 'createAt'}">신상품</c:when>
+          	<c:when test="${filter == 'priceDESC'}">가격 - 높은 가격순</c:when>
+          	<c:when test="${filter == 'priceASC'}">가격 - 낮은 가격순</c:when>
+          </c:choose></span></div>
         </div>
         <div class="detail-filter-option">
           <ul>
-            <li class="option-list createAt on"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&filter=createAt">신상품</a></li>
-            <li class="option-list priceDESC"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&filter=priceDESC">가격 - 높은 가격순</a></li>
-            <li class="option-list priceASC"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&filter=priceASC">가격 - 낮은 가격순</a></li>
+          	
+            <li class="option-list ${filter == 'createAt' ? 'on' : ''} createAt"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=createAt">신상품</a></li>
+            <li class="option-list ${filter == 'priceDESC' ? 'on' : ''} priceDESC"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceDESC">가격 - 높은 가격순</a></li>
+            <li class="option-list ${filter == 'priceASC' ? 'on' : ''} priceASC"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceASC">가격 - 낮은 가격순</a></li>
           </ul>
         </div>
       </div>
@@ -50,9 +58,13 @@
 	          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
 	        </div>
 		</c:forEach>
-        
+		<c:if test="${empty productMap}">
+        	<div style="text-align: center; width:100%">검색결과가 없습니다.</div>
+        </c:if>
       </div>
-      <div class="product-all-btn">모두 보기</div>
+      <c:if test="${productCount > 20}">
+      	<div class="product-all-btn">모두 보기</div>
+      </c:if>
     </main>
 
 <%@ include file="/WEB-INF/view/product/footer.jsp" %>

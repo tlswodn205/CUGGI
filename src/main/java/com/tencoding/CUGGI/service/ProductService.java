@@ -39,8 +39,14 @@ public class ProductService {
 	}
 	
 	
+	/**
+	 * 상품 상세
+	 * @param productId
+	 * @return 상품 하나의 정보(이미지 여러개여서 list)
+	 */
 	public List<ProductDto> productDetail(int productId) {
 		List<ProductDto> productDto = productRepository.findByIdForCate(productId); // sql
 		return productDto;
 	}
+	
 }
