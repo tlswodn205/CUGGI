@@ -12,15 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tencoding.CUGGI.dto.response.ProductDto;
-import com.tencoding.CUGGI.dto.response.ProductListDto;
+import com.tencoding.CUGGI.dto.response.ProductResponseDto;
+import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
 import com.tencoding.CUGGI.repository.model.ProductImage;
 import com.tencoding.CUGGI.service.ProductImageService;
 import com.tencoding.CUGGI.service.ProductService;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping("/product")
 public class ProductController {
@@ -48,7 +46,7 @@ public class ProductController {
 		// secondCategoryId = 1; // 임시 변수
 		
 		// 1. 제품 목록 가져오기
-		Map<Integer , List<ProductListDto>> productMap = productService.productList(secondCategoryId, filter, searchData);
+		Map<Integer , List<ProductListResponseDto>> productMap = productService.productList(secondCategoryId, filter, searchData);
 		
 		// 2. 2차 카테고리 이름 가져오기
 		String secondCategoryName = null;
@@ -56,9 +54,9 @@ public class ProductController {
 		if(searchData == null || searchData.trim().isEmpty()) {
 			// 반복문 한번에 탈출하기(맵의 리스트를 추출하여 2차카테고리명을 가져옴)
 			loopOut:
-			for(Map.Entry<Integer, List<ProductListDto>> entry : productMap.entrySet()) {
-				List<ProductListDto> productListDtos =  entry.getValue();
-				for(ProductListDto dto : productListDtos) {
+			for(Map.Entry<Integer, List<ProductListResponseDto>> entry : productMap.entrySet()) {
+				List<ProductListResponseDto> productListDtos =  entry.getValue();
+				for(ProductListResponseDto dto : productListDtos) {
 					secondCategoryName = dto.getSecondCategoryName();
 					break loopOut;
 				}
@@ -69,7 +67,7 @@ public class ProductController {
 		
 		// 목록 개수
 		int productCount = productMap.size();
-
+		
 		model.addAttribute("productMap", productMap);
 		model.addAttribute("secondCategoryName", secondCategoryName);
 		model.addAttribute("searchData", searchData);
@@ -92,10 +90,10 @@ public class ProductController {
 		// 1. 제품정보 가져오기	
 		// 2. 제품 이미지 가져오기
 //		log.info("productId : " + productId);
-		List<ProductDto> productDto = productService.productDetail(productId);
+		List<ProductResponseDto> productDto = productService.productDetail(productId);
 		model.addAttribute("productList", productDto);
 		
-		// 3. 하단 섬네일 가져오기
+		// 3. 하단 썸네일 가져오기
 		ProductImage productImage = productImageService.getFirstThumbnail(productId);
 		model.addAttribute("productImage", productImage);
 		return "product/detail";

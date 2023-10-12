@@ -124,6 +124,7 @@
 	border: 1px solid #000;
 	margin-left:4px;
 	margin-right:4px;
+	list-style: none; /* kjh */
 }
 
 .admin-wrap .pagination a, label{
@@ -136,14 +137,15 @@
 	<div class="admin-wrap">
 		<div class = "top-bar">
 			<a href="#">
-				<img class = "logo" src="/image/logo.png">admin
+				<img class = "logo" src="/images/logo/logo.png">admin
 			</a>
 		</div>
 		<div class="container">
 			<div class="side-bar">
 				<div>
 					<a href="#">오프라인매장관리</a><br>
-					<a href="/admin/qnaList">문의사항관리</a>
+					<a href="/admin/qnaList">문의사항관리</a><br>
+					<a href="/admin/product">상품관리</a>
 				</div>
 			</div>
 			<div class= "main-console">

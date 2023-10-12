@@ -15,9 +15,11 @@ import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
+import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.dto.response.PagingResponseDto;
+import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.interfaces.FirstCategoryRepository;
@@ -27,6 +29,7 @@ import com.tencoding.CUGGI.repository.interfaces.OrderRepository;
 import com.tencoding.CUGGI.repository.interfaces.PaymentRepository;
 import com.tencoding.CUGGI.repository.interfaces.PersonRepository;
 import com.tencoding.CUGGI.repository.interfaces.ProductImageRepository;
+import com.tencoding.CUGGI.repository.interfaces.ProductRepository;
 import com.tencoding.CUGGI.repository.interfaces.QnaRepository;
 import com.tencoding.CUGGI.repository.interfaces.UserRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
@@ -81,7 +84,7 @@ public class AdminService {
 		for(int i = 0; i< offlineStoreList.size(); i++) {
 			offlineStoreListResponseDto.add(OfflineStoreListResponseDto.fromEntity(
 					offlineStoreList.get(i))); 
-		}
+		}System.out.println("keyword : " + kerword);
 		AdminPageListDto<OfflineStoreListResponseDto> adminPageListDto = new AdminPageListDto<OfflineStoreListResponseDto>(PagingResponseDto, kerword, type, null ,offlineStoreListResponseDto);
 		return adminPageListDto; 
 	}
@@ -116,11 +119,11 @@ public class AdminService {
 	}
 	
 	
-//	//    주문 내역 
-//	public List<OrderListResponseDto> readOrderList() {
-//		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
-//		return orderList;
-//	}
+	//    주문 내역 
+	public List<OrderListResponseDto> readOrderList() {
+		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
+		return orderList;
+	}
 	@Transactional
 	public AdminPageListDto<OrderListResponseDto> OrderList(String type,String kerword,Integer page){
 		if(page <= 0) {
@@ -180,4 +183,27 @@ public class AdminService {
 	}
 	
 	//qna end
+	
+	// product start
+	
+	// 나중에 위로 올려주세요@ autowired
+	@Autowired
+	private ProductRepository productRepository; 
+	
+	@Transactional
+	public AdminPageListDto<ProductResponseDto> adminProductList(String type, String kerword, Integer page) {
+		if(page <= 0) page = 1;
+		PagingResponseDto PagingResponseDto = productRepository.findPaging(type, kerword, page);
+		int startNum = (page - 1) * 10;
+		List<ProductResponseDto> productList = productRepository.findByKeywordAndCurrentPage(type, kerword, startNum);
+		AdminPageListDto<ProductResponseDto> productPageList = new AdminPageListDto<ProductResponseDto>(PagingResponseDto, kerword, type, null ,productList);
+		return productPageList;
+	}
+	
+	@Transactional
+	public List<AdminProductResponseDto> findAdminProductResponseDtoByProductId(String productId) {
+		return productRepository.findAdminProductByProductId(productId);
+	}
+	
+	// product end
 }

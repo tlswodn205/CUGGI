@@ -20,7 +20,12 @@ import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
+import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
+import com.tencoding.CUGGI.dto.response.ProductResponseDto;
+import com.tencoding.CUGGI.repository.model.User;
+
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
+import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
@@ -156,4 +161,31 @@ System.out.println(adminPageListDto.getKeyword());
 	}
 	
 	//qna end
+	
+	// product start
+	/**
+	 * 상품관리 페이지 이동
+	 * @return 상품관리페이지 이동
+	 */
+	@GetMapping("/product")
+	public String adminProductList(
+			@RequestParam(required = false) String type, 
+			@RequestParam(required = false) String keyword, 
+			@RequestParam(defaultValue = "1") Integer page, 
+			Model model) 
+	{
+		AdminPageListDto<ProductResponseDto> adminPageListDto = adminService.adminProductList(type, keyword, page);
+		model.addAttribute("adminPageListDto", adminPageListDto);
+		return "/admin/product/productManagement";
+	}
+	
+	@GetMapping("/product/{productId}")
+	public String updateAdminProduct(@PathVariable String productId, Model model) {
+		List<AdminProductResponseDto> adminProductList= adminService.findAdminProductResponseDtoByProductId(productId);
+		System.out.println(adminProductList);
+		model.addAttribute("adminProductList", adminProductList);
+		return "/admin/product/productUpdate";
+	}
+	
+	// product end
 }
