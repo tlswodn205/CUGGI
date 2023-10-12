@@ -13,6 +13,7 @@ import com.tencoding.CUGGI.dto.response.PagingResponseDto;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
 import com.tencoding.CUGGI.repository.model.Order;
 import com.tencoding.CUGGI.repository.model.OrderProducts;
+import com.tencoding.CUGGI.repository.model.Payment;
 
 @Mapper
 public interface OrderRepository {
@@ -24,11 +25,12 @@ public interface OrderRepository {
 	public List<OrderListResponseDto> findByList(int id);
 	public List<OrderListResponseDto> findByListAdmin();
 	public Order findByDetailId(int id);
-	public PagingResponseDto findPaging(@Param("type")String type, @Param("keyword")String keyword, @Param("page")Integer page);
-	public List<OrderListResponseDto> findByKeywordAndCurrentPage(@Param("type")String type, @Param("keyword")String keyword, @Param("startNum")Integer startNum);
+	public PagingResponseDto findPaging(@Param("type")String type, @Param("keyword")String keyword, @Param("page")Integer page,@Param("status")String status);
+	public List<OrderListResponseDto> findByKeywordAndCurrentPage(@Param("type")String type, @Param("keyword")String keyword, @Param("startNum")Integer startNum,@Param("status")String status);
 	public int orderDetailUpdate(Order order);
 	public List<OrderBasketResponseDto> findByBasketList(int id);
 	public int orderUpdate(Order order);
+	public int orderAdminUpdate(Order order);
 	
 
 	

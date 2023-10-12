@@ -23,8 +23,9 @@ public class OrderListResponseDto {
 	Timestamp cancelDate;
 	Timestamp createdAt;
 	String name;
-	String status;
+	String state;
 	
+
 	public static OrderListResponseDto fromEntity(Order order){
 		System.out.println(order.getPrice());
 		return new OrderListResponseDto(

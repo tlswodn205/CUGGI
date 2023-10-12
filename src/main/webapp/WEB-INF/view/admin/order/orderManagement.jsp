@@ -23,7 +23,7 @@
 					            <th>고객 성명(아이디)</th>
 					            <th>상품명</th>					            
 					            <th>금액</th>	
-					            <th>취소여부</th>				            
+					            <th>진행상태</th>				            
 					            <th>상세보기 및 수정</th>
 					        </tr>
 					    </thead>
@@ -35,12 +35,16 @@
 						            <td>${order.name} (${order.userId})</td>
 						            <td>${order.productName}</td>
 						            <td>${order.price} </td>
-						            <td>${order.status}</td>
+						            <td>${order.state}</td>
 						            <td><input type="button" onclick="location.href='./updateOrderList/${order.id}'"  value="상세보기"></td>					            
 						        </tr>
 						    </tbody>
 					    </c:forEach>
 					</table>
+					<a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}">모두</a>
+					 <a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}&status=취소요청">취소요청</a>
+					 <a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}&status=결제취소">결제취소</a>
+					 <a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}&status=결제완료">결제완료</a>
 					<div class="d-flex justify-content-center">
 						<ul class="pagination">
 							<li class='page-item'>
@@ -76,11 +80,11 @@ function search(){
 	let keyword=$("#keyword").val();
 	let status=$("#status").val();
 	
-//	if(status){
-//		location.href="?page=1&type="+type+"&keyword="+keyword+"&status="+status;
-//	}else{
+	if(status){
+		location.href="?page=1&type="+type+"&keyword="+keyword+"&status="+status;
+	}else{
 		location.href="?page=1&type="+type+"&keyword="+keyword;
-//	}
+	}
 }
 </script>
 <%@ include file ="/WEB-INF/view/admin/layout/footer.jsp" %>

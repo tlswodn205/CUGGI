@@ -94,7 +94,9 @@ public class OrderService {
 	}
 
 	public int updateOrder(UpdateOrderListRequestDto updateOrderListRequestDto, int orderId) {
+		
 		Order orderEntity = updateOrderListRequestDto.toEntity2(orderId);
+		System.out.println(orderEntity.getState());
 		int result = orderRepository.orderUpdate(orderEntity);
 		return result;
 		
