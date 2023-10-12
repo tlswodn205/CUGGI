@@ -8,7 +8,8 @@ public class OrderBasketResponseDto {
 	
 	String image;
 	String productName;
+	String secondCategoryName;
 	int quantity;
-	int categoryId;
 	int price;
+	int orderId;
 }

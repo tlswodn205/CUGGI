@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tencoding.CUGGI.dto.request.InsertPaymentRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto;
@@ -14,18 +15,24 @@ import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.interfaces.OrderProductsRepository;
 import com.tencoding.CUGGI.repository.interfaces.OrderRepository;
+import com.tencoding.CUGGI.repository.interfaces.PaymentRepository;
+import com.tencoding.CUGGI.repository.model.OfflineStore;
 import com.tencoding.CUGGI.repository.model.Order;
+import com.tencoding.CUGGI.repository.model.Payment;
 
 
 @Service
 public class OrderService {
-	
+
 	@Autowired
 	OrderRepository orderRepository;
 
 	@Autowired
 	OrderProductsRepository orderProductsRepository;
 	
+	@Autowired
+	PaymentRepository paymentRepository;
+
 	@Transactional
 	public List<OrderListResponseDto> readOrderList(int id) {
 		List<OrderListResponseDto> list = orderRepository.findByList(id);
@@ -37,7 +44,10 @@ public class OrderService {
 	@Transactional
 	public List<OrderDetailProductResponseDto> readOrderDetailList(int orderId) {
 		List<OrderDetailProductResponseDto> detailList = orderProductsRepository.findByDetailList(orderId);
-		System.out.println(detailList.toString());
+		
+		System.out.println(detailList.get(0).toString());
+		System.out.println("서비스 : " +detailList.toString());
+		
 		return detailList;
 	}
 
@@ -68,10 +78,29 @@ public class OrderService {
 		return order;
 	}
 
-//	public List<OrderBasketResponseDto> readOrderBasketList() {
-//		List<OrderBasketResponseDto> basketList = orderRepository.findByBasketList();
-//
-//		return basketList;
-//	}
-  
+	public List<OrderBasketResponseDto> readOrderBasketList(int id) {
+		List<OrderBasketResponseDto> basketList = orderRepository.findByBasketList(id);
+		return basketList;
+	}
+
+	
+
+	@Transactional
+	public int insertPayment(InsertPaymentRequestDto insertPaymentRequestDto,int orderId) {
+		Payment paymentEntity = insertPaymentRequestDto.toEntity(orderId);
+
+		System.out.println(" 서비스 : " + paymentEntity);
+		return paymentRepository.insert(paymentEntity);
+	}
+
+	public int updateOrder(UpdateOrderListRequestDto updateOrderListRequestDto, int orderId) {
+		Order orderEntity = updateOrderListRequestDto.toEntity2(orderId);
+		int result = orderRepository.orderUpdate(orderEntity);
+		return result;
+		
+	}
+
+	
+
+
 }

@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
+import com.tencoding.CUGGI.dto.request.UpdateOrderRequestDto;
 import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tencoding.CUGGI.dto.request.InsertPaymentRequestDto;
 import com.tencoding.CUGGI.dto.request.NicepayRequestDto;
 import com.tencoding.CUGGI.dto.response.NicepayResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto;
@@ -105,25 +107,44 @@ public class OrderController {
 		return "/payment/orderDetail";
 	}
 	
-
-	@PostMapping("orderDetail/{id}")
-	public String updateOrderListProc주문내역수정(@PathVariable("id") int id, UpdateOrderListRequestDto updateOrderListRequestDto) {
-		int result = orderService.orderDetailUpdate(updateOrderListRequestDto);	
+	@PostMapping("/orderDetail/{id}")
+	public String orderDetailUpdate취소완료로수정(@PathVariable("id") int id, UpdateOrderListRequestDto updateOrderListRequestDto) {
 		
-		return "redirect:/order/orderDetail/{id}"; 
+		int result = orderService.orderDetailUpdate(updateOrderListRequestDto);
+		return "redirect:/order/orderDetail/" + id; 		
 	}
 	
-//	@GetMapping("/basket")
-//	public String basket장바구니(Model model) {
-//		
-//		List<OrderBasketResponseDto> orderBasketResponseDto = orderService.readOrderBasketList();
-//		if(orderBasketResponseDto.isEmpty()) {
-//			model.addAttribute("orderBasketResponseDto", null);
-//		} else {
-//			model.addAttribute("orderBasketResponseDto",orderBasketResponseDto);
-//			System.out.println("List:" + orderBasketResponseDto);
-//		}
-//	}
+
+	@PostMapping("insertpayment/{orderId}")
+	public String insertPayment결제결과추가(@PathVariable("orderId") int orderId, InsertPaymentRequestDto insertPaymentRequestDto,UpdateOrderListRequestDto updateOrderRequestDto) {
+		System.out.println("여긴?");
+		
+		orderService.insertPayment(insertPaymentRequestDto,orderId);	
+		orderService.updateOrder(updateOrderRequestDto, orderId);
+		
+		System.out.println( "이거는요?" + orderService.insertPayment(insertPaymentRequestDto,orderId) );
+		
+		return "redirect:/order/orderDetail/"+orderId; 
+	}
+	
+	
+	@GetMapping("/basket")
+	public String basket장바구니(Model model) {
+		
+		User user = new User();
+
+		user.setId(1);
+		
+		List<OrderBasketResponseDto> orderBasketResponseDto = orderService.readOrderBasketList(user.getId());
+		if(orderBasketResponseDto.isEmpty()) {
+			model.addAttribute("orderBasketResponseDto", null);
+		} else {
+			model.addAttribute("orderBasketResponseDto",orderBasketResponseDto);
+			System.out.println("List:" + orderBasketResponseDto);
+		}
+		
+		return "/payment/basket";
+	}
   
 	@GetMapping("/payment")
 	public String payment() {
@@ -131,10 +152,20 @@ public class OrderController {
 	}
 	
 	
+	
 	@PostMapping("/nicepayInfo")
 	@ResponseBody
 	public NicepayResponseDto nicepayAjax(@RequestBody NicepayRequestDto nicepayRequestDto) {
 		NicepayResponseDto nicepayResponseDto = new NicepayResponseDto(nicepayRequestDto); 
+		
 		return  nicepayResponseDto;
 	}
+	
+	@PostMapping("/paymentResult")
+	public String paymentResult결제완료화면() {	
+		 
+		return"/payment/payResult_utf";
+	} 
+	
+	
 }
