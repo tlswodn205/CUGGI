@@ -23,4 +23,5 @@ public class Order {
 	String productName;
 	String state;
 	int price;
+	int orderId;
 }

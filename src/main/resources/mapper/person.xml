@@ -4,13 +4,13 @@
 <mapper namespace="com.tencoding.CUGGI.repository.interfaces.PersonRepository"> 
 
 	<insert id= "insert">
-		INSERT INTO person_tb(name , address, email , phone_number, birthday, user_id, created_at)
-		values(#{name},#{address},#{email},#{phoneNumber},#{birthday},#{userId},now());
+		INSERT INTO person_tb(name , address, address_detail, email , phone_number, birthday, user_id, created_at)
+		values(#{name},#{address},#{addressDetail},#{email},#{phoneNumber},#{birthday},#{userId},now());
 	</insert>
 	
 	<update id="updateById">
 		UPDATE person_tb SET name = #{name},
-		address = #{address}, email = #{email}, phone_number = #{phoneNumber},
+		address = #{address}, address_detail = #{addressDetail}, email = #{email}, phone_number = #{phoneNumber},
 		birthday = #{birthday}, user_id = #{userId}
 		WHERE id = #{id};
 	</update>
@@ -30,4 +30,11 @@
 	<select id="findByUserId" resultType = "com.tencoding.CUGGI.repository.model.Person">
 		SELECT * FROM person_tb WHERE user_id = #{userId};
 	</select>
+	
+	<update id="updateByUserId">
+		UPDATE person_tb SET name = #{name},
+		address = #{address}, address_detail = #{addressDetail}, email = #{email}, phone_number = #{phoneNumber},
+		birthday = #{birthday}
+		WHERE user_id = #{userId};
+	</update>
 </mapper>

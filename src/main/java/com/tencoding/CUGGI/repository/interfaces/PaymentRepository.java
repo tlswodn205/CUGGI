@@ -12,5 +12,6 @@ public interface PaymentRepository {
 	public int deleteById(int paymentId);
 	public Payment findById(int paymentId);
 	public List<Payment> findByAll();
+	public Payment findPayment(int id);
 	
 }
