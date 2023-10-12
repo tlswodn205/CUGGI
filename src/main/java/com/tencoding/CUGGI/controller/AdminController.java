@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.request.InsertPaymentRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
+import com.tencoding.CUGGI.dto.response.PaymentResponseDto;
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
+import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.model.Qna;
@@ -103,11 +106,10 @@ System.out.println(adminPageListDto.getKeyword());
 	
 	// order start
 	@GetMapping("orderListManagement")
-	public String orderListManagent관리자주문내역(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page, Model model) {
+	public String orderListManagent관리자주문내역(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
 		
-		AdminPageListDto<OrderListResponseDto> OrderadminPageListDto = adminService.OrderList(type, keyword, page);
+		AdminPageListDto<OrderListResponseDto> OrderadminPageListDto = adminService.OrderList(type, keyword, page,status);
 		model.addAttribute("OrderadminPageListDto", OrderadminPageListDto);
-		
 
 		
 		return "admin/order/orderManagement";
@@ -117,18 +119,63 @@ System.out.println(adminPageListDto.getKeyword());
 	public String updateOrderList주문내역수정(@PathVariable("id") int id, Model model) {
 		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(id);
 		model.addAttribute("orderListResponseDto", orderListResponseDto);
-		System.out.println(orderListResponseDto);
+		
+		PaymentResponseDto paymentResponseDto = adminService.findPayment(id);
+		model.addAttribute("paymentResponseDto", paymentResponseDto);
+		
+		
+		
+		
+		System.out.println(paymentResponseDto);
 		
 
 		
 		return "admin/order/orderListUpdate";
 	}
 	
-	@PutMapping("updateOrderList/{id}")
-	public String updateOrderListProc주문내역수정(UpdateOrderListRequestDto updateOrderListRequestDto) {
-		int result = adminService.updateOrderList(updateOrderListRequestDto);		
-		return "redirect: orderManagement"; 
+	
+	
+	@PostMapping("updateOrder/{orderId}")
+	public String insertPayment결제결과추가(@PathVariable("orderId") int orderId,UpdateOrderListRequestDto updateOrderRequestDto) {
+		System.out.println("여긴?");
+			
+		adminService.updateOrder(updateOrderRequestDto, orderId);
+		
+		return "redirect:/admin/updateOrderList/"+orderId; 
 	}
+	
+	
+	
+	
+	@PostMapping("/cancelPayment/{orderId}")
+	public String cancelPayment취소(@PathVariable("orderId") int orderId, Model model) {
+		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(orderId);
+		model.addAttribute("orderListResponseDto", orderListResponseDto);
+		
+		PaymentResponseDto paymentResponseDto = adminService.findPayment(orderId);
+		model.addAttribute("paymentResponseDto", paymentResponseDto);
+		
+		
+		return "admin/order/cancelRequest_utf";
+	}
+	
+	
+	@GetMapping("/cancelPaymentResult/{orderId}")
+	public String cancelPaymentResult취소완료(@PathVariable("orderId") int orderId) {
+		
+		return "admin/order/cancelResult_utf";
+	}
+	
+	@PostMapping("/cancelPaymentResult/{orderId}")
+	public String cancelPaymentResult취소완료1(@PathVariable("orderId") int orderId,Model model) {
+		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(orderId);
+		model.addAttribute("orderListResponseDto", orderListResponseDto);
+		
+		
+		return "admin/order/cancelResult_utf";
+	}
+	
+	
 	
 	
 	// order end

@@ -122,7 +122,7 @@ public class OrderController {
 		orderService.insertPayment(insertPaymentRequestDto,orderId);	
 		orderService.updateOrder(updateOrderRequestDto, orderId);
 		
-		System.out.println( "이거는요?" + orderService.insertPayment(insertPaymentRequestDto,orderId) );
+
 		
 		return "redirect:/order/orderDetail/"+orderId; 
 	}

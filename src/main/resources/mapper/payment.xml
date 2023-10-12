@@ -25,4 +25,11 @@
 		resultType="com.tencoding.CUGGI.repository.model.Payment">
 		SELECT * FROM payment_tb;
 	</select>
+	
+	<select id="findPayment"
+		resultType="com.tencoding.CUGGI.repository.model.Payment">
+		select *
+		from  payment_tb
+		where order_id = #{id};
+	</select>
 </mapper>
