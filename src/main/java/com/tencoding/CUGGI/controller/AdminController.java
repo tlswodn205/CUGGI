@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,6 +23,7 @@ import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.repository.model.User;
+
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
@@ -109,16 +108,13 @@ System.out.println(adminPageListDto.getKeyword());
 	
 	// order start
 	@GetMapping("orderListManagement")
-	public String orderListManagent관리자주문내역(Model model) {
-
+	public String orderListManagent관리자주문내역(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page, Model model) {
+		
+		AdminPageListDto<OrderListResponseDto> OrderadminPageListDto = adminService.OrderList(type, keyword, page);
+		model.addAttribute("OrderadminPageListDto", OrderadminPageListDto);
 		
 
-		List<OrderListResponseDto> orderList = adminService.readOrderList();
-		if(orderList.isEmpty()) {
-			model.addAttribute("orderList", null);
-		} else {
-			model.addAttribute("orderList",orderList);
-		}
+		
 		return "admin/order/orderManagement";
 	}
 	

@@ -21,6 +21,7 @@ public class Order {
 	Timestamp createdAt;
 	String image;
 	String productName;
-	String status;
+	String state;
 	int price;
+	int orderId;
 }

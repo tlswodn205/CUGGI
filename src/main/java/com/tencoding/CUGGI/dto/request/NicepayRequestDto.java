@@ -8,4 +8,6 @@ public class NicepayRequestDto {
 	final String merchantID = "nicepay00m"; 				// 상점아이디
 	String goodsName; 					// 결제상품명
 	String price;
+	int orderId;
+	
 }

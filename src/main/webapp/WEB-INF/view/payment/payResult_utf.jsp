@@ -154,11 +154,26 @@ if(authResultCode.equals("0000") /*&& authSignature.equals(authComparisonSignatu
 %>
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+
+$(document).ready(function() {
+
+	console.log("작동됨");
+	$("#frm").submit();
+	
+	
+});
+
+</script>
+	
 <title>NICEPAY PAY RESULT(UTF-8)</title>
 <m eta charset="utf-8">
+
 </head>
 <body>
+<form id="frm" name="frm" method="post" action = "/order/insertpayment/<%=moid%>"> 
 	<table>
 		<%if("9999".equals(resultJsonStr)){%>
 		<tr>
@@ -167,25 +182,14 @@ if(authResultCode.equals("0000") /*&& authSignature.equals(authComparisonSignatu
 		</tr>
 		<%}else{%>
 		<tr>
-			<th>결과 내용</th>
-			<td>[<%=ResultCode%>]<%=ResultMsg%></td>
-		</tr>
-		<tr>
-			<th>결제수단</th>
-			<td><%=PayMethod%></td>
-		</tr>
-		<tr>
-			<th>상품명</th>
-			<td><%=GoodsName%></td>
-		</tr>
-		<tr>
 			<th>결제 금액</th>
-			<td><%=Amt%></td>
+			<td><input type="text" name="price" value="<%=Amt%>"></td>
 		</tr>
 		<tr>
 			<th>거래 번호</th>
-			<td><%=TID%></td>
+			<td><input type="text" name="tid" value="<%=TID%>"></td>
 		</tr>
+		
 		<!--<%/*if(Signature.equals(paySignature)){%>
 		<tr>
 			<th>Signature</th>
@@ -200,9 +204,11 @@ if(authResultCode.equals("0000") /*&& authSignature.equals(authComparisonSignatu
 			<th>생성 Signature</th>
 			<td><%=paySignature%></td>
 		</tr> -->
-		<%}*/}%>
+		<%}*/}%>		
 	</table>
-	<p>*테스트 아이디인경우 당일 오후 11시 30분에 취소됩니다.</p>
+    <input type="submit"/>
+	</form>
+	
 </body>
 </html>
 <%!
