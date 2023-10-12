@@ -23,9 +23,4 @@ public class Order {
 	String productName;
 	String status;
 	int price;
-	
-	String image;
-	String productName;
-	int price;
-	
 }
