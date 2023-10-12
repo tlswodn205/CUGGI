@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 import lombok.Data;
 
 @Data
-public class ProductDto {
+public class ProductResponseDto {
 
 	private Integer id;
 	private Integer secondCategoryId;
