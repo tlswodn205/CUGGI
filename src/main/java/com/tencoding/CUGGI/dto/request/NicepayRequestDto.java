@@ -9,5 +9,4 @@ public class NicepayRequestDto {
 	String goodsName; 					// 결제상품명
 	String price;
 	int orderId;
-	
 }
