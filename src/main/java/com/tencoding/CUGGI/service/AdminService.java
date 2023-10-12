@@ -117,9 +117,23 @@ public class AdminService {
 	
 	
 	//    주문 내역 
-	public List<OrderListResponseDto> readOrderList() {
-		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
-		return orderList;
+//	public List<OrderListResponseDto> readOrderList() {
+//		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
+//		return orderList;
+//	}
+	@Transactional
+	public AdminPageListDto<OrderListResponseDto> OrderList(String type,String kerword,Integer page){
+		if(page <= 0) {
+			page = 1;
+		}
+		PagingResponseDto PagingResponseDto = orderRepository.findPaging(type, kerword, page);
+		int startNum = (page-1)*10;
+		List<OrderListResponseDto> orderListResponseDto = orderRepository.findByKeywordAndCurrentPage(type, kerword, startNum);
+		
+		
+		
+		AdminPageListDto<OrderListResponseDto> adminPageListDto = new AdminPageListDto<OrderListResponseDto>(PagingResponseDto, kerword, type, null ,orderListResponseDto);
+		return adminPageListDto; 
 	}
 
 	@Transactional

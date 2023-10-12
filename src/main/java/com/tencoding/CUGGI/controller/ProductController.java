@@ -40,17 +40,42 @@ public class ProductController {
 	 * @return 제품목록 페이지
 	 */
 	@GetMapping("list")
-	public String productList(Integer secondCategoryId, @RequestParam(defaultValue = "createAt", required = true )String filter, Model model) {
+	public String productList(Integer secondCategoryId, 
+			@RequestParam(defaultValue = "createAt", required = true )String filter, 
+			@RequestParam(required = false) String searchData, 
+			Model model) {
 		// 서비스 호출
-		// 제품 목록 가져오기
-		// 필터 설정시 매개변수 추가
-		secondCategoryId = 1; // 임시 변수
-//		log.info("filter : " + filter);
-		Map<Integer , List<ProductListDto>> productMap = productService.productList(secondCategoryId, filter);
-//		log.info("scCateId : " + secondCategoryId);
-//		log.info("list : " + productMap);
+		// secondCategoryId = 1; // 임시 변수
 		
+		// 1. 제품 목록 가져오기
+		Map<Integer , List<ProductListDto>> productMap = productService.productList(secondCategoryId, filter, searchData);
+		
+		// 2. 2차 카테고리 이름 가져오기
+		String secondCategoryName = null;
+		// 검색어가 없다면
+		if(searchData == null || searchData.trim().isEmpty()) {
+			// 반복문 한번에 탈출하기(맵의 리스트를 추출하여 2차카테고리명을 가져옴)
+			loopOut:
+			for(Map.Entry<Integer, List<ProductListDto>> entry : productMap.entrySet()) {
+				List<ProductListDto> productListDtos =  entry.getValue();
+				for(ProductListDto dto : productListDtos) {
+					secondCategoryName = dto.getSecondCategoryName();
+					break loopOut;
+				}
+			}
+		}else {
+			secondCategoryName = "검색결과 : " + searchData;
+		}
+		
+		// 목록 개수
+		int productCount = productMap.size();
+
 		model.addAttribute("productMap", productMap);
+		model.addAttribute("secondCategoryName", secondCategoryName);
+		model.addAttribute("searchData", searchData);
+		model.addAttribute("secondCategoryId", secondCategoryId);
+		model.addAttribute("filter", filter);
+		model.addAttribute("productCount", productCount);
 		
 		return "product/list";
 	}
@@ -75,4 +100,6 @@ public class ProductController {
 		model.addAttribute("productImage", productImage);
 		return "product/detail";
 	}
+	
+	// TODO 모두보기 ajax처리
 }

@@ -115,18 +115,9 @@ System.out.println(adminPageListDto.getKeyword());
 			model.addAttribute("orderList", null);
 		} else {
 			model.addAttribute("orderList",orderList);
-			System.out.println("여기");
 		}
-		System.out.println(orderList);
-		System.out.println("컨트롤러");
-		
-		
-
 		return "admin/order/orderManagement";
 	}
-	
-	
-	
 	
 	@GetMapping("updateOrderList/{id}")
 	public String updateOrderList주문내역수정(@PathVariable("id") int id, Model model) {
