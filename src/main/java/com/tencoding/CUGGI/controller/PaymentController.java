@@ -26,23 +26,6 @@ public class PaymentController {
 	@Autowired
 	HttpSession session;
 	
-	@GetMapping("/payRequest")
-	public String payREquest(PaymentDto paymentDto, Model model) {
-		
-        model.addAttribute("paymentDto", paymentDto);
-        
-                
-    	
-		return "payment/payRequest_utf";
-	}
-	
-	@PostMapping("/payResult")
-	public String payResult(PaymentDto paymentDto) {
-		
-		paymentService.insertPayment(paymentDto);
-		
-		return "account/payResult_utf";
-	}
 	
 	
 }

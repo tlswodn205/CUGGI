@@ -157,6 +157,7 @@ li{
 	border: 1px solid #000;
 	margin-left:4px;
 	margin-right:4px;
+	list-style: none; /* kjh */
 }
 
 .admin-wrap .pagination a{
@@ -190,6 +191,9 @@ li{
 						</li>
 						<li>
 							<a href="/admin/qnaList">문의사항관리</a>
+						</li>
+						<li>
+					    <a href="/admin/product">상품관리</a>
 						</li>
 					</ul>
 				</div>

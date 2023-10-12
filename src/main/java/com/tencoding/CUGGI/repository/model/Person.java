@@ -1,5 +1,6 @@
 package com.tencoding.CUGGI.repository.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
@@ -17,9 +18,10 @@ public class Person {
 	int id;
 	String name;
 	String address;
+	String addressDetail;
 	String email;
 	String phoneNumber;
-	Timestamp birthday;
+	Date birthday;
 	int userId;
 	Timestamp createdAt;
 }

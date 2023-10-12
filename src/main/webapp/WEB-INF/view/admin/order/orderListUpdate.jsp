@@ -28,7 +28,7 @@
 					        </tr>
 					        <tr>
 					            <td>취소여부</td>
-					            <td><input type="text" id="cancel-Date" name="cancelDate"  value="${orderListResponseDto.cancelDate}" readonly></td>
+					            <td><input type="text" id="cancel-Date" name="cancelDate"  value="${orderListResponseDto.status}" readonly></td>
 					        </tr>
 					    </tbody>
 					</table>
