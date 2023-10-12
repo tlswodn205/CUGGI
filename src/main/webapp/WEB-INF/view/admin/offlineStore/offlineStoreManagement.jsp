@@ -45,29 +45,28 @@
 					</table>
 					<div class="d-flex justify-content-center">
 						<ul class="pagination">
-							<li class='page-item'>
-								<c:choose>
-									<c:when test="${adminPageListDto.first}">
-										<label>Prev</label>
-									</c:when>
-									<c:otherwise>	
-										<a class="page-link" href="?page=${adminPageListDto.currentPage-1}${empty adminPageListDto.keyword ? "": "&keyword="+= adminPageListDto.keyword}${empty adminPageListDto.type ? "": "&type="+= adminPageListDto.type}${empty adminPageListDto.status ? "": "&status="+= adminPageListDto.status}">Prev</a>
-									</c:otherwise> 
-								</c:choose> 
-							</li>
+							<c:if test="${!adminPageListDto.first}">
+								<li class='page-item'>
+									<a class="page-link" href="?page=${adminPageListDto.currentPage-1}${empty adminPageListDto.keyword ? "": "&keyword="+= adminPageListDto.keyword}${empty adminPageListDto.type ? "": "&type="+= adminPageListDto.type}${empty adminPageListDto.status ? "": "&status="+= adminPageListDto.status}">Prev</a>
+								</li>
+							</c:if> 
+
 							<c:forEach var ="num" begin = "${adminPageListDto.startPageNum}" end="${adminPageListDto.lastPageNum}">
-								<li class='page-item'><a class='page-link' href="?page=${num}${empty adminPageListDto.keyword ? "": "&keyword="+= adminPageListDto.keyword}${empty adminPageListDto.type ? "": "&type="+= adminPageListDto.type}${empty adminPageListDto.status ? "": "&status="+= adminPageListDto.status}">${num}</a></li>
+									<c:choose>
+										<c:when test="${num==adminPageListDto.currentPage}">
+											<li class='page-item'><label>${num}</label></li>
+										</c:when>
+										<c:otherwise>	
+											<li class='page-item'><a class='page-link' href="?page=${num}${empty adminPageListDto.keyword ? "": "&keyword="+= adminPageListDto.keyword}${empty adminPageListDto.type ? "": "&type="+= adminPageListDto.type}${empty adminPageListDto.status ? "": "&status="+= adminPageListDto.status}">${num}</a></li>
+										</c:otherwise> 
+									</c:choose>
 							</c:forEach>
-							<li class='page-item'>
-								<c:choose>
-									<c:when test="${adminPageListDto.last}">
-										<label>Next</label>
-									</c:when>
-									<c:otherwise>	
-										<a class="page-link" href="?page=${adminPageListDto.currentPage+1}${empty adminPageListDto.keyword ? "": "&keyword="+= adminPageListDto.keyword}${empty adminPageListDto.type ? "": "&type="+= adminPageListDto.type}${empty adminPageListDto.status ? "": "&status="+= adminPageListDto.status}">Next</a>
-									</c:otherwise> 
-								</c:choose>
-							</li>
+							<c:if test="${!adminPageListDto.last}">	
+								<li class='page-item'>
+									<a class="page-link" href="?page=${adminPageListDto.currentPage+1}${empty adminPageListDto.keyword ? "": "&keyword="+= adminPageListDto.keyword}${empty adminPageListDto.type ? "": "&type="+= adminPageListDto.type}${empty adminPageListDto.status ? "": "&status="+= adminPageListDto.status}">Next</a>
+						
+								</li>
+							</c:if>
 						</ul>
 					</div>
 				</div>			

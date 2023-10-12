@@ -2,6 +2,7 @@ package com.tencoding.CUGGI.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,9 @@ public class AdminController {
 
 	@Autowired
 	HttpSession session;
-	
+
+	@Autowired 
+	ServletContext servletContext;
 	
 	//offlinestore start
 	
@@ -48,7 +51,6 @@ public class AdminController {
 	public String offlineStoreManagement(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page, Model model) {
 		AdminPageListDto<OfflineStoreListResponseDto> adminPageListDto = adminService.OfflineStoreList(type, keyword, page);
 		model.addAttribute("adminPageListDto", adminPageListDto);
-System.out.println(adminPageListDto.getKeyword());
 		return "admin/offlineStore/offlineStoreManagement"; 
 	}	
 	
