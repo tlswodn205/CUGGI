@@ -10,6 +10,22 @@
 <title>Insert title here</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
+a{
+	color: #000; 
+	text-decoration: none; 
+	outline: none
+}
+
+ul{
+   list-style:none;
+   padding:0px;
+   margin : 0px;
+}
+
+li{
+   list-style:none;
+   padding-left:0px;
+}
 
 .admin-wrap{
 	height: 100%;
@@ -39,6 +55,19 @@
 	border-bottom: 1px solid; 
 	width:200px;
 	height: 100%;
+}
+
+.admin-wrap .side-bar ul{
+	margin-left: 5px;
+	margin-top :
+}
+
+.admin-wrap .side-bar li{
+   list-style:inside;
+}
+   
+.admin-wrap .side-bar a:hover{
+	color: #fff;
 }
 
 .admin-wrap .main-console{
@@ -119,31 +148,54 @@
 .admin-wrap .pagination{
 	display: flex;
 	justify-content: center;
+	margin-top:4px;
 }
+
+
+
 .admin-wrap .pagination li{
 	border: 1px solid #000;
 	margin-left:4px;
 	margin-right:4px;
+	list-style: none; /* kjh */
 }
 
-.admin-wrap .pagination a, label{
+.admin-wrap .pagination a{
+	color: #00f;
 	padding: 4px;
 }
 
+.admin-wrap .pagination label{
+	color: #000;
+	padding: 4px;
+}
+
+
 </style>
+
+
 </head>
 <body>
 	<div class="admin-wrap">
 		<div class = "top-bar">
-			<a href="#">
-				<img class = "logo" src="/image/logo.png">admin
+			<a href="/">
+				<img class = "logo" src="/images/logo/logo.png">admin
 			</a>
 		</div>
 		<div class="container">
 			<div class="side-bar">
 				<div>
-					<a href="#">오프라인매장관리</a><br>
-					<a href="/admin/qnaList">문의사항관리</a>
+					<ul>
+						<li>
+							<a href="/admin/offlineStoreManagement">오프라인매장관리</a>
+						</li>
+						<li>
+							<a href="/admin/qnaList">문의사항관리</a>
+						</li>
+						<li>
+					    <a href="/admin/product">상품관리</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<div class= "main-console">

@@ -37,7 +37,7 @@ public class AdminPageListDto<T>{
 		
 		int blockCount = 10;
 
-		int currentBlock = this.currentPage / blockCount;
+		int currentBlock = (this.currentPage-1) / blockCount;
 		this.startPageNum = 1 + blockCount * currentBlock;
 		this.lastPageNum = 10 + blockCount * currentBlock;
 

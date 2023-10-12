@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,11 +57,7 @@ public class OrderController {
 			model.addAttribute("orderList", null);
 		} else {
 			model.addAttribute("orderList",orderList);
-			System.out.println("여기");
 		}
-		System.out.println(orderList);
-		System.out.println("컨트롤러");
-		System.out.println(user.getId());
 
 		return "/payment/orderList";
 	}
@@ -75,7 +72,6 @@ public class OrderController {
 			model.addAttribute("orderDetailList", null);
 		} else {
 			model.addAttribute("orderDetailList",orderDetailList);
-			System.out.println("List:" + orderDetailList);
 		}
 		
 //		// 상세보기 주문자
@@ -84,10 +80,6 @@ public class OrderController {
 			model.addAttribute("orderDetailPerson", null);
 		} else {
 			model.addAttribute("orderDetailPerson",orderDetailPerson);
-			
-			System.out.println("여가 마지막으로타나");
-			System.out.println("Person:" + orderDetailPerson);
-			
 		}
 		
 		// 결제 금액
@@ -117,13 +109,8 @@ public class OrderController {
 
 	@PostMapping("insertpayment/{orderId}")
 	public String insertPayment결제결과추가(@PathVariable("orderId") int orderId, InsertPaymentRequestDto insertPaymentRequestDto,UpdateOrderListRequestDto updateOrderRequestDto) {
-		System.out.println("여긴?");
-		
 		orderService.insertPayment(insertPaymentRequestDto,orderId);	
 		orderService.updateOrder(updateOrderRequestDto, orderId);
-		
-
-		
 		return "redirect:/order/orderDetail/"+orderId; 
 	}
 	
@@ -140,7 +127,6 @@ public class OrderController {
 			model.addAttribute("orderBasketResponseDto", null);
 		} else {
 			model.addAttribute("orderBasketResponseDto",orderBasketResponseDto);
-			System.out.println("List:" + orderBasketResponseDto);
 		}
 		
 		return "/payment/basket";
@@ -151,13 +137,10 @@ public class OrderController {
 		return "/payment/payRequest_utf2";
 	}
 	
-	
-	
 	@PostMapping("/nicepayInfo")
 	@ResponseBody
 	public NicepayResponseDto nicepayAjax(@RequestBody NicepayRequestDto nicepayRequestDto) {
 		NicepayResponseDto nicepayResponseDto = new NicepayResponseDto(nicepayRequestDto); 
-		
 		return  nicepayResponseDto;
 	}
 	
@@ -166,6 +149,5 @@ public class OrderController {
 		 
 		return"/payment/payResult_utf";
 	} 
-	
 	
 }

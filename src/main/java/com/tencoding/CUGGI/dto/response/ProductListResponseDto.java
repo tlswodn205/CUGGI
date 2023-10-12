@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class ProductListDto {
+public class ProductListResponseDto {
 	private Integer productId;
 	private Integer secondCategoryId;
 	private String productName;

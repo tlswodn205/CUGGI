@@ -24,7 +24,4 @@ public class Order {
 	String state;
 	int price;
 	int orderId;
-	
-
-	
 }
