@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
+import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.dto.response.PagingResponseDto;
 
@@ -26,6 +27,8 @@ public interface OrderRepository {
 	public PagingResponseDto findPaging(@Param("type")String type, @Param("keyword")String keyword, @Param("page")Integer page);
 	public List<OrderListResponseDto> findByKeywordAndCurrentPage(@Param("type")String type, @Param("keyword")String keyword, @Param("startNum")Integer startNum);
 	public int orderDetailUpdate(Order order);
+	public List<OrderBasketResponseDto> findByBasketList(int id);
+	public int orderUpdate(Order order);
 	
 
 	

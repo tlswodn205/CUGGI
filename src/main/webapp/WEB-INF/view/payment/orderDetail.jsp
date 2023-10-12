@@ -88,15 +88,17 @@
 				<table class="order">
 					<tr>
 						<td><span>결제금액</span></td>
-						<td><input type="text" name="price" readonly value="${orderDetailPayment.price} "></td>
+						<td><input type="text" name="price" readonly value="${orderDetailPayment.price}"></td>
 					</tr>
+					
 					<tr>
 						<td><span>결제방법</span></td>
 						<td><input type="text" name="" readonly value="nicepay"></td>
 						<td>
 					</tr>
 					<tr>
-					<td><input type="hidden" id="status" name="status"value="${order.status}"></td>
+					<td><span>진행상태</span>
+					<td><input type="text" id="status" name="status" readonly value="${order.state}"></td>
 					</tr>
 
 				</table>

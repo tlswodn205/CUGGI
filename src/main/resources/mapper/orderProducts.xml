@@ -16,7 +16,11 @@
 		#{productName},
 		WHERE id = #{id}
 	</update>
-	
+	<update id="">
+	UPDATE order_products_tb SET price ={price}
+    WHERE order_id =#{orderId}	
+	</update>
+
 	<update id="orderDetailUpdate">
 		UPDATE order_tb SET status="취소 요청"
 		WHERE id = #{id};
@@ -38,18 +42,20 @@
 
 	<select id="findByDetailList"
 		resultType="com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto">
-		select pi.image, op.price, op.quantity, op.product_name,
-		s.second_category_name
+		select op.order_id,pi.image, op.price, op.quantity, op.product_name,
+		s.second_category_name, o.state
 		from order_products_tb op
 		left join product_tb p
 		on op.product_id = p.id
 		left join product_image_tb pi
 		on p.id = pi.product_id
 		left join second_category_tb s
-		on p.category_id = s.id
+		on p.second_category_id = s.id
 		left join first_category_tb f
 		on s.category_id = f.id
-		where op.order_id = #{orderId}
+		left join order_tb o
+        on      o.id = op.order_id
+		where op.order_id = #{orderId};
 	</select>
 
 	<select id="findByDetailPerson"
