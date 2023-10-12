@@ -16,6 +16,6 @@ public class OrderDetailProductResponseDto {
 	String phoneNumber;
 	String email;
 	String secondCategoryName;
-	String status;
+	String state;
 
 }
