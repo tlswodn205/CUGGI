@@ -80,6 +80,7 @@ public class OrderService {
 
 	public List<OrderBasketResponseDto> readOrderBasketList(int id) {
 		List<OrderBasketResponseDto> basketList = orderRepository.findByBasketList(id);
+		System.out.println(basketList);
 		return basketList;
 	}
 
@@ -100,6 +101,11 @@ public class OrderService {
 		int result = orderRepository.orderUpdate(orderEntity);
 		return result;
 		
+	}
+
+	public int deleteBasket(int id) {
+		int result = orderRepository.deleteBasket(id);
+		return result;
 	}
 
 	

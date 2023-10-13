@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.tencoding.CUGGI.dto.request.ImgRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
-import com.tencoding.CUGGI.dto.request.QnaFormRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateProductReqeustDto;
@@ -30,8 +29,8 @@ import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.dto.response.PagingResponseDto;
-import com.tencoding.CUGGI.dto.response.QnaAnswerMailResponseDto;
 import com.tencoding.CUGGI.dto.response.PaymentResponseDto;
+import com.tencoding.CUGGI.dto.response.QnaAnswerMailResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaListResponseDto;
@@ -137,6 +136,7 @@ public class AdminService {
 		int result = offlineStoreRepository.deleteById(id);
 		return result;
 	}
+	
 	//    주문 내역 
 	public List<OrderListResponseDto> readOrderList() {
 		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
