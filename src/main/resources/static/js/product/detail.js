@@ -16,7 +16,20 @@
     
     // TODO 장바구니 기능
     $('.add-cart').on('click', function () {
-        confirm('장바구니 기능테스트');
+       	let productId = $('.add-cart').attr('id');
+		let url = "/order/addProduct/"+productId;
+
+           $.ajax(url, {
+               type: "get",
+               headers: {
+                   "Content-Type": "application/json"
+               }
+           }).done((res) => {
+			   let moveBasket = confirm("장바구니로 이동하시겠습니까?");
+			   if(moveBasket){
+				   window.location.href="/order/basket";
+			   }
+           });
 	});
 
 	// 상품 일반 정보 클릭시 슬라이드 함수

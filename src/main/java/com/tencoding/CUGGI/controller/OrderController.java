@@ -150,4 +150,11 @@ public class OrderController {
 		return"/payment/payResult_utf";
 	} 
 	
+	@GetMapping("/addProduct/{productId}")
+	public void addProductAtBasket(@PathVariable() int productId) {
+		User user = new User();
+		user.setId(1);
+		orderService.addProductAtBasket(productId, user.getId());
+	}
+	
 }
