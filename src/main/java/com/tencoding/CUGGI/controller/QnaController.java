@@ -1,6 +1,5 @@
 package com.tencoding.CUGGI.controller;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tencoding.CUGGI.dto.request.QnaFormRequestDto;
 import com.tencoding.CUGGI.dto.response.QnaPersonResponseDto;
-import com.tencoding.CUGGI.repository.model.Person;
 import com.tencoding.CUGGI.repository.model.User;
-import com.tencoding.CUGGI.service.PersonService;
-import com.tencoding.CUGGI.service.ProductService;
 import com.tencoding.CUGGI.service.QnaService;
-import com.tencoding.CUGGI.util.Mail;
 
 @Controller
 @RequestMapping("/qna")
