@@ -3,6 +3,8 @@ package com.tencoding.CUGGI.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,9 +21,11 @@ import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.dto.response.PagingResponseDto;
+import com.tencoding.CUGGI.dto.response.QnaAnswerMailResponseDto;
 import com.tencoding.CUGGI.dto.response.PaymentResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
+import com.tencoding.CUGGI.dto.response.QnaListResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.interfaces.FirstCategoryRepository;
 import com.tencoding.CUGGI.repository.interfaces.OfflineStoreRepository;
@@ -37,6 +41,7 @@ import com.tencoding.CUGGI.repository.model.OfflineStore;
 import com.tencoding.CUGGI.repository.model.Order;
 import com.tencoding.CUGGI.repository.model.Payment;
 import com.tencoding.CUGGI.repository.model.Qna;
+import com.tencoding.CUGGI.util.Mail;
 
 @Service
 public class AdminService {
@@ -70,7 +75,10 @@ public class AdminService {
 
 	@Autowired
 	OfflineStoreRepository offlineStoreRepository;
-
+  
+	@Resource(name="mail")
+	private Mail mail;
+  
 	//offlineStore start
 
 	@Transactional
@@ -176,9 +184,15 @@ public class AdminService {
 	//qna start
 
 	@Transactional
-	public List<Qna> qnaList() {
-		List<Qna> qnaList = qnaRepository.findByAll();
-		return qnaList;
+	public AdminPageListDto<QnaListResponseDto> qnaList(String type, String kerword,Integer page, String status) {
+		if(page <= 0) {
+			page = 1;
+		}
+		PagingResponseDto PagingResponseDto = qnaRepository.findPaging(type, kerword, page, status);
+		int startNum = (page-1)*10;
+		List<QnaListResponseDto> qnaList = qnaRepository.findByKeywordAndCurrentPage(type, kerword, startNum, status);
+		AdminPageListDto<QnaListResponseDto> adminPageListDto = new AdminPageListDto<QnaListResponseDto>(PagingResponseDto, kerword, type, null ,qnaList);
+		return adminPageListDto;
 	}
 
 	@Transactional
@@ -189,8 +203,10 @@ public class AdminService {
 
 	@Transactional
 	public int insertQnaAnswer(InsertQnaAnswerDto insertQnaAnswerDto) {
-		qnaRepository.updateByQnaid(insertQnaAnswerDto.getQnaId());
-		return qnaRepository.insertAnswer(insertQnaAnswerDto);
+		qnaRepository.insertAnswer(insertQnaAnswerDto);
+		QnaAnswerMailResponseDto qnaAnswerMailResponseDto = qnaRepository.findByQnaId(insertQnaAnswerDto.getQnaId());
+		mail.sendAnswerEmail(qnaAnswerMailResponseDto);
+		return qnaRepository.updateByQnaid(insertQnaAnswerDto.getQnaId());
 	}
 
 	public int updateOrder(UpdateOrderListRequestDto updateOrderRequestDto, int orderId) {

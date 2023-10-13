@@ -40,7 +40,6 @@
 
 	</style>
         <main>
-        
         	<div class="main-column">
         		<h3>문의사항</h3>	
 	            <form action="insertQna" method="post">

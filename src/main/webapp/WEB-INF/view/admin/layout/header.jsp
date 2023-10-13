@@ -170,7 +170,9 @@ li{
 	padding: 4px;
 }
 
-
+ul {
+	list-style: none;
+}
 </style>
 
 
