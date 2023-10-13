@@ -2,30 +2,36 @@ package com.tencoding.CUGGI.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.request.InsertPaymentRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
+import com.tencoding.CUGGI.dto.response.PaymentResponseDto;
+import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
+import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.repository.model.User;
+
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
+import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
+import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaListResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
@@ -41,7 +47,9 @@ public class AdminController {
 
 	@Autowired
 	HttpSession session;
-	
+
+	@Autowired 
+	ServletContext servletContext;
 	
 	//offlinestore start
 	
@@ -49,7 +57,6 @@ public class AdminController {
 	public String offlineStoreManagement(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page, Model model) {
 		AdminPageListDto<OfflineStoreListResponseDto> adminPageListDto = adminService.OfflineStoreList(type, keyword, page);
 		model.addAttribute("adminPageListDto", adminPageListDto);
-System.out.println(adminPageListDto.getKeyword());
 		return "admin/offlineStore/offlineStoreManagement"; 
 	}	
 	
@@ -107,44 +114,76 @@ System.out.println(adminPageListDto.getKeyword());
 	
 	// order start
 	@GetMapping("orderListManagement")
-	public String orderListManagent관리자주문내역(Model model) {
+	public String orderListManagent관리자주문내역(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
+		
+		AdminPageListDto<OrderListResponseDto> OrderadminPageListDto = adminService.OrderList(type, keyword, page,status);
+		model.addAttribute("OrderadminPageListDto", OrderadminPageListDto);
 
 		
-
-		List<OrderListResponseDto> orderList = adminService.readOrderList();
-		if(orderList.isEmpty()) {
-			model.addAttribute("orderList", null);
-		} else {
-			model.addAttribute("orderList",orderList);
-			System.out.println("여기");
-		}
-		System.out.println(orderList);
-		System.out.println("컨트롤러");
-		
-		
-
 		return "admin/order/orderManagement";
 	}
-	
-	
-	
 	
 	@GetMapping("updateOrderList/{id}")
 	public String updateOrderList주문내역수정(@PathVariable("id") int id, Model model) {
 		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(id);
 		model.addAttribute("orderListResponseDto", orderListResponseDto);
-		System.out.println(orderListResponseDto);
+		
+		PaymentResponseDto paymentResponseDto = adminService.findPayment(id);
+		model.addAttribute("paymentResponseDto", paymentResponseDto);
+		
+		
+		
+		
+		System.out.println(paymentResponseDto);
 		
 
 		
 		return "admin/order/orderListUpdate";
 	}
 	
-	@PutMapping("updateOrderList/{id}")
-	public String updateOrderListProc주문내역수정(UpdateOrderListRequestDto updateOrderListRequestDto) {
-		int result = adminService.updateOrderList(updateOrderListRequestDto);		
-		return "redirect: orderManagement"; 
+	
+	
+	@PostMapping("updateOrder/{orderId}")
+	public String insertPayment결제결과추가(@PathVariable("orderId") int orderId,UpdateOrderListRequestDto updateOrderRequestDto) {
+		System.out.println("여긴?");
+			
+		adminService.updateOrder(updateOrderRequestDto, orderId);
+		
+		return "redirect:/admin/updateOrderList/"+orderId; 
 	}
+	
+	
+	
+	
+	@PostMapping("/cancelPayment/{orderId}")
+	public String cancelPayment취소(@PathVariable("orderId") int orderId, Model model) {
+		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(orderId);
+		model.addAttribute("orderListResponseDto", orderListResponseDto);
+		
+		PaymentResponseDto paymentResponseDto = adminService.findPayment(orderId);
+		model.addAttribute("paymentResponseDto", paymentResponseDto);
+		
+		
+		return "admin/order/cancelRequest_utf";
+	}
+	
+	
+	@GetMapping("/cancelPaymentResult/{orderId}")
+	public String cancelPaymentResult취소완료(@PathVariable("orderId") int orderId) {
+		
+		return "admin/order/cancelResult_utf";
+	}
+	
+	@PostMapping("/cancelPaymentResult/{orderId}")
+	public String cancelPaymentResult취소완료1(@PathVariable("orderId") int orderId,Model model) {
+		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(orderId);
+		model.addAttribute("orderListResponseDto", orderListResponseDto);
+		
+		
+		return "admin/order/cancelResult_utf";
+	}
+	
+	
 	
 	
 	// order end
@@ -172,4 +211,31 @@ System.out.println(adminPageListDto.getKeyword());
 	}
 	
 	//qna end
+	
+	// product start
+	/**
+	 * 상품관리 페이지 이동
+	 * @return 상품관리페이지 이동
+	 */
+	@GetMapping("/product")
+	public String adminProductList(
+			@RequestParam(required = false) String type, 
+			@RequestParam(required = false) String keyword, 
+			@RequestParam(defaultValue = "1") Integer page, 
+			Model model) 
+	{
+		AdminPageListDto<ProductResponseDto> adminPageListDto = adminService.adminProductList(type, keyword, page);
+		model.addAttribute("adminPageListDto", adminPageListDto);
+		return "/admin/product/productManagement";
+	}
+	
+	@GetMapping("/product/{productId}")
+	public String updateAdminProduct(@PathVariable String productId, Model model) {
+		List<AdminProductResponseDto> adminProductList= adminService.findAdminProductResponseDtoByProductId(productId);
+		System.out.println(adminProductList);
+		model.addAttribute("adminProductList", adminProductList);
+		return "/admin/product/productUpdate";
+	}
+	
+	// product end
 }

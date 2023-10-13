@@ -34,14 +34,14 @@
 		width: 15px;
 		height: 15px;
 	}
-	.sign-up input[type="submit"] {
+	.sign-up .submit-btn input {
 		width: 400px;
 		background-color: black;
 		color: white;
 		margin-bottom: 100px;
 		margin-top: 30px;
 	}
-	.sign-up input[type="submit"]:hover {
+	.sign-up .submit-btn input:hover {
         background-color: white;
         color: black;
         border-radius: 0px;
@@ -65,23 +65,42 @@
 			<div id="info">
 				<div>
 					<input type="text" placeholder="아이디" id="username" name="username"
-						value="${user.username}"
-						<c:if test="${user != null}">readonly</c:if>>
+						value="${signUpDto.username}"
+						<c:if test="${signUpDto != null}">readonly</c:if>>
 				</div>
 				<div>
+				
+					<c:if test="${signUpDto == null}">
 					<input type="password" placeholder="비밀번호" id="password"
-						name="password" value="${password.password}">
+						name="password" value="${signUpDto.password}">
+					</c:if>
+					
+					<c:if test="${signUpDto != null}">
+					<input type="hidden" placeholder="비밀번호" id="password"
+						name="password" value="${signUpDto.password}">
+					</c:if>
+				</div>
+				<div>
+				
+					<c:if test="${signUpDto == null}">
+					<input type="password" placeholder="비밀번호 확인" id="password_check"
+						name="passwordCheck" value="${signUpDto.passwordCheck}">
+					</c:if>
+					
+					<c:if test="${signUpDto != null}">
+					<input type="hidden" placeholder="비밀번호 확인" id="password_check"
+						name="passwordCheck" value="${signUpDto.passwordCheck}">
+					</c:if>
 				</div>
 				<div>
 					<input type="text" placeholder="이름" id="name" name="name">
 				</div>
 				<div>
-					<input type="address" placeholder="주소" id="address" readonly>
+					<input type="address" placeholder="주소" id="address" readonly name="address">
 					<input type="button" onclick="openZipSearch()" value="검색" id="search">
 				</div>
 				<div>
-					<input type="address" placeholder="상세주소" id="address_detail"><input
-						type="hidden" id="add_address" name="address">
+					<input type="text" placeholder="상세주소" id="address_detail" name="addressDetail">
 				</div>
 				<div>
 					<input type="email" placeholder="이메일" id="email" name="email">
@@ -91,11 +110,11 @@
 						name="phone_number">
 				</div>
 				<div>
-					<input type="date" palceholder="생년월일" id="birthday" name="birthday">
+					<input type="date" id="birthday" name="birthday">
 				</div>
 			</div>
 			<div id="agree">
-				<h3>필수 동의</h3>
+				<h3>필수 동의*</h3>
 				<div>
 					<input type="checkbox" id="check1" name="check1" >
 					<label for="check1">CUGGI가 본인의 개인 정보를 수집 및 이용하는 것에 동의합니다.*</label>
@@ -146,7 +165,7 @@
 			</div>
 			<br>
 			<div class="submit-btn">
-				<input type="submit" value="프로필 만들기" onclick="signUp(this.form)">
+				<input type="button" value="프로필 만들기" onclick="signUp(this.form)">
 			</div>
 		</form>
 	</div>
@@ -156,11 +175,18 @@
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+
+	document.getElementById('birthday').value = new Date().toISOString().substring(0,10);
+	
 	function signUp(form) {
-		let all_address = $("#address").val() + " "
-				+ $("#address_detail").val();
-		$("#add_address").val(all_address);
-		form.submit;
+		let check1 = document.getElementById('check1');
+		let check2 = document.getElementById('check2');
+		
+		if(check1.checked == false || check2.checked == false) {
+			alert("필수항목에 체크해주세요");
+			return false;
+		}
+		form.submit();
 	}
 
 	function openZipSearch() {
@@ -178,5 +204,6 @@
 			}
 		}).open();
 	}
+
 </script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

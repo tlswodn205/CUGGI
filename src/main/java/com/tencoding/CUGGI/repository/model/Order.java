@@ -19,9 +19,9 @@ public class Order {
 	Timestamp purchaseDate;
 	Timestamp cancelDate;
 	Timestamp createdAt;
-	
 	String image;
 	String productName;
+	String state;
 	int price;
-	
+	int orderId;
 }

@@ -13,13 +13,5 @@ public class PaymentService {
 	@Autowired
 	PaymentRepository paymentRepository;
 
-	public void insertPayment(PaymentDto paymentDto) {
-		Payment payment = new Payment();
-		payment.setOrderId(paymentDto.getOrderId());
-		payment.setId(paymentDto.getId());
-		payment.setTid(paymentDto.getTid());
-		// payment.setUserId(princiPalId);
-		
-		paymentRepository.insert(payment);
-	}
+
 }

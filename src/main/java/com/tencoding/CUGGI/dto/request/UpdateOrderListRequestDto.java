@@ -21,19 +21,18 @@ public class UpdateOrderListRequestDto {
 	
 	String image;
 	String productName;
+	String State;
 	int price;
-	
-	
-	
-
+	int orderId;
 
 	public Order toEntity() {
-		
-		return new Order(this.id, this.userId, this.purchaseDate, this.cancelDate, this.createdAt, this.image, this.productName, this.price);
+		return new Order(this.id, this.userId, this.purchaseDate, this.cancelDate, this.createdAt, this.image, this.productName, this.State, this.price, this.orderId);
+	}
+	
+	public Order toEntity2(int orderId) {
+		return new Order(id = orderId, this.userId, this.purchaseDate, this.cancelDate, this.createdAt, this.image, this.productName, this.State, this.price, orderId);
 	}
 
-
-
-
-
+	
+  
 }

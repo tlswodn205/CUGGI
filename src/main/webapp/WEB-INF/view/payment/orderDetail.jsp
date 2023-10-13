@@ -36,7 +36,7 @@
 <main>
 
 	<div class="main-column">
-		<form action="/order/orderDetail">
+		<form class="one-table-form" method="post" action="../orderDetail/${order.id}">
 			<h2 style="text-align: center">주문 내역 상세보기</h2>
 			<div class="order-detail">
 			
@@ -88,27 +88,38 @@
 				<table class="order">
 					<tr>
 						<td><span>결제금액</span></td>
-						<td><input type="text" name="price" readonly value="${orderDetailPayment.price} "></td>
+						<td><input type="text" name="price" readonly value="${orderDetailPayment.price}"></td>
 					</tr>
+					
 					<tr>
 						<td><span>결제방법</span></td>
 						<td><input type="text" name="" readonly value="nicepay"></td>
 						<td>
 					</tr>
+					<tr>
+					<td><span>진행상태</span>
+					<td><input type="text" id="status" id = "status" name="status" readonly value="${order.state}"></td>
+					</tr>
 
 				</table>
-
-
-
-
-
-
-
+				<c:if test="${order.state eq '결제완료'}">
+					<input type="submit" value="결제 취소 요청" onclick="isDelete(this.form)">
+					</c:if>
+					
+</form>
 
 			</div>
 
-		</form>
-	</div>
+	
 </main>
+
+<script>
+function isDelete(form){
+	const response = confirm("정말 취소하시겠습니까??");
+	if(response){
+		form.submit();
+	}
+}
+</script>
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

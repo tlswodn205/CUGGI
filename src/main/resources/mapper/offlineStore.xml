@@ -42,7 +42,7 @@
 				SELECT count(*) totalCount, ceil(count(*)/10) totalPage,#{page} currentPage, 0 isFirst, 0 isLast
 				FROM offline_store_tb
 				<if test="type == 'storeAddress' and keyword != null">
-					WHERE store_address like CONCAT('%',#{keyword},'%')
+					WHERE store_address like CONCAT('%',#{keyword},'%') 
 				</if>
 				<if test="type == 'storeName' and keyword != null" >
 					WHERE store_name like CONCAT('%',#{keyword},'%')
@@ -63,5 +63,15 @@
 		LIMIT #{startNum}, 10;
 	</select>
 	
+	<select id="findLocator" resultType = "String">
+		SELECT substring(store_address, 1, locate(' ', store_address)-1) as location FROM offline_store_tb GROUP BY location ORDER BY count(*) desc;
+	</select>
+	
+	<select id="findByAddress" resultType = "com.tencoding.CUGGI.repository.model.OfflineStore">
+		SELECT * FROM offline_store_tb 
+				<if test="location != null" >
+					WHERE store_address like CONCAT('%',#{location},'%');
+				</if>
+	</select>
 	
 </mapper>
