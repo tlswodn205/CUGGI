@@ -165,12 +165,8 @@
 		FROM order_tb o
 
 		LEFT
-<<<<<<< HEAD
 		JOIN
 		order_products_tb t
-=======
-		JOIN order_products_tb t
->>>>>>> e7aef6afd88ff8a05a9a1009a375f5f76f79bd59
 		ON t.order_id = o.id
 
 		LEFT JOIN person_tb p

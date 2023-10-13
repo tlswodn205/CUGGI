@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
-import com.tencoding.CUGGI.dto.request.QnaFormRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
@@ -21,13 +20,9 @@ import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.dto.response.PagingResponseDto;
-<<<<<<< HEAD
 import com.tencoding.CUGGI.dto.response.PaymentResponseDto;
-=======
 import com.tencoding.CUGGI.dto.response.QnaAnswerMailResponseDto;
-import com.tencoding.CUGGI.dto.response.PaymentResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
->>>>>>> e7aef6afd88ff8a05a9a1009a375f5f76f79bd59
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaListResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
@@ -44,7 +39,6 @@ import com.tencoding.CUGGI.repository.interfaces.UserRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
 import com.tencoding.CUGGI.repository.model.Order;
 import com.tencoding.CUGGI.repository.model.Payment;
-import com.tencoding.CUGGI.repository.model.Qna;
 import com.tencoding.CUGGI.util.Mail;
 
 @Service
@@ -79,14 +73,10 @@ public class AdminService {
 
 	@Autowired
 	OfflineStoreRepository offlineStoreRepository;
-<<<<<<< HEAD
-
-=======
   
 	@Resource(name="mail")
 	private Mail mail;
   
->>>>>>> e7aef6afd88ff8a05a9a1009a375f5f76f79bd59
 	//offlineStore start
 
 	@Transactional
@@ -135,22 +125,13 @@ public class AdminService {
 		int result = offlineStoreRepository.deleteById(id);
 		return result;
 	}
-<<<<<<< HEAD
-
-
-	//	//    주문 내역 
-	//	public List<OrderListResponseDto> readOrderList() {
-	//		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
-	//		return orderList;
-	//	}
-=======
+	
 	//    주문 내역 
 	public List<OrderListResponseDto> readOrderList() {
 		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
 		return orderList;
 	}
   
->>>>>>> e7aef6afd88ff8a05a9a1009a375f5f76f79bd59
 	@Transactional
 	public AdminPageListDto<OrderListResponseDto> OrderList(String type,String kerword,Integer page,String status){
 		if(page <= 0) {
@@ -253,19 +234,6 @@ public class AdminService {
 		AdminPageListDto<ProductResponseDto> productPageList = new AdminPageListDto<ProductResponseDto>(PagingResponseDto, kerword, type, null ,productList);
 		return productPageList;
 	}
-<<<<<<< HEAD
-
-	public int updateOrder(UpdateOrderListRequestDto updateOrderRequestDto, int orderId) {
-		Order orderEntity = updateOrderRequestDto.toEntity2(orderId);
-		int result = orderRepository.orderAdminUpdate(orderEntity);
-		
-		return result;
-	}
-
-
-
-	//qna end
-=======
 	
 	@Transactional
 	public List<AdminProductResponseDto> findAdminProductResponseDtoByProductId(String productId) {
@@ -273,5 +241,4 @@ public class AdminService {
 	}
 	
 	// product end
->>>>>>> e7aef6afd88ff8a05a9a1009a375f5f76f79bd59
 }

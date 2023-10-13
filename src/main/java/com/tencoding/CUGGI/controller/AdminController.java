@@ -23,13 +23,10 @@ import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.dto.response.PaymentResponseDto;
-<<<<<<< HEAD
-=======
 import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.repository.model.User;
 
->>>>>>> e7aef6afd88ff8a05a9a1009a375f5f76f79bd59
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;

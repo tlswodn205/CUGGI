@@ -112,12 +112,6 @@ public class OrderController {
 	public String insertPayment결제결과추가(@PathVariable("orderId") int orderId, InsertPaymentRequestDto insertPaymentRequestDto,UpdateOrderListRequestDto updateOrderRequestDto) {
 		orderService.insertPayment(insertPaymentRequestDto,orderId);	
 		orderService.updateOrder(updateOrderRequestDto, orderId);
-<<<<<<< HEAD
-		
-
-		
-=======
->>>>>>> e7aef6afd88ff8a05a9a1009a375f5f76f79bd59
 		return "redirect:/order/orderDetail/"+orderId; 
 	}
 	
