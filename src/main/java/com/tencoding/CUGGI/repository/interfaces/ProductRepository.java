@@ -18,6 +18,7 @@ public interface ProductRepository {
 	public int updateById(UpdateProductReqeustDto updateProductReqeustDto);
 	public int deleteById(String productId);
 	public Product findById(String productId);
+	public Product findById(int productId);
 	public List<Product> findByAll();
 	public List<ProductListResponseDto>findByAllForCateOrderByDesc(@Param("secondCategoryId") Integer secondCategoryId, @Param("filter") String filter, @Param("searchData") String searchData);
 	public List<ProductResponseDto> findByIdForCate(int productId);

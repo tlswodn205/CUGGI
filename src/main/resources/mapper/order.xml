@@ -5,8 +5,11 @@
 	namespace="com.tencoding.CUGGI.repository.interfaces.OrderRepository">
 
 	<insert id="insert">
-		INSERT INTO order_tb(user_id, status, purchase_date)
-		values(#{userId},"결제완료",now())
+		INSERT INTO order_tb(user_id, state, created_at)
+		values(#{userId},"장바구니",now())
+				<selectKey resultType="int" keyProperty="number" order="AFTER"> <!-- 입력후 co_no를 리턴함 -->
+					SELECT LAST_INSERT_ID()
+				</selectKey>
 	</insert>
 
 	<update id="updateById">
@@ -23,9 +26,8 @@
 	</update>
 
 	<update id="orderUpdate">
-		UPDATE order_tb SET state="결제완료"
-		WHERE id =
-		#{orderId};
+		UPDATE order_tb SET state="결제완료", purchase_date = now()
+		WHERE id = #{orderId};
 	</update>
 
 	<update id="orderAdminUpdate">
@@ -185,6 +187,11 @@
 		</if>
 		ORDER BY id DESC
 		LIMIT #{startNum}, 10
+	</select>
+	
+	<select id="findByUserId"
+		resultType="com.tencoding.CUGGI.repository.model.Order">
+		SELECT * FROM order_tb WHERE user_id = #{userId}
 	</select>
 
 </mapper>

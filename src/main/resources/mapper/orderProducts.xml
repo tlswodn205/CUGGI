@@ -6,8 +6,8 @@
 
 	<insert id="insert">
 		INSERT INTO order_products_tb(quantity, price,
-		product_id, product_name, created_at)
-		values(#{quantity},#{price},#{productId},#{productName},now())
+		product_id, product_name, order_id, created_at)
+		values(#{quantity},#{price},#{productId},#{productName}, #{orderId},now())
 	</insert>
 
 	<update id="updateById">
@@ -76,6 +76,11 @@
 		left join order_tb o
 		on op.order_id = o.id
 		where op.order_id = #{orderId}
+	</select>
+	
+	<select id="findByOrderIdAndProductId"
+		resultType="com.tencoding.CUGGI.repository.model.OrderProducts">
+		SELECT * FROM order_products_tb WHERE order_id =#{orderId} AND product_id = #{productId};
 	</select>
 
 </mapper>
