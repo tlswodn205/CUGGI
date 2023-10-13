@@ -5,7 +5,7 @@
 	namespace="com.tencoding.CUGGI.repository.interfaces.OrderRepository">
 
 	<insert id="insert">
-		INSERT INTO order_tb(user_id, status, created_at)
+		INSERT INTO order_tb(user_id, status, purchase_date)
 		values(#{userId},"결제완료",now())
 	</insert>
 
@@ -21,19 +21,27 @@
 		UPDATE order_tb SET state="취소요청"
 		WHERE id = #{id};
 	</update>
-	
+
 	<update id="orderUpdate">
 		UPDATE order_tb SET state="결제완료"
-		WHERE id = #{orderId};
+		WHERE id =
+		#{orderId};
 	</update>
-	
+
 	<update id="orderAdminUpdate">
 		UPDATE order_tb SET state="결제취소"
-		WHERE id = #{orderId};
+		WHERE id =
+		#{orderId};
 	</update>
 
 	<delete id="deleteById">
 		DELETE FROM order_tb WHERE id = #{id}
+	</delete>
+
+	<delete id="deleteBasket">
+		DELETE FROM order_products_tb 
+		WHERE id=#{id}
+
 	</delete>
 
 	<select id="findById"
@@ -48,18 +56,20 @@
 
 	<select id="findByBasketList"
 		resultType="com.tencoding.CUGGI.dto.response.OrderBasketResponseDto">
-		select o.id, op.quantity, p.price*op.quantity as price,
-		p.product_name, s.second_category_name, pi.image,pi.product_id,o.id as orderId
-		from order_tb o
-		left join order_products_tb op
+		select op.id ,o.id, op.quantity, p.price as price,
+		p.product_name, s.second_category_name, pi.image,pi.product_id as
+		productId,o.id as orderId
+		from order_products_tb op
+		left join order_tb o
 		on o.id = op.order_id
 		left join product_tb p
 		on p.id = op.product_id
 		left join second_category_tb s
 		on p.second_category_id = s.id
-		left join product_image_tb pi
+		left join
+		product_image_tb pi
 		on p.id = pi.product_id
-		where o.user_id = #{userId}
+		where o.user_id = #{id}
 		and o.state = '장바구니';
 
 	</select>
@@ -70,7 +80,8 @@
 		ot.product_name,
 		ot.price, pi.image, o.id, o.state
 		from order_tb o
-		left join
+		left
+		join
 		order_products_tb ot
 		on o.id = ot.order_id
 		left join product_tb p
@@ -149,11 +160,13 @@
 		FROM order_tb o
 
 		LEFT
-		JOIN order_products_tb t
+		JOIN
+		order_products_tb t
 		ON t.order_id = o.id
 
 		LEFT JOIN person_tb p
-		ON p.user_id =
+		ON
+		p.user_id =
 		o.user_id
 		WHERE state != "장바구니"
 		<if test="type == 'id' and keyword != null">
