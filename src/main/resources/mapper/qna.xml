@@ -38,4 +38,58 @@
 	<update id="updateByQnaid">
 		update qna_tb set state = '답변 완료' where id = ${qnaId};
 	</update>
+	
+	<select  id="findPaging" resultType = "com.tencoding.CUGGI.dto.response.PagingResponseDto">
+		SELECT totalCount, totalPage, currentPage,	
+				CASE
+					WHEN currentPage = 1
+					THEN 1
+					ELSE 0 
+				END AS isFirst,
+			   CASE
+					WHEN currentPage = totalPage
+					THEN 1
+					ELSE 0 
+				END AS isLast
+			FROM(
+				SELECT count(*) totalCount, ceil(count(*)/10) totalPage,#{page} currentPage, 0 isFirst, 0 isLast
+				FROM qna_tb qt
+				left join person_tb p
+				on qt.user_id = p.user_id
+				WHERE 1=1
+				<if test="type == 'name' and keyword != null">
+					and p.name like CONCAT('%',#{keyword},'%')
+				</if>
+				<if test="status != null and keyword != null">
+			 		and qt.state like CONCAT('%',#{status},'%')
+				</if>
+			) ost;
+	
+	</select>
+	
+	<select id="findByKeywordAndCurrentPage" resultType = "com.tencoding.CUGGI.dto.response.QnaListResponseDto">
+		select qt.id, qt.user_id, qt.title, qt.state, qt.created_at, p.name
+		from qna_tb qt
+		left join person_tb p
+		on qt.user_id = p.user_id
+		WHERE 1=1
+		<if test="type == 'name' and keyword != null">
+			 and p.name like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="status != null and keyword != null">
+			 and qt.state like CONCAT('%',#{status},'%')
+		</if>
+		ORDER BY id DESC
+		LIMIT #{startNum}, 10;
+	</select>
+	
+	<select id="findByQnaId" resultType = "com.tencoding.CUGGI.dto.response.QnaAnswerMailResponseDto">
+		select p.email, qt.title, qt.content, qat.content qatContent
+		from person_tb p
+		left join qna_tb qt
+		on p.user_id = qt.user_id
+		left join qna_answer_tb qat
+		on qt.id = qat.qna_id
+		where qat.qna_id = #{qnaId};
+	</select>
 </mapper>

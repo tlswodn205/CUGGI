@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.handler.exception.UnAuthorizedException;
+import com.tencoding.CUGGI.handler.exception.UnSignUpException;
 
 /**
  * 예외 발생시 (Json,Xml)
@@ -40,7 +41,17 @@ public class MyRestfullExceptionHandler {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
 		sb.append("alert('"+e.getMessage() + "');");
-		sb.append("location.href='http://localhost/user/sign-in';");
+		sb.append("location.href='http://localhost:90/user/signIn';");
+		sb.append("</script>");
+		return sb.toString();
+	}
+	
+	@ExceptionHandler(UnSignUpException.class)
+	public String notSignUpException(UnSignUpException e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<script>");
+		sb.append("alert('"+e.getMessage() + "');");
+		sb.append("location.href='http://localhost:90/user/signUp';");
 		sb.append("</script>");
 		return sb.toString();
 	}

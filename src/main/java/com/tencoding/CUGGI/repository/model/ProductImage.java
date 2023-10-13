@@ -17,6 +17,6 @@ public class ProductImage {
 	int id;
 	int productId;
 	String image;
-	boolean isThimbnail;
+	boolean isThumbnail;
 	Timestamp createdAt;
 }

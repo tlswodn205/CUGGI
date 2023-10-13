@@ -62,7 +62,7 @@
         	<div style="text-align: center; width:100%">검색결과가 없습니다.</div>
         </c:if>
       </div>
-      <c:if test="${productCount > 20}">
+      <c:if test="${productCount >= 20}">
       	<div class="product-all-btn">모두 보기</div>
       </c:if>
     </main>

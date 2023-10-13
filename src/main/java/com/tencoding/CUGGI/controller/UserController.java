@@ -20,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.tencoding.CUGGI.dto.request.DeleteUserDto;
 import com.tencoding.CUGGI.dto.request.KakaoProfile;
 import com.tencoding.CUGGI.dto.request.OAuthToken;
 import com.tencoding.CUGGI.dto.request.SignInDto;
 import com.tencoding.CUGGI.dto.request.SignUpDto;
+import com.tencoding.CUGGI.dto.request.UpdateUserDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
+import com.tencoding.CUGGI.repository.model.Person;
 import com.tencoding.CUGGI.repository.model.User;
 import com.tencoding.CUGGI.service.UserService;
 import com.tencoding.CUGGI.util.Define;
@@ -54,9 +57,17 @@ public class UserController {
 		if (signUpDto.getUsername() == null || signUpDto.getUsername().isEmpty()) {
 			throw new CustomRestfulException("아이디를 입력하세요", HttpStatus.BAD_REQUEST);
 		}
-		if (signUpDto.getPassword() == null || signUpDto.getPassword().isEmpty()) {
-			throw new CustomRestfulException("비밀번호를 입력하세요", HttpStatus.BAD_REQUEST);
+
+		if (!signUpDto.getUsername().contains("_kakao")) {
+			if (signUpDto.getPassword() == null || signUpDto.getPassword().isEmpty()) {
+				throw new CustomRestfulException("비밀번호를 입력하세요", HttpStatus.BAD_REQUEST);
+			}
+			if (signUpDto.getPasswordCheck() == null || !signUpDto.getPasswordCheck().equals(signUpDto.getPassword())) {
+				throw new CustomRestfulException("비밀번호가 일치하지 않습니다", HttpStatus.BAD_REQUEST);
+			}
 		}
+		System.out.println("1 "+ signUpDto.getPassword());
+		System.out.println("2 "+ signUpDto.getPasswordCheck());
 		if (signUpDto.getName() == null || signUpDto.getName().isEmpty()) {
 			throw new CustomRestfulException("이름을 입력하세요", HttpStatus.BAD_REQUEST);
 		}
@@ -68,9 +79,6 @@ public class UserController {
 		}
 		if (signUpDto.getPhone_number() == null || signUpDto.getPhone_number().isEmpty()) {
 			throw new CustomRestfulException("연락처를 입력하세요", HttpStatus.BAD_REQUEST);
-		}
-		if (signUpDto.getBirthday() == null || signUpDto.getBirthday().isEmpty()) {
-			throw new CustomRestfulException("생년월일을 입력하세요", HttpStatus.BAD_REQUEST);
 		}
 		userService.signUp(signUpDto);
 		return "redirect:/user/signIn";
@@ -90,7 +98,7 @@ public class UserController {
 		principal.setPassword(null);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		
-		return "redirect:/main";
+		return "redirect:/user/updateForm";
 	}
 	
 	@GetMapping("/logout")
@@ -138,21 +146,139 @@ public class UserController {
 		
 		SignUpDto signUpDto = SignUpDto
 				.builder()
-				.username(kakaoProfile.getKakaoAccount().getEmail()+"_"+kakaoProfile.getId())
+				.username(kakaoProfile.getKakaoAccount().getEmail()+"_"+kakaoProfile.getId()+"_kakao")
 				.password("tencoKey")
 				.build();
 
 		User oldUser = userService.searchUsername(signUpDto.getUsername());
 		if (oldUser == null) {
-			//userService.signUp(signUpDto);
-			oldUser.setUsername(signUpDto.getUsername());
+//			userService.signUp(signUpDto);
+//			oldUser.setUsername(signUpDto.getUsername());
+			model.addAttribute("signUpDto", signUpDto);
+			return "/user/signUp";
 		}
-		//oldUser.setPassword(null);
+		oldUser.setPassword(null);
+		session.setAttribute(Define.PRINCIPAL, oldUser);
 		
 		//session.setAttribute(Define.PRINCIPAL, oldUser);
-		model.addAttribute("user", oldUser);
-		model.addAttribute("password", oldUser);
-		return "/user/signUp";
+		return "redirect:/user/updateForm";
 		
+	}
+	
+	@GetMapping("/updateForm")
+	public String updateForm(Model model) {
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		UpdateUserDto updateUserDto = userService.findUserandPerson(user.getId());
+		model.addAttribute("updateUserDto", updateUserDto);
+
+		if (user.getUsername().contains("_kakao")) {
+			model.addAttribute("iskakaoUser", true);
+		} else {
+			model.addAttribute("iskakaoUser", false);
+		}
+		return "user/updateForm";
+	}
+	
+	@PostMapping("/updateUser")
+	public String updateUser(UpdateUserDto updateUserDto) {
+		if (updateUserDto.getUsername() == null || updateUserDto.getUsername().isEmpty()) {
+			throw new CustomRestfulException("아이디를 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if (updateUserDto.getName() == null || updateUserDto.getName().isEmpty()) {
+			throw new CustomRestfulException("이름을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if (updateUserDto.getAddress() == null || updateUserDto.getAddress().isEmpty()) {
+			throw new CustomRestfulException("주소를 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if (updateUserDto.getEmail() == null || updateUserDto.getEmail().isEmpty()) {
+			throw new CustomRestfulException("이메일을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if (updateUserDto.getPhoneNumber() == null || updateUserDto.getPhoneNumber().isEmpty()) {
+			throw new CustomRestfulException("연락처를 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if (updateUserDto.getBirthday() == null) {
+			throw new CustomRestfulException("생년월일을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		userService.updateUserForm(updateUserDto);
+		return "redirect:/user/updateForm";
+	}
+	
+	@PostMapping("/delete")
+	public String deleteUser(DeleteUserDto deleteUserDto) {
+		
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		
+		if (!user.getUsername().contains("_kakao")) {
+			if (deleteUserDto.getPassword() == null || deleteUserDto.getPassword().isEmpty()) {
+				throw new CustomRestfulException("비밀번호를 입력하세요", HttpStatus.BAD_REQUEST);
+			} else {
+				userService.deleteUser(deleteUserDto, user);			
+			}			
+		}
+		else {
+			userService.deleteUser(deleteUserDto, user);
+		}		
+		return "redirect:/user/logout";
+	}
+	
+	@GetMapping("/delete")
+	public String deleteForm(Model model) {
+		
+		// 1. 세션에 접근 - kakao 확인
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		// 속성 --JSP isKakaoUser
+		// Model <....
+		if (user.getUsername().contains("_kakao")) {
+			model.addAttribute("iskakaoUser", true);
+		} else {
+			model.addAttribute("iskakaoUser", false);
+		}
+		return "/user/delete";
+	}
+	
+	@GetMapping("/findId")
+	public String findUsername() {
+
+		return "/user/findId";
+	}
+	
+	
+	@PostMapping("/findId")
+	public String findId(String email, Model model) {
+		
+		if (email == null) {
+			throw new CustomRestfulException("이메일을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		
+		String username = userService.findId(email);
+		model.addAttribute("username", username);
+		
+		if (username.contains("_kakao")) {
+			model.addAttribute("iskakaoUser", true);
+		} else {
+			model.addAttribute("iskakaoUser", false);
+		}
+		
+		return "/user/showId";
+	}
+	
+	@GetMapping("/findPassword")
+	public String findUserPassword() {
+		
+		return "/user/findPassword";
+	}
+	
+	@PostMapping("findPassword")
+	public String findPassword(String username, String email, Model model) {
+		if (username == null) {
+			throw new CustomRestfulException("아이디를 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if (email ==null) {
+			throw new CustomRestfulException("이메일을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		
+		String password = userService.findPassword(username, email);
+		
+		return "/user/showPassword";
 	}
 }
