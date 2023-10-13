@@ -11,7 +11,7 @@ public class ProductResponseDto {
 	private Integer id;
 	private Integer secondCategoryId;
 	private String productName;
-	private String price;
+	protected String price;
 	private String productFeature;
 	private int quantity;
 	private Timestamp createdAt;
