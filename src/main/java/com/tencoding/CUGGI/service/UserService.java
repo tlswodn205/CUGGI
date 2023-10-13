@@ -112,4 +112,18 @@ public class UserService {
 			userRepository.deleteById(userEntity);
 		}
 	}
+	
+	public String findId(String email) {
+		User userEntity = userRepository.findByEmail(email);
+		if (userEntity == null) {
+			throw new CustomRestfulException("존재하지 않은 계정입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return userEntity.getUsername();
+	}
+	
+	public String findPassword(String username, String email) {
+		User userEntity = userRepository.findByUsernameAndEmail(username, email);
+		
+		return userEntity.getPassword();
+	}
 }

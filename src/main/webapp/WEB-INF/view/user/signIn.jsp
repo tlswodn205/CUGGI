@@ -81,6 +81,7 @@
        	font-size:18px;
     }
 </style>
+	<main>
 	<div id="body">
 		<div id="title">나의 CUGGI 계정</div>
 		<div id="subTitle">로그인</div>
@@ -101,6 +102,13 @@
 				<img src="/image/kakao_login_large_wide.png" width="400px" alt=""></a>
 			</div>
 		</form>
+		<br>
+		<div>
+			<a href="http://localhost:90/user/signUp">회원가입</a>
+			<a href="http://localhost:90/user/findId">아이디 찾기</a>
+			<a href="http://localhost:90/user/findPassword">비밀번호 찾기</a>
+		</div>
 	</div>
+	</main>
 
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

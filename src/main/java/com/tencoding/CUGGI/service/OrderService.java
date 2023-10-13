@@ -86,6 +86,7 @@ public class OrderService {
 
 	public List<OrderBasketResponseDto> readOrderBasketList(int id) {
 		List<OrderBasketResponseDto> basketList = orderRepository.findByBasketList(id);
+		System.out.println(basketList);
 		return basketList;
 	}
 
@@ -123,6 +124,10 @@ public class OrderService {
 		}
 		OrderProducts orderProducts = new OrderProducts(userId, product);
 		orderProductsRepository.insert(orderProducts);
+  }
+	public int deleteBasket(int id) {
+		int result = orderRepository.deleteBasket(id);
+		return result;
 	}
 
 	

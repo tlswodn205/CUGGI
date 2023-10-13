@@ -13,6 +13,11 @@ public class SecondCategoryService {
 	
 	@Autowired
 	SecondCategoryRepository secondCategoryRepository;
+  
+	// 목록 조회
+	public List<SecondCategory> getSecondCategoryList() {
+		return secondCategoryRepository.findByAll();
+  }
 
 	public List<SecondCategory> selectMenu() {
 		List<SecondCategory> secondCategoryList = secondCategoryRepository.findByAll();

@@ -18,4 +18,6 @@ public interface UserRepository {
 	public List<User> findByAll();
 	public User findByUsernameAndPassword(SignInDto signInDto);
 	public User findByUsername(String username);
+	public User findByEmail(String email);
+	public User findByUsernameAndEmail(String username, String email);
 }
