@@ -26,31 +26,22 @@
 	            <li>쥬얼리&시계</li>
 	            <div class="submenu">
 		                	<span class="close">X</span>
+		                	<c:set var="modelObject" value="${AopParameter.before()}"/>
+
+							<c:out value="${modelObject.test}"/>
 		                <div class="subcategory">
 			                <ul>
-			                    <li>더블백</li>
-			                    <li>캐리어</li>
-			                    <li>하드쉘</li>
+			                <c:forEach items="${secondCategoryList}" var="secondCategory" varStatus="loop">
+			                <c:if test="${not loop.first && secondCategory.firstCategoryId ne previousItem.firstCategoryId}">
 			                </ul>
 			                <ul>
-			                    <li>탑 핸들백</li>
-			                    <li>토트백</li>
-			                    <li>숄더백</li>
-			                    <li>크로스백</li>
-			                    <li>미니백</li>
-			                    <li>클러치</li>
+			                </c:if>
+			                <li><a href="/product/list?secondCategoryId=${secondCategory.id}">${secondCategory.secondCategoryName}</a></li>
+			                <c:if test="${loop.last}">
 			                </ul>
-			                <ul>
-			                    <li>카드 지갑</li>
-			                    <li>반지갑</li>
-			                    <li>장지갑</li>
-			                    <li>체인지갑</li>
-			                </ul>
-			                <ul>
-			                    <li>패션 주얼리</li>
-			                    <li>파인 주얼리</li>
-			                    <li>실버 주얼리</li>
-			                    <li>시계</li>
+			                </c:if>
+			                <c:set var="previousItem" value="${secondCategory}" />
+			                </c:forEach>
 			                </ul>
 		            	</div>
 	            </div>
