@@ -10,7 +10,7 @@
 	
 	<update id="updateById">
 		UPDATE product_image_tb SET product_id = #{productId},
-		image = #{image}, is_thumbnail = #{isThumbnail}
+		image = #{image}
 		WHERE id = #{id};
 	</update>
 	

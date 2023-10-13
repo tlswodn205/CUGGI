@@ -16,17 +16,17 @@
 	      </tr>
 	      <tr>
 	        <td>상품 가격</td>
-	        <td><input type="text" id="prduct-price" name="price" value="${adminProductList[0].price}" /></td>
+	        <td><input type="number" id="prduct-price" name="price" value="${adminProductList[0].price}" /></td>
 	      </tr>
 	      <tr>
 	        <td>상품 설명</td>
 	        <td>
-	          <textarea rows="4" cols="100" id="product-feature" name="productFeature" style="resize: none">${adminProductList[0].productFeature}</textarea>
+	          <textarea rows="4" cols="140" id="product-feature" name="productFeature" style="resize: none">${adminProductList[0].productFeature}</textarea>
 	        </td>
 	      </tr>
 	      <tr>
 	        <td>재고</td>
-	        <td><input type="text" id="product-quantity" name="quantity" value="${adminProductList[0].quantity}" /></td>
+	        <td><input type="number" id="product-quantity" name="quantity" value="${adminProductList[0].quantity}" /></td>
 	      </tr>
 	      <tr>
 	        <td>1차카테고리</td>
@@ -61,25 +61,31 @@
 	      <tr>
 	        <td>썸네일</td>
 	        <td id="thumbnailImgTd">
-	        <input type="file" id="product-thumbnail" name="thumbnails" multiple value="" accept="image/*" /><br>
-	          <c:forEach var="product" items="${adminProductList}">
-	          	<c:if test="${product.isThumbnail == 1}">
-	          		<img src="${product.image}" alt="${product.imgId}" style="width:19%">
-	          	</c:if>
-	          </c:forEach>
-	          
+	          <div style="display: flex; justify-content: center; text-align: center;">
+		          <c:forEach var="product" items="${adminProductList}">
+		          	<c:if test="${product.isThumbnail == 1}">
+		          		<div>
+		          			<img src="${product.image}" alt="${product.imgId}" style="width:70%"><br>
+		          			<input type="file" name="${product.imgId}"><br>
+	          			</div>
+		          	</c:if>
+		          </c:forEach>
+	          </div>
 	        </td>
 	      </tr>
 	      <tr>
 	        <td>상품 세부 이미지</td>
 	        <td id="detailImglTd">
-	        <input type="file" id="product-detail-img" name="detailImgs" multiple value="" accept="image/*" /><br>
-  	          <c:forEach var="product" items="${adminProductList}">
-	          	<c:if test="${product.isThumbnail == 0}">
-	          		<img src="${product.image}" alt="${product.imgId}" style="width:19%">
-	          	</c:if>
-	          </c:forEach>
-	          
+  	          <div style="display: flex; justify-content: center; text-align: center;">
+		          <c:forEach var="product" items="${adminProductList}">
+		          	<c:if test="${product.isThumbnail == 0}">
+		          		<div>
+		          			<img src="${product.image}" alt="${product.imgId}" style="width:70%"><br>
+		          			<input type="file" name="${product.imgId}"><br>
+	          			</div>
+		          	</c:if>
+		          </c:forEach>
+	          </div>
 	        </td>
 	      </tr>
 	    </tbody>

@@ -1,13 +1,13 @@
 package com.tencoding.CUGGI.dto.request;
 
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class InsertProductReqeustDto {
+@NoArgsConstructor
+@AllArgsConstructor
+public class UpdateProductReqeustDto {
 
 	private String id;
 	private String productName;
@@ -16,7 +16,6 @@ public class InsertProductReqeustDto {
 	private int quantity;
 	private String fcName;
 	private String scName;
-	private List<MultipartFile> thumbnails;
-	private List<MultipartFile> detailImgs;
 	
+	private int secondCategoryId;
 }
