@@ -38,6 +38,7 @@ import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
+import com.tencoding.CUGGI.dto.response.QnaListResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.model.Qna;
 import com.tencoding.CUGGI.service.AdminService;
@@ -195,9 +196,9 @@ public class AdminController {
 	//qna start
 	
 	@GetMapping("/qnaList")
-	public String qnaList문의사항리스트(Model model) {
-		List<Qna> qnaList = adminService.qnaList();
-		model.addAttribute("qnaList", qnaList);
+	public String qnaList문의사항리스트(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
+		AdminPageListDto<QnaListResponseDto> adminPageListDto = adminService.qnaList(type, keyword, page, status);
+		model.addAttribute("adminPageListDto", adminPageListDto);
 		return "admin/qna/qnaList";
 	}
 	

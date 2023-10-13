@@ -5,18 +5,18 @@
 				<form class="oneTableForm" method="post" action="/admin/qnaAnswer">
 					<input type="hidden" name="qnaId" value="${qnaDetail.id}">
 					<h2>문의사항 상세보기 페이지</h2>
-					<table class = "oneTable">
+					<table class = "list-table">
 					    <tbody>
 					        <tr>
-					            <td>제목</td>
+					            <th>제목</th>
 					            <td><input type="text" name="title" value="${qnaDetail.title}" readonly></td>
 					        </tr>
 					        <tr>
-					            <td>내용</td>
+					            <th>내용</th>
 					            <td><textarea rows="10" cols="70" readonly>${qnaDetail.content}</textarea></td>
 					        </tr>
 					        <tr>
-					            <td>답변</td>
+					            <th>답변</th>
 					            <c:choose>
 					            	<c:when test="${qnaDetail.qatContent != null}">
 					            		<td><textarea rows="10" cols="70" name="content" readonly>${qnaDetail.qatContent}</textarea></td>
