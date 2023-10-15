@@ -9,9 +9,12 @@
 	</insert>
 	
 	<update id="updateById">
-		UPDATE product_image_tb SET product_id = #{productId},
-		image = #{image}
-		WHERE id = #{id};
+		<foreach collection="list" item="imgList">
+			UPDATE product_image_tb 
+			SET image = #{imgList.image}, 
+				created_at = now() 
+			WHERE id = #{imgList.id};
+		</foreach>
 	</update>
 	
 	<delete id="deleteById">

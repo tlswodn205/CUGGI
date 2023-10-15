@@ -25,4 +25,10 @@
 	<select id="findByAll" resultType = "com.tencoding.CUGGI.repository.model.SecondCategory">
 		SELECT * FROM second_category_tb;
 	</select>
+	
+	<select id="findByFirstCategoryId" resultType = "com.tencoding.CUGGI.repository.model.SecondCategory">
+		SELECT * 
+		FROM second_category_tb sct 
+		WHERE sct.first_category_id = #{firstCategoryId};
+	</select>	
 </mapper>
