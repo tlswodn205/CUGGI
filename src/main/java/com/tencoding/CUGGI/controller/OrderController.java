@@ -32,6 +32,7 @@ import com.tencoding.CUGGI.repository.model.User;
 import com.tencoding.CUGGI.service.OrderService;
 import com.tencoding.CUGGI.service.UserService;
 import com.tencoding.CUGGI.util.DataEncrypt;
+import com.tencoding.CUGGI.util.Define;
 
 
 @Controller
@@ -46,11 +47,9 @@ public class OrderController {
 
 	@GetMapping("/orderList")
 	public String orderList주문내역( Model model) {
-
-
-		User user = new User();
-
-		user.setId(1);
+		
+		
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
 
 		List<OrderListResponseDto> orderList = orderService.readOrderList(user.getId());
 		if(orderList.isEmpty()) {
@@ -65,6 +64,8 @@ public class OrderController {
 	@GetMapping("/orderDetail/{id}")
 	public String orderDetail주문상세내역(@PathVariable("id") int id,Model model) {
 							
+		
+		
 		
 		// 상세보기 상품
 		List<OrderDetailProductResponseDto> orderDetailList = orderService.readOrderDetailList(id);
@@ -114,13 +115,20 @@ public class OrderController {
 		return "redirect:/order/orderDetail/"+orderId; 
 	}
 	
+	@GetMapping("deleteBasket/{id}")
+	@ResponseBody
+	public Integer deleteOfflineStore오프라인스토어삭제(@PathVariable("id") int id) {
+	
+		int result = orderService.deleteBasket(id);
+		return result; 
+	}
+
+	
 	
 	@GetMapping("/basket")
 	public String basket장바구니(Model model) {
 		
-		User user = new User();
-
-		user.setId(1);
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		
 		List<OrderBasketResponseDto> orderBasketResponseDto = orderService.readOrderBasketList(user.getId());
 		if(orderBasketResponseDto.isEmpty()) {
@@ -149,5 +157,12 @@ public class OrderController {
 		 
 		return"/payment/payResult_utf";
 	} 
+	
+	@GetMapping("/addProduct/{productId}")
+	public void addProductAtBasket(@PathVariable() int productId) {
+		User user = new User();
+		user.setId(1);
+		orderService.addProductAtBasket(productId, user.getId());
+	}
 	
 }

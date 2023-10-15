@@ -9,9 +9,10 @@
 	</insert>
 	
 	<update id="updateById">
-		UPDATE product_tb SET category_id = #{categoryId},
+		UPDATE product_tb SET second_category_id = #{secondCategoryId},
 		product_name = #{productName}, price = #{price},
-		product_feature = #{productFeature}, quantity = #{quantity}
+		product_feature = #{productFeature}, quantity = #{quantity},
+		created_at = now() 
 		WHERE id = #{id};
 	</update>
 	

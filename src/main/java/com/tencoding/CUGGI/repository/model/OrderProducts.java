@@ -18,4 +18,13 @@ public class OrderProducts {
 	int price;
 	int productId;
 	String productName;
+	
+	public OrderProducts(int orderId, Product product) {
+		this.id = 0;
+		this.quantity = 1;
+		this.orderId = orderId;
+		this.price = product.getPrice();
+		this.productId = product.getId();
+		this.productName = product.getProductName();
+	}
 }

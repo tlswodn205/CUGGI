@@ -16,9 +16,12 @@ import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.interfaces.OrderProductsRepository;
 import com.tencoding.CUGGI.repository.interfaces.OrderRepository;
 import com.tencoding.CUGGI.repository.interfaces.PaymentRepository;
+import com.tencoding.CUGGI.repository.interfaces.ProductRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
 import com.tencoding.CUGGI.repository.model.Order;
+import com.tencoding.CUGGI.repository.model.OrderProducts;
 import com.tencoding.CUGGI.repository.model.Payment;
+import com.tencoding.CUGGI.repository.model.Product;
 
 
 @Service
@@ -32,6 +35,9 @@ public class OrderService {
 	
 	@Autowired
 	PaymentRepository paymentRepository;
+	
+	@Autowired
+	ProductRepository productRepository;
 
 	@Transactional
 	public List<OrderListResponseDto> readOrderList(int id) {
@@ -80,6 +86,7 @@ public class OrderService {
 
 	public List<OrderBasketResponseDto> readOrderBasketList(int id) {
 		List<OrderBasketResponseDto> basketList = orderRepository.findByBasketList(id);
+		System.out.println(basketList);
 		return basketList;
 	}
 
@@ -100,6 +107,27 @@ public class OrderService {
 		int result = orderRepository.orderUpdate(orderEntity);
 		return result;
 		
+	}
+
+	public void addProductAtBasket(int productId, int userId) {
+		Order orderEntity = orderRepository.findByUserId(userId);
+		if(orderEntity ==null) {
+			Order basket = new Order(0, userId, null, null, null, null, null, null, 0, 0);
+			int orderId = orderRepository.insert(basket);
+			orderEntity = orderRepository.findById(orderId);
+		}
+		
+		Product product = productRepository.findById(productId);
+		OrderProducts orderProductsEntity = orderProductsRepository.findByOrderIdAndProductId(orderEntity.getId(), productId);
+		if(orderProductsEntity != null) {
+			throw new CustomRestfulException("이미 등록된 상품입니다.", HttpStatus.BAD_REQUEST);
+		}
+		OrderProducts orderProducts = new OrderProducts(userId, product);
+		orderProductsRepository.insert(orderProducts);
+  }
+	public int deleteBasket(int id) {
+		int result = orderRepository.deleteBasket(id);
+		return result;
 	}
 
 	
