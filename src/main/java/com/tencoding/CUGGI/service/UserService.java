@@ -121,9 +121,12 @@ public class UserService {
 		return userEntity.getUsername();
 	}
 	
-	public String findPassword(String username, String email) {
+	public void findPassword(String username, String email, String newPwd) {
 		User userEntity = userRepository.findByUsernameAndEmail(username, email);
 		
-		return userEntity.getPassword();
+		String hashPwd = passwordEncoder.encode(newPwd);
+		userEntity.setPassword(hashPwd);
+		userRepository.updateById(userEntity);
+		
 	}
 }

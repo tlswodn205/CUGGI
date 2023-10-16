@@ -73,7 +73,7 @@
 				
 					<c:if test="${signUpDto == null}">
 					<input type="password" placeholder="비밀번호" id="password"
-						name="password" value="1234">
+						name="password" >
 					</c:if>
 					
 					<c:if test="${signUpDto != null}">
@@ -85,7 +85,7 @@
 				
 					<c:if test="${signUpDto == null}">
 					<input type="password" placeholder="비밀번호 확인" id="password_check"
-						name="passwordCheck" value="1234">
+						name="passwordCheck">
 					</c:if>
 					
 					<c:if test="${signUpDto != null}">

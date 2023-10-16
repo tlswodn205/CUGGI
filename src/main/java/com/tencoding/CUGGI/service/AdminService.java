@@ -41,6 +41,8 @@ import com.tencoding.CUGGI.dto.response.QnaAnswerMailResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaListResponseDto;
+import com.tencoding.CUGGI.dto.response.UserInfoDetailDto;
+import com.tencoding.CUGGI.dto.response.UserInfoListDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.interfaces.FirstCategoryRepository;
 import com.tencoding.CUGGI.repository.interfaces.OfflineStoreRepository;
@@ -348,4 +350,23 @@ public class AdminService {
 	}
 	
 	// product end
+	
+	// user start
+	@Transactional
+	public AdminPageListDto<UserInfoListDto> userList(String type, String kerword,Integer page, String status) {
+		if(page <= 0) {
+			page = 1;
+		}
+		PagingResponseDto PagingResponseDto = qnaRepository.findPaging(type, kerword, page, status);
+		int startNum = (page-1)*10;
+		List<UserInfoListDto> userList = userRepository.findByKeywordAndCurrentPage(type, kerword, startNum, status);
+		System.out.println(userList.get(0).getBirthday());
+		AdminPageListDto<UserInfoListDto> adminPageListDto = new AdminPageListDto<UserInfoListDto>(PagingResponseDto, kerword, type, null ,userList);
+		return adminPageListDto;
+	}
+
+	public UserInfoDetailDto userInfoDetail(int id) {
+		UserInfoDetailDto userInfoDetailDto = userRepository.findByIdAtAdmin(id);
+		return userInfoDetailDto;
+	}
 }
