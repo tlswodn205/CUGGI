@@ -9,6 +9,7 @@ import com.tencoding.CUGGI.dto.request.UpdateProductReqeustDto;
 import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.PagingResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
+import com.tencoding.CUGGI.dto.response.ProductSearchListResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
 import com.tencoding.CUGGI.repository.model.Product;
 
@@ -25,4 +26,5 @@ public interface ProductRepository {
 	public PagingResponseDto findPaging(@Param("type")String type, @Param("keyword")String keyword, @Param("page")Integer page);
 	public List<ProductResponseDto> findByKeywordAndCurrentPage(@Param("type")String type, @Param("keyword")String keyword, @Param("startNum")Integer startNum);
 	public List<AdminProductResponseDto> findAdminProductByProductId(String productId);
+	public List<ProductSearchListResponseDto> findBySearchProductAll(String searchData);
 }

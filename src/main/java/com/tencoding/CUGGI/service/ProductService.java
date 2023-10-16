@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
+import com.tencoding.CUGGI.dto.response.ProductSearchListResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
 import com.tencoding.CUGGI.repository.interfaces.ProductRepository;
 
@@ -95,5 +96,15 @@ public class ProductService {
 		}
 		return resultMap;
 	}
-	
+
+	/**
+	 * 
+	 * @param searchData
+	 * @return searchList
+	 * 헤더 검색
+	 */
+	public List<ProductSearchListResponseDto> searchProductList(String searchData) {
+		List<ProductSearchListResponseDto> searchList = productRepository.findBySearchProductAll(searchData);
+		return searchList;
+	}	
 }

@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
+import com.tencoding.CUGGI.dto.response.ProductSearchListResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
 import com.tencoding.CUGGI.repository.model.ProductImage;
 import com.tencoding.CUGGI.service.ProductImageService;
@@ -100,4 +102,18 @@ public class ProductController {
 	}
 	
 	// TODO 모두보기 ajax처리
+	
+	// 검색 -psg start
+	@GetMapping("search")
+	@ResponseBody
+	public List<ProductSearchListResponseDto> SearchProductList(@RequestParam(defaultValue = "") String searchData) {
+		// 서비스 호출
+		// secondCategoryId = 1; // 임시 변수
+		// 1. 제품 목록 가져오기
+		List<ProductSearchListResponseDto> searchList = productService.searchProductList(searchData);
+		System.out.println(searchList);
+		
+		return searchList;
+	}
+	// 검색 -psg end
 }
