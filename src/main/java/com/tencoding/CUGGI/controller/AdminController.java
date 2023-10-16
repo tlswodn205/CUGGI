@@ -1,5 +1,6 @@
 package com.tencoding.CUGGI.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -227,7 +228,7 @@ public class AdminController {
 	
 	// product start
 	/**
-	 * 상품관리 페이지 이동
+	 * 상품목록 페이지 이동
 	 * @return 상품관리페이지 이동
 	 */
 	@GetMapping("/products")
@@ -238,6 +239,9 @@ public class AdminController {
 			Model model) 
 	{
 		AdminPageListDto<ProductResponseDto> adminPageListDto = adminService.adminProductList(type, keyword, page);
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("page", page);
 		model.addAttribute("adminPageListDto", adminPageListDto);
 		return "/admin/product/productManagement";
 	}
@@ -291,9 +295,17 @@ public class AdminController {
 	// 상품 추가 기능
 	@PostMapping("/product")
 	public String productInsertProc(InsertProductRequestDto insertProductRequestDto) {
+		// 상품 정보 입력
+		adminService.insertProduct(insertProductRequestDto);
 		
 		System.out.println();
 		return "redirect:/admin/products/";
+	}
+	// 상품 삭제
+	@GetMapping("/deleteProduct/{productId}")
+	public String deleteProduct(@PathVariable Integer productId) {
+		adminService.deleteProduct(productId);
+		return "redirect:/admin/products";
 	}
 	
 	// product end

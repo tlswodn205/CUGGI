@@ -7,7 +7,8 @@
       <div class="variable-width">
       	<c:forEach var="product" items="${productList}">
         <div class="slider">
-          <img src="${product.image}" alt="" />
+          <img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="" />
+          
         </div>
         </c:forEach>
       </div>
@@ -77,7 +78,7 @@
         </div>
         <div class="info-2">
           <div class="product-info">
-            <img src="${productImage.image}" alt="상품사진" />
+            <img src="${productImage.image.startsWith('/') ? productImage.image : '/upload/' += productImage.image}" alt="상품사진" />
             <p>상품정보</p>
             <p>${productList[0].productFeature}</p>
             <ul>
