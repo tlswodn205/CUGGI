@@ -28,7 +28,17 @@ spring:
           timeout: 5000 # 6
           starttls:
             enable: true # 7
-
+            
+# 파일업로드            
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 50MB
+      max-file-size: 10MB
+  
+        
+        
+      
 #  sql:  
 #    init:
 #      schema-locations:

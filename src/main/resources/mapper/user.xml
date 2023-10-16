@@ -34,4 +34,12 @@
 	<select id="findByAll" resultType = "com.tencoding.CUGGI.repository.model.User">
 		SELECT * FROM user_tb;
 	</select>
+	
+	<select id="findByEmail" resultType = "com.tencoding.CUGGI.repository.model.User">
+		SELECT u.* FROM user_tb u LEFT JOIN person_tb p ON u.id = p.user_id WHERE p.email = #{email};
+	</select>
+	
+	<select id="findByUsernameAndEmail" resultType = "com.tencoding.CUGGI.repository.model.User">
+		SELECT u.* FROM user_tb u LEFT JOIN person_tb p ON u.id = p.user_id WHERE u.username = #{username}, p.email = #{email};
+	</select>
 </mapper>

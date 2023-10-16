@@ -1,6 +1,7 @@
 package com.tencoding.CUGGI.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.tencoding.CUGGI.dto.request.ImgRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertPaymentRequestDto;
+import com.tencoding.CUGGI.dto.request.UpdateProductReqeustDto;
 import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
@@ -232,10 +237,59 @@ public class AdminController {
 	@GetMapping("/product/{productId}")
 	public String updateAdminProduct(@PathVariable String productId, Model model) {
 		List<AdminProductResponseDto> adminProductList= adminService.findAdminProductResponseDtoByProductId(productId);
-		System.out.println(adminProductList);
+//		System.out.println(adminProductList);
 		model.addAttribute("adminProductList", adminProductList);
 		return "/admin/product/productUpdate";
 	}
-	
+	@Transactional
+	@PostMapping("/product/{productId}")
+	public String updateAdminProductProc(@PathVariable String productId, 
+			@RequestParam Map<String, MultipartFile> files, 
+			UpdateProductReqeustDto updateProductReqeustDto) {
+		
+//		String productName = updateProductReqeustDto.getProductName();
+//		String productFeature = updateProductReqeustDto.getProductFeature();
+//		int price = updateProductReqeustDto.getPrice();
+//		int quantity = updateProductReqeustDto.getQuantity();
+//		String scName = updateProductReqeustDto.getScName();
+		
+//		if(productName == null || productName.isEmpty()) throw new CustomRestfulException("상품 이름을 입력해주세요.", HttpStatus.BAD_REQUEST);
+//		if(productFeature == null || productFeature.isEmpty()) throw new CustomRestfulException("상품 설명을 입력해주세요.", HttpStatus.BAD_REQUEST);
+//		if(price <= 0) throw new CustomRestfulException("상품 가격을 올바르게 입력해주세요.", HttpStatus.BAD_REQUEST);
+//		if(quantity < 0) throw new CustomRestfulException("상품 수량을 올바르게 입력해주세요.", HttpStatus.BAD_REQUEST);
+//		if(thumbnails.get(0).getOriginalFilename() == null || thumbnails.get(0).getOriginalFilename().isEmpty()) throw new CustomRestfulException("썸네일 이미지가 필요합니다.", HttpStatus.BAD_REQUEST);
+//		if(detailImgs.get(0).getOriginalFilename() == null || detailImgs.get(0).getOriginalFilename().isEmpty())  throw new CustomRestfulException("상품 상세 이미지가 필요합니다.", HttpStatus.BAD_REQUEST);
+//		if(scName == null || scName.isEmpty()) throw new CustomRestfulException("2차 카테고리를 입력해주세요.", HttpStatus.BAD_REQUEST);
+		
+		// 상품 정보 업데이트
+		adminService.updateProduct(updateProductReqeustDto);
+				
+		// 이미지 정보 업데이트
+		adminService.updateProductImage(files);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// TODO 2차카테고리 DB 조회후 비교하여 없는 값은 throw
+		return "redirect:/admin/product/" + productId;
+	}
 	// product end
 }

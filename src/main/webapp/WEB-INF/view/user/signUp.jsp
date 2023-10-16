@@ -59,6 +59,7 @@
 		text-align: center;
 	}
 </style>
+	<main>
 	<div id="title">프로필 생성</div>
 	<div class="sign-up">
 		<form action="/user/signUp" method="post">
@@ -72,7 +73,7 @@
 				
 					<c:if test="${signUpDto == null}">
 					<input type="password" placeholder="비밀번호" id="password"
-						name="password" value="${signUpDto.password}">
+						name="password" value="1234">
 					</c:if>
 					
 					<c:if test="${signUpDto != null}">
@@ -84,7 +85,7 @@
 				
 					<c:if test="${signUpDto == null}">
 					<input type="password" placeholder="비밀번호 확인" id="password_check"
-						name="passwordCheck" value="${signUpDto.passwordCheck}">
+						name="passwordCheck" value="1234">
 					</c:if>
 					
 					<c:if test="${signUpDto != null}">
@@ -100,7 +101,7 @@
 					<input type="button" onclick="openZipSearch()" value="검색" id="search">
 				</div>
 				<div>
-					<input type="text" placeholder="상세주소" id="address_detail" name="addressDetail">
+					<input type="text" placeholder="상세주소" id="address_detail" name="address_detail">
 				</div>
 				<div>
 					<input type="email" placeholder="이메일" id="email" name="email">
@@ -169,7 +170,7 @@
 			</div>
 		</form>
 	</div>
-
+	</main>
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-1.10.2.min.js" /></script>
 <script

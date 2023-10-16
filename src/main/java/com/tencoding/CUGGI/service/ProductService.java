@@ -12,6 +12,9 @@ import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
 import com.tencoding.CUGGI.repository.interfaces.ProductRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ProductService {
 	

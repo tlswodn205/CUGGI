@@ -27,6 +27,7 @@ import com.tencoding.CUGGI.dto.request.SignInDto;
 import com.tencoding.CUGGI.dto.request.SignUpDto;
 import com.tencoding.CUGGI.dto.request.UpdateUserDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
+import com.tencoding.CUGGI.repository.model.Person;
 import com.tencoding.CUGGI.repository.model.User;
 import com.tencoding.CUGGI.service.UserService;
 import com.tencoding.CUGGI.util.Define;
@@ -233,5 +234,51 @@ public class UserController {
 			model.addAttribute("iskakaoUser", false);
 		}
 		return "/user/delete";
+	}
+	
+	@GetMapping("/findId")
+	public String findUsername() {
+
+		return "/user/findId";
+	}
+	
+	
+	@PostMapping("/findId")
+	public String findId(String email, Model model) {
+		
+		if (email == null) {
+			throw new CustomRestfulException("이메일을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		
+		String username = userService.findId(email);
+		model.addAttribute("username", username);
+		
+		if (username.contains("_kakao")) {
+			model.addAttribute("iskakaoUser", true);
+		} else {
+			model.addAttribute("iskakaoUser", false);
+		}
+		
+		return "/user/showId";
+	}
+	
+	@GetMapping("/findPassword")
+	public String findUserPassword() {
+		
+		return "/user/findPassword";
+	}
+	
+	@PostMapping("findPassword")
+	public String findPassword(String username, String email, Model model) {
+		if (username == null) {
+			throw new CustomRestfulException("아이디를 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		if (email ==null) {
+			throw new CustomRestfulException("이메일을 입력하세요", HttpStatus.BAD_REQUEST);
+		}
+		
+		String password = userService.findPassword(username, email);
+		
+		return "/user/showPassword";
 	}
 }

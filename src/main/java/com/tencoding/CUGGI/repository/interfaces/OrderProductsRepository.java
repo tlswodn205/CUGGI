@@ -3,6 +3,7 @@ package com.tencoding.CUGGI.repository.interfaces;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto;
 import com.tencoding.CUGGI.repository.model.OrderProducts;
@@ -18,4 +19,5 @@ public interface OrderProductsRepository {
 	public OrderDetailProductResponseDto findByDetailPerson(int orderId);
 	public OrderDetailProductResponseDto findByDetailPayment(int orderId);
 	public OrderDetailProductResponseDto updatePrice(OrderProducts orderProducts);
+	public OrderProducts findByOrderIdAndProductId(@Param("orderId") int orderId,@Param("productId") int productId);
 }
