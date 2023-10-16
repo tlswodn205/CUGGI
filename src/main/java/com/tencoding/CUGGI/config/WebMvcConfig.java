@@ -31,10 +31,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Value("${file.path}")
 	private String filePath;
 	
-//	@Override
-//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//		WebMvcConfigurer.super.addResourceHandlers(registry);
-//		registry.addResourceHandler("/images/**")
-//				.addResourceLocations("file:///" + filePath);
-//	}
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		WebMvcConfigurer.super.addResourceHandlers(registry);
+		registry.addResourceHandler("/upload/**")
+				.addResourceLocations("file:///" + filePath);
+	}
 }

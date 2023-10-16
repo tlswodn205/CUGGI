@@ -61,7 +61,6 @@
 </style>
 	<div id="title">프로필 수정</div>
 	<div class="sign-up">
-	<a href="/user/logout">로그아웃</a>
 		<form action="/user/updateUser" method="post">
 			<div id="info">
 				<div>
@@ -87,7 +86,6 @@
 				</div>
 				<div>
 					<input type="text" placeholder="상세주소" id="address_detail" value="${updateUserDto.addressDetail}" name="addressDetail">
-					<input type="hidden" id="add_address">
 				</div>
 				<div>
 					<input type="email" placeholder="이메일" id="email" name="email" value="${updateUserDto.email}">
