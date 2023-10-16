@@ -35,7 +35,7 @@
 						            <td>${product.quantity}</td>
 						            <td> <input type="button" onclick="location.href='/admin/product/${product.id}'" value="수정 및 상세보기"></td>
 						            <td> 
-							            <form action="./deleteOfflineStore/${product.id}" method="get">
+							            <form action="/deleteProduct/${product.id}" method="get">
 							            	<input type="button" value="삭제" onclick="isDelete(this.form)">
 							            </form>
 						            </td>

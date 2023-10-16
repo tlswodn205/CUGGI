@@ -66,7 +66,7 @@ public class ProductController {
 		}
 		
 		// 목록 개수
-		int productCount = productMap.size();
+		int productCount = productService.countProductListSize(secondCategoryId, filter, searchData);
 		
 		model.addAttribute("productMap", productMap);
 		model.addAttribute("secondCategoryName", secondCategoryName);
