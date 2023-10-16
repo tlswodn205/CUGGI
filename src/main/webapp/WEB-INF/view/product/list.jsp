@@ -1,20 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/product/list.css" />
-  </head>
 
-  <body>
-	<%@ include file="/WEB-INF/view/product/header.jsp" %>
+	<%@ include file="/WEB-INF/view/layout/header.jsp" %>
 
     <main id="product-list">
     <c:if test="${!empty firstCategoryId}">
@@ -54,6 +40,10 @@
 	            	<img src="${item.image}" alt="" />
 	            </c:forEach>
 	          </div>
+	          <div class="product-hover">
+	          	<div>${productList.value[0].productName}</div>
+	            <div>&#8361;<fmt:formatNumber value="${productList.value[0].price}" pattern="#,###" /></div>
+           	  </div>
 	          <p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>
 	          <p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>
 	        </div>
@@ -66,9 +56,5 @@
       	<div class="product-all-btn">모두 보기</div>
       </c:if>
     </main>
-
-<%@ include file="/WEB-INF/view/product/footer.jsp" %>
-  </body>
-  <script src="/js/script.js"></script>
-  <script src="/js/product/list.js"></script>
-</html>
+	<script src="/js/product/list.js"></script>
+<%@ include file="/WEB-INF/view/layout/footer.jsp" %>

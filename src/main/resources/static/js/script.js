@@ -1,24 +1,30 @@
-$(".submenu").hide();
-
 $(".menu").on('click', ()=>{
     $(".submenu").slideDown("slow")
-    $('.search-area').css('display', 'none');
+    $(".submenu").css("display","flex")
+    $('.account-area').slideUp("fast");
+    $('.search-area').slideUp("fast");
+    $('.overlay').addClass('active');
 });
 
 $(".close").on('click', (e)=>{
     e.stopPropagation();
     $(".submenu").slideUp("fast");
+    $('.overlay').removeClass('active');
 });
 
 /* logo nav바 */
 // 검색 영역 토글 이벤트
 $('.searchBtn').on('click', function () {
   $('.search-area').slideToggle();
+  $('.account-area').slideUp("fast");
   $(".submenu").slideUp("fast");
 });
 // 회원 이벤트
 $('.profileBtn').on('click', function () {
-  alert('회원 이벤트');
+  $('.account-area').slideToggle("slow");
+  $('.account-area').css("display","flex");
+  $('.search-area').slideUp("fast");
+  $(".submenu").slideUp("fast");
 });
 
 $('.basketBtn').on('click', function () {
