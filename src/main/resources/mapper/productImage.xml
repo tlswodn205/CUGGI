@@ -4,8 +4,12 @@
 <mapper namespace="com.tencoding.CUGGI.repository.interfaces.ProductImageRepository"> 
 
 	<insert id= "insert">
-		INSERT INTO product_image_tb(product_id, image, is_thumbnail, created_at)
-		values(#{productId},#{image},#{isThumbnail},now());
+		INSERT INTO product_image_tb(product_id, image, is_thumbnail, created_at) values 
+		<foreach collection="list" item="item" separator=","> 
+			(
+				#{item.productId}, #{item.image}, #{item.isThumbnail}, now()
+				)
+		</foreach>
 	</insert>
 	
 	<update id="updateById">
@@ -35,5 +39,9 @@
 		where pit.product_id = #{productId} and is_thumbnail = 1
 		LIMIT 1;
 	</select>
+	
+	<delete id="deleteByProductId">
+		DELETE FROM product_image_tb WHERE product_id = #{productId}; 
+	</delete>
 	
 </mapper>

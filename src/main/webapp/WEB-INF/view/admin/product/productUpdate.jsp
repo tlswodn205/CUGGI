@@ -4,7 +4,7 @@
 
 <form class="one-table-form" method="POST" action="/admin/product/${adminProductList[0].id}" enctype="multipart/form-data">
       <h2>상품 수정 페이지</h2>
-      <table class="one-table">
+      <table class="one-table updateProduct">
         <tbody>
           <tr>
             <td>상품 아이디</td>
@@ -21,7 +21,7 @@
 	      <tr>
 	        <td>상품 설명</td>
 	        <td>
-	          <textarea rows="4" cols="140" id="product-feature" name="productFeature" style="resize: none">${adminProductList[0].productFeature}</textarea>
+	          <textarea rows="4" cols="140" id="product-feature" name="productFeature">${adminProductList[0].productFeature}</textarea>
 	        </td>
 	      </tr>
 	      <tr>
@@ -44,19 +44,20 @@
 	        <td>
               <select name="secondCategoryId" id="second-category-id">
               	<c:forEach items="${secondCategory}" var="item">
-	                <option value="${item.id}">${item.secondCategoryName}</option>
+	                <option value="${item.id}" ${item.id == adminProductList[0].scId ? 'selected' : '' }>${item.secondCategoryName}</option>
                 </c:forEach>
               </select>
        		 </td>
 	      </tr>
 	      <tr>
 	        <td>썸네일</td>
-	        <td id="thumbnailImgTd">
-	          <div style="display: flex; justify-content: center; text-align: center;">
+	        <td class="tableImgTd" id="thumbnailImgTd">
+	          <div>
 		          <c:forEach var="product" items="${adminProductList}">
 		          	<c:if test="${product.isThumbnail == 1}">
 		          		<div>
-		          			<img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="${product.imgId}" style="width:70%"><br>
+		          			<div><i class="fa-solid fa-x"></i></div>
+		          			<img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="${product.imgId}"><br>
 		          			<input type="file" name="${product.imgId}"><br>
 	          			</div>
 		          	</c:if>
@@ -66,12 +67,13 @@
 	      </tr>
 	      <tr>
 	        <td>상품 세부 이미지</td>
-	        <td id="detailImglTd">
-  	          <div style="display: flex; justify-content: center; text-align: center;">
+	        <td class="tableImgTd" id="detailImglTd">
+  	          <div>
 		          <c:forEach var="product" items="${adminProductList}">
 		          	<c:if test="${product.isThumbnail == 0}">
 		          		<div>
-		          			<img src="${product.image.startsWith('/') ? product.image : '/images/' += product.image}" alt="${product.imgId}" style="width:70%"><br>
+		          			<div><i class="fa-solid fa-x"></i></div>
+		          			<img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="${product.imgId}" ><br>
 		          			<input type="file" name="${product.imgId}"><br>
 	          			</div>
 		          	</c:if>
