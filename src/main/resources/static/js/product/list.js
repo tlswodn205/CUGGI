@@ -1,5 +1,6 @@
 /* 상품목록 스크립트 */
-   
+ var numberOfProduct = 20;
+ 
  $(() => {
   // 무한슬라이드를 위한 이미지태그 복사(31231순으로 만들어주기위해)
   $('.slide').each(function () {
@@ -13,41 +14,40 @@
 
   // 상품별 슬라이드 이벤트
   // 슬라이드 Next
-  $('.btnNext').on('click', function (e) {
+  $(document).on('click', '.btnNext', function (e) {
     e.stopPropagation(); // 이벤트 위임 금지
     let classNames = $(this).attr('class'); // 클래스 이름 변수
     slideImg($(this), classNames); // 함수 실행
   });
   // 슬라이드 Prev
-  $('.btnPrev').on('click', function (e) {
+  $(document).on('click', '.btnPrev', function (e) {
     e.stopPropagation(); // 이벤트 위임 금지
     let classNames = $(this).attr('class'); // 클래스 이름 변수
     slideImg($(this), classNames); // 함수 실행
   });
   
   // 슬라이드 버튼 마우스 오버시 나타내기
-  $('.product-one').on('mouseover mouseout', function () {
+  $(document).on('mouseover mouseout', '.product-one', function () {
     $(this).find('p').toggleClass('active');
-    $(this).find('.product-hover').toggleClass('active')
   });
   
   // 상품 detail 이동 이벤트
-  $('.product-one').click(function (e) {
+  $(document).on('click','.product-one',function (e) {
     let productId = $(this).attr('id');
     location.href = `http://localhost:90/product/detail?productId=${productId}`;
   });
   
   // 필터 마우스 오버시 나타내기
-  $('.detail-filter-current').on('mouseover', function () {
+  $(document).on('mouseover', '.detail-filter-current', function () {
     $('.detail-filter-option').addClass('active');
   });
-  $('.detail-filter-option').on('mouseover', function () {
+  $(document).on('mouseover', '.detail-filter-option', function () {
     $('.detail-filter-option').addClass('active');
   });
-  $('.detail-filter-current').on('mouseout', function () {
+  $(document).on('mouseout', '.detail-filter-current', function () {
     $('.detail-filter-option').removeClass('active');
   });
-  $('.detail-filter-option').on('mouseout', function () {
+  $(document).on('mouseout', '.detail-filter-option', function () {
     $('.detail-filter-option').removeClass('active');
   });
   
@@ -56,10 +56,44 @@
     let href = $(this).children('a').attr('href');
     location.href = href;
   });
-  
+
   // TODO
   $('.product-all-btn').on('click', function () {
-    alert('모두 보기 ajax');
+	let secondCategoryId   =$('#second-category-id').val();
+    let URL = "/product/reloadList?secondCategoryId="+secondCategoryId+"&startNum="+numberOfProduct;
+    console.log($('.product-all-btn').eq(0));
+    console.log($('#second-category-id').val());
+           $.ajax(URL, {
+               type: "get",
+               headers: {
+                   "Content-Type": "application/json"
+               }
+           }).done((res) => {
+			   for(key in res){
+				     let html = ' <div class="product-one" id="'+key+'">';
+				               html += '<div class="slide">';
+				               res[key].forEach((item)=>{
+				               		html += '<img src="'+item.image+'" alt="" />';
+							   })
+				               html += '</div>';
+				               html += '<p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>';
+				               html += '<p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>';
+				               html += '</div>';
+				               
+				               
+				               $('.detail-main').eq(0).append(html);
+				               
+				               let lastOfProduct = $('.detail-main .slide').last();
+							    let firstImg = $(lastOfProduct).find('img:first').clone(); // 처음 이미지 복사
+							    let lastImg = $(lastOfProduct).find('img:last').clone(); // 마지막 이미지 복사
+							    
+							    $(lastOfProduct).append(firstImg); // 처음 이미지 마지막 뒤에 붙이기
+							    $(lastOfProduct).prepend(lastImg); // 마지막 이미지 처음 앞에 붙이기
+							    $(lastOfProduct).css('transition', 'none'); // 새로고침시 움직임 없애기
+							    $(lastOfProduct).css('left', '-380px'); // 보여줄 이미지 위치 변경
+				}
+            	   numberOfProduct += 20;
+           });
   });
 });
 
@@ -123,9 +157,3 @@ function slideImg(tag, classNames) {
     isClickEnabled = true;
   }, 500);
 }
-
-/*psg 2023-10-13 list mouse over*/
-// 마우스 오버시 상품명 가격 나타내기
-  $('.detail-filter-current').on('mouseover', function () {
-    $('.detail-filter-option').addClass('active');
-  });

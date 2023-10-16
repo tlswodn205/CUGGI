@@ -12,7 +12,8 @@
           alt="1차 카테고리 이미지"
         />
       </div>
-	</c:if>      
+	</c:if>  
+	  <input type="hidden" id="second-category-id" value="${secondCategoryId}">    
       <div class="detail-filter">
       	<div>${secondCategoryName}</div>
         <div>

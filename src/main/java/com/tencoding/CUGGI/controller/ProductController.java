@@ -76,9 +76,47 @@ public class ProductController {
 		model.addAttribute("secondCategoryId", secondCategoryId);
 		model.addAttribute("filter", filter);
 		model.addAttribute("productCount", productCount);
+		model.addAttribute("secondCategoryId", secondCategoryId);
 		
 		return "product/list";
 	}
+	
+
+	@GetMapping("reloadList")
+	@ResponseBody
+	public Map<Integer , List<ProductListResponseDto>> reloadProductList(Integer secondCategoryId, 
+			@RequestParam(defaultValue = "createAt", required = true )String filter, 
+			@RequestParam(required = false) String searchData, Integer startNum,
+			Model model) {
+		// 서비스 호출
+		// secondCategoryId = 1; // 임시 변수
+		// 1. 제품 목록 가져오기
+		Map<Integer , List<ProductListResponseDto>> productMap = productService.reloadProductList(secondCategoryId, filter, searchData, startNum);
+		
+		// 2. 2차 카테고리 이름 가져오기
+		String secondCategoryName = null;
+		// 검색어가 없다면
+		if(searchData == null || searchData.trim().isEmpty()) {
+			// 반복문 한번에 탈출하기(맵의 리스트를 추출하여 2차카테고리명을 가져옴)
+			loopOut:
+			for(Map.Entry<Integer, List<ProductListResponseDto>> entry : productMap.entrySet()) {
+				List<ProductListResponseDto> productListDtos =  entry.getValue();
+				for(ProductListResponseDto dto : productListDtos) {
+					secondCategoryName = dto.getSecondCategoryName();
+					break loopOut;
+				}
+			}
+		}else {
+			secondCategoryName = "검색결과 : " + searchData;
+		}
+		
+		// 목록 개수
+		int productCount = productMap.size();
+		System.out.println(secondCategoryId);
+		
+		return productMap;
+	}
+
 	
 	
 	/**
