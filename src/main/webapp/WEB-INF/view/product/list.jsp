@@ -26,9 +26,9 @@
         <div class="detail-filter-option">
           <ul>
           	
-            <li class="option-list ${filter == 'createAt' ? 'on' : ''} createAt"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=createAt">신상품</a></li>
-            <li class="option-list ${filter == 'priceDESC' ? 'on' : ''} priceDESC"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceDESC">가격 - 높은 가격순</a></li>
-            <li class="option-list ${filter == 'priceASC' ? 'on' : ''} priceASC"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceASC">가격 - 낮은 가격순</a></li>
+            <li class="option-list ${filter == 'createAt' ? 'on' : ''} createAt"><a href="/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=createAt">신상품</a></li>
+            <li class="option-list ${filter == 'priceDESC' ? 'on' : ''} priceDESC"><a href="/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceDESC">가격 - 높은 가격순</a></li>
+            <li class="option-list ${filter == 'priceASC' ? 'on' : ''} priceASC"><a href="/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceASC">가격 - 낮은 가격순</a></li>
           </ul>
         </div>
       </div>
@@ -37,7 +37,7 @@
 	        <div class="product-one" id="${productList.key}">
 	          <div class="slide">
 	          	<c:forEach items="${productList.value}" var="item">
-	            	<img src="${item.image.startsWith('/') ? item.image : '/images/' += item.image}" alt="" />
+	            	<img src="${item.image.startsWith('/') ? item.image : '/upload/' += item.image}" alt="" />
 	            </c:forEach>
 	          </div>
 	          <div class="product-hover">
