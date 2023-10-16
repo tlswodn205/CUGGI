@@ -17,4 +17,8 @@ public class ImgRequestDto {
 	private String id;
 	private MultipartFile file;
 	private String image;
+	
+	public ImgRequestDto(MultipartFile file) {
+		this.file = file;
+	}
 }

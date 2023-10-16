@@ -30,33 +30,24 @@
 	      </tr>
 	      <tr>
 	        <td>1차카테고리</td>
-	        <td><input type="text" id="product-first-category" name="fcName" value="${adminProductList[0].firstCategoryName}" /></td>
+	        <td>
+	         	<select name="firstCategoryId" id="first-category-id">
+                	<option value="1" ${adminProductList[0].fcId == 1 ? 'selected' : '' }>트래블</option>
+                    <option value="2" ${adminProductList[0].fcId == 2 ? 'selected' : '' }>핸드백</option>
+                    <option value="3" ${adminProductList[0].fcId == 3 ? 'selected' : '' }>지갑</option>
+                    <option value="4" ${adminProductList[0].fcId == 4 ? 'selected' : '' }>쥬얼리&시계</option>
+                </select>
+        	</td>
 	      </tr>
 	      <tr>
 	        <td>2차카테고리</td>
 	        <td>
-	          <input type="text" id="autocomplete" name="scName" list="choices" value="${adminProductList[0].secondCategoryName}" autocomplete="off" />
-	          <datalist id="choices">
-	            <!-- forEach? -->
-	            <option value="트롤리 & 캐리어"></option>
-	            <option value="더플백"></option>
-	            <option value="트래블 소품"></option>
-	            <option value="더플하드쉘 러기지백"></option>
-	            <option value="구찌 포터"></option>
-	            <option value="탑 핸들백"></option>
-	            <option value="숄더백"></option>
-	            <option value="크로스백"></option>
-	            <option value="미니백"></option>
-	            <option value="장지갑"></option>
-	            <option value="반지갑"></option>
-	            <option value="체인 지갑 "></option>
-	            <option value="여성 파인 주얼리"></option>
-	            <option value="여성 실버 주얼리"></option>
-	            <option value="여성 패션 주얼리"></option>
-	            <option value="장지갑"></option>
-	            <option value="여성 시계"></option>
-	          </datalist>
-	        </td>
+              <select name="secondCategoryId" id="second-category-id">
+              	<c:forEach items="${secondCategory}" var="item">
+	                <option value="${item.id}">${item.secondCategoryName}</option>
+                </c:forEach>
+              </select>
+       		 </td>
 	      </tr>
 	      <tr>
 	        <td>썸네일</td>
@@ -65,7 +56,7 @@
 		          <c:forEach var="product" items="${adminProductList}">
 		          	<c:if test="${product.isThumbnail == 1}">
 		          		<div>
-		          			<img src="${product.image}" alt="${product.imgId}" style="width:70%"><br>
+		          			<img src="${product.image.startsWith('/') ? product.image : '/images/' += product.image}" alt="${product.imgId}" style="width:70%"><br>
 		          			<input type="file" name="${product.imgId}"><br>
 	          			</div>
 		          	</c:if>
@@ -80,7 +71,7 @@
 		          <c:forEach var="product" items="${adminProductList}">
 		          	<c:if test="${product.isThumbnail == 0}">
 		          		<div>
-		          			<img src="${product.image}" alt="${product.imgId}" style="width:70%"><br>
+		          			<img src="${product.image.startsWith('/') ? product.image : '/images/' += product.image}" alt="${product.imgId}" style="width:70%"><br>
 		          			<input type="file" name="${product.imgId}"><br>
 	          			</div>
 		          	</c:if>
@@ -94,6 +85,25 @@
 </form>
 	
 <script>
+const firstSelect = document.getElementById('first-category-id');
+const secondSelect = document.getElementById('second-category-id');
+
+firstSelect.addEventListener('change', function (e) {
+  const fcId = e.target.value;
+  fetch("/admin/product/category/first/" + fcId)
+    .then((res) => res.json())
+    .then((data) => {
+      secondSelect.innerHTML = '';
+      data.forEach((e) => {
+        let scOption = document.createElement('option');
+        scOption.value = e.id;
+        scOption.textContent = e.secondCategoryName;
+        secondSelect.append(scOption);
+      });
+    })
+    .catch((err) => console.log(err));
+});
+
 
 </script>
 <%@ include file ="/WEB-INF/view/admin/layout/footer.jsp" %>

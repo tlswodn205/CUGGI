@@ -195,7 +195,7 @@ ul {
 							<a href="/admin/qnaList">문의사항관리</a>
 						</li>
 						<li>
-					    <a href="/admin/product">상품관리</a>
+					    <a href="/admin/products">상품관리</a>
 						</li>
 					</ul>
 				</div>

@@ -37,7 +37,7 @@
 	        <div class="product-one" id="${productList.key}">
 	          <div class="slide">
 	          	<c:forEach items="${productList.value}" var="item">
-	            	<img src="${item.image}" alt="" />
+	            	<img src="${item.image.startsWith('/') ? item.image : '/images/' += item.image}" alt="" />
 	            </c:forEach>
 	          </div>
 	          <div class="product-hover">

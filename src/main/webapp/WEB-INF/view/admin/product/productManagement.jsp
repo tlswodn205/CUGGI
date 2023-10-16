@@ -13,7 +13,7 @@
 						<input type="text" id="keyword" placeholder="검색" value="${adminPageListDto.keyword}">
 						<input type="button" id="search-btn" value="검색하기" onclick="search()">
 						</div>
-						<input type="button" class="insertButton" onclick="location.href='./insertOfflineStore'" value="지점 추가">
+						<input type="button" class="insertButton" onclick="location.href='/admin/product'" value="상품 추가">
 					</div>
 					<table class = "list-table">
 					    <thead>

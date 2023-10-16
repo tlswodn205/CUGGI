@@ -52,8 +52,7 @@ public class ProductService {
 	 * @return 상품 하나의 정보(이미지 여러개여서 list)
 	 */
 	public List<ProductResponseDto> productDetail(int productId) {
-		List<ProductResponseDto> productDto = productRepository.findByIdForCate(productId); // sql
-		return productDto;
+		return productRepository.findByIdForCate(productId);
 	}
 	
 	/**
@@ -92,7 +91,7 @@ public class ProductService {
 
 		for(ProductListResponseDto dto : listResponseDtos) {
 			Integer productId = dto.getProductId();
-			resultMap.computeIfAbsent(productId, ArrayList::new).add(dto); // productId를 기준으로 없으면 추가
+			resultMap.computeIfAbsent(productId, t -> new ArrayList<>()).add(dto); // productId를 기준으로 없으면 추가
 		}
 		return resultMap;
 	}
