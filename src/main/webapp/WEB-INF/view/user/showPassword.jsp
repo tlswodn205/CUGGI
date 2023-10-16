@@ -19,13 +19,6 @@
 		font-size: 30px;
 		margin-bottom: 30px;
 	}
-	#email {
-		width: 380px;
-		height: 56px;
-		font-size: 18px;
-		margin-bottom: 20px;
-		padding: 0px 10px;
-	}
 	button {
 		width: 400px;
 		height: 56px;
@@ -42,25 +35,17 @@
     }
 
 </style>
+	<main>
 	<div id="body">
-		<div id="title">비밀번호 찾기</div>
-		<div id="subTitle">
-			<p>
-				아이디와 이메일을 입력해주세요
-			</p>
+		<div>
+			<div id="title">비밀번호 확인</div>
+			<div id="subTitle">회원님의 임시 비밀번호입니다.</div>
+			<div id="newPassword" name="newPassword">${newPassword}</div>
+			<button onclick="location.href='signIn'">로그인</button>
 		</div>
-		<form action="/user/showPassword" method="post">
-			<div>			
-				<input type="text" placeholder="아이디*" id="username" name="username">
-				<input type="email" placeholder="email*" id="email" name="email">
-			</div>
-			<button type="submit"  onclick="findPassword()">비밀번호 찾기</button>
-		</form>
 	</div>
-	
+	</main>
 <script>
-	function findPassword() {
-		form.submit;
-	}
+
 </script>
 <%@ include file="/WEB-INF/view/layout/footer.jsp"%>

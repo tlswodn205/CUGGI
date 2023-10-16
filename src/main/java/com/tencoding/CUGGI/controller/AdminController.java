@@ -27,6 +27,7 @@ import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertPaymentRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertProductRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateProductReqeustDto;
+import com.tencoding.CUGGI.dto.request.UpdateUserDto;
 import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
@@ -43,6 +44,8 @@ import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaListResponseDto;
+import com.tencoding.CUGGI.dto.response.UserInfoDetailDto;
+import com.tencoding.CUGGI.dto.response.UserInfoListDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.model.FirstCategory;
 import com.tencoding.CUGGI.repository.model.Qna;
@@ -306,4 +309,26 @@ public class AdminController {
 	}
 	
 	// product end
+	
+	// user start
+	@GetMapping("/userInfoList")
+	public String userInfoList문의사항리스트(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
+		AdminPageListDto<UserInfoListDto> adminPageListDto = adminService.userList(type, keyword, page, status);
+		model.addAttribute("adminPageListDto", adminPageListDto);
+		return "admin/user/userInfoList";
+	}
+	
+	@GetMapping("/userInfoDetail/{id}")
+	public String userInfoDetail(@PathVariable("id") int id, Model model) {
+		UserInfoDetailDto userInfoDetailDto = adminService.userInfoDetail(id);
+		model.addAttribute("userInfoDetail", userInfoDetailDto);
+		System.out.println(userInfoDetailDto.toString());
+		return "admin/user/userInfoDetail";
+	}
+	
+//	@PostMapping("userInfoDetail")
+//	public String userInfoDetail(UpdateUserDto updateuserDto) {
+//		int result = adminService.userInfoDetail(UpdateUserDto);
+//		return "redirect:userInfo";
+//	}
 }
