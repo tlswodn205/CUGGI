@@ -26,9 +26,9 @@
         <div class="detail-filter-option">
           <ul>
           	
-            <li class="option-list ${filter == 'createAt' ? 'on' : ''} createAt"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=createAt">신상품</a></li>
-            <li class="option-list ${filter == 'priceDESC' ? 'on' : ''} priceDESC"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceDESC">가격 - 높은 가격순</a></li>
-            <li class="option-list ${filter == 'priceASC' ? 'on' : ''} priceASC"><a href="http://localhost:90/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceASC">가격 - 낮은 가격순</a></li>
+            <li class="option-list ${filter == 'createAt' ? 'on' : ''} createAt"><a href="/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=createAt">신상품</a></li>
+            <li class="option-list ${filter == 'priceDESC' ? 'on' : ''} priceDESC"><a href="/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceDESC">가격 - 높은 가격순</a></li>
+            <li class="option-list ${filter == 'priceASC' ? 'on' : ''} priceASC"><a href="/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceASC">가격 - 낮은 가격순</a></li>
           </ul>
         </div>
       </div>
