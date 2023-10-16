@@ -30,12 +30,31 @@ public class ProductService {
 	 * @return 상품아이디별로 묶인 map
 	 */
 	public Map<Integer , List<ProductListResponseDto>> productList(Integer secondCategoryId, String filter, String searchData) {
+		
 		List<ProductListResponseDto> productList = productRepository.findByAllForCateOrderByDesc(secondCategoryId, filter, searchData); // sql 결과
+		
 		// 개수 20개 리스트로 바꾸고 맵 변환 or 바로 맵 변환
 		Map<Integer , List<ProductListResponseDto>> resultMap = new LinkedHashMap<>();
 		int listSize = productList.size();
 		if(listSize >= 20) {
-			List<ProductListResponseDto> newList = limitListTo20(productList, listSize);
+			List<ProductListResponseDto> newList = limitListTo20(productList, listSize, 0);
+			resultMap = listToMap(newList);
+		}else {
+			resultMap = listToMap(productList);
+		}
+
+		return resultMap;
+	}
+	
+	public Map<Integer , List<ProductListResponseDto>> reloadProductList(Integer secondCategoryId, String filter, String searchData, int startNum) {
+		
+		List<ProductListResponseDto> productList = productRepository.findByAllForCateOrderByDesc(secondCategoryId, filter, searchData); // sql 결과
+		
+		// 개수 20개 리스트로 바꾸고 맵 변환 or 바로 맵 변환
+		Map<Integer , List<ProductListResponseDto>> resultMap = new LinkedHashMap<>();
+		int listSize = productList.size();
+		if(listSize >= 20) {
+			List<ProductListResponseDto> newList = limitListTo20(productList, listSize, startNum);
 			resultMap = listToMap(newList);
 		}else {
 			resultMap = listToMap(productList);
@@ -71,13 +90,13 @@ public class ProductService {
 	 * @return newList
 	 */
 	// 개수 20개 리스트로 바꾸는 함수
-	private List<ProductListResponseDto> limitListTo20(List<ProductListResponseDto> productList, int size){
+	private List<ProductListResponseDto> limitListTo20(List<ProductListResponseDto> productList, int size, int startNum){
 		int listSize = productList.size(); // sql 리스트 사이즈
 		List<ProductListResponseDto> newList = new ArrayList<>(); // 새로운 리스트 생성
 		int count = 0; // 개수제한 변수
 		
-		for(int i = 0; i < listSize; i++) {
-			if(i+1 == listSize) break; // 최대 인덱스 벗어나는 경우 반복문 중단
+		for(int i = startNum; i < listSize; i++) {
+			if(i+1 > listSize) break; // 최대 인덱스 벗어나는 경우 반복문 중단
 			
 			// 현재 인덱스의 productId와 다음 인덱스의 productId가 다른 경우 count++
 			if(!productList.get(i).getProductId().equals(productList.get(i+1).getProductId())) {
