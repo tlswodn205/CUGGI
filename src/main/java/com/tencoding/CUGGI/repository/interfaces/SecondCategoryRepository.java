@@ -12,4 +12,5 @@ public interface SecondCategoryRepository {
 	public int deleteById(int secondCategoryId);
 	public SecondCategory findById(int secondCategoryId);
 	public List<SecondCategory> findByAll();
+	public List<SecondCategory> findByFirstCategoryId(int firstCategoryId);
 }

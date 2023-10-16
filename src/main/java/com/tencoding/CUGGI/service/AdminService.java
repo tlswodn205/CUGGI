@@ -1,5 +1,11 @@
 package com.tencoding.CUGGI.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,6 +18,7 @@ import java.util.UUID;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +51,7 @@ import com.tencoding.CUGGI.repository.interfaces.PersonRepository;
 import com.tencoding.CUGGI.repository.interfaces.ProductImageRepository;
 import com.tencoding.CUGGI.repository.interfaces.ProductRepository;
 import com.tencoding.CUGGI.repository.interfaces.QnaRepository;
+import com.tencoding.CUGGI.repository.interfaces.SecondCategoryRepository;
 import com.tencoding.CUGGI.repository.interfaces.UserRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
 import com.tencoding.CUGGI.repository.model.Order;
@@ -52,12 +60,17 @@ import com.tencoding.CUGGI.repository.model.Qna;
 import com.tencoding.CUGGI.repository.model.SecondCategory;
 import com.tencoding.CUGGI.util.Mail;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class AdminService {
 
 	@Autowired
 	FirstCategoryRepository firstCategoryRepository;
 
+	@Autowired
+	SecondCategoryRepository secondCategoryRepository;
+	
 	@Autowired
 	OrderRepository orderRepository;
 
@@ -77,9 +90,6 @@ public class AdminService {
 	QnaRepository qnaRepository;
 
 	@Autowired
-	SecondCategoryService secondCategoryService;
-
-	@Autowired
 	UserRepository userRepository;
 
 	@Autowired
@@ -88,6 +98,12 @@ public class AdminService {
 	@Resource(name="mail")
 	private Mail mail;
   
+	@Autowired
+	private ProductRepository productRepository;
+	
+	@Value("${file.path}")
+	private String filePath;
+	
 	//offlineStore start
 
 	@Transactional
@@ -231,10 +247,8 @@ public class AdminService {
 	//qna end
 	
 	// product start
-	
-	// 나중에 위로 올려주세요@ autowired
-	@Autowired
-	private ProductRepository productRepository;
+
+
 	
 	// 관리자 상품 목록
 	@Transactional
@@ -251,19 +265,17 @@ public class AdminService {
 	public List<AdminProductResponseDto> findAdminProductResponseDtoByProductId(String productId) {
 		return productRepository.findAdminProductByProductId(productId);
 	}
-	// 관리자 상품 정보 업데이트 (이미지 제외) 
+	
+	// 관리자 상품 정보 업데이트 (이미지 제외)
+	@Transactional
 	public int updateProduct(UpdateProductReqeustDto updateProductReqeustDto) {
-		// 2차 카테고리 이름을 가져오므로 DB에서 조회한 2차 카테고리 이름과 비교하여 카테고리아이디를 Set한다.
-		List<SecondCategory> cateScList = secondCategoryService.getSecondCategoryList();
-		for(SecondCategory category : cateScList) {
-			if(updateProductReqeustDto.getScName().equals(category.getSecondCategoryName())) {
-				updateProductReqeustDto.setSecondCategoryId(category.getId());
-			}
-		}
-		
 		return productRepository.updateById(updateProductReqeustDto);
 	}
-	// 관리자 상품 정보 업데이트 (이미지)
+	/**
+	 *  관리자 상품 정보 업데이트 (이미지)
+	 * @param Map files
+	 */
+	@Transactional
 	public void updateProductImage(Map<String, MultipartFile> files) {
 		// List 선언
 		List<ImgRequestDto> list = new ArrayList<>();
@@ -279,37 +291,61 @@ public class AdminService {
 			}
 		}
 		// 파일 업로드 기능
-		uploadFile(list);
+		List<ImgRequestDto> newlist = uploadFile(list);
 		
-		
-		// DB img(url) 수정
-		// productImageRepository.updateById(list);
-	}
-	
-	// TODO 파일 업로드 
-	public boolean uploadFile(List<ImgRequestDto> list) {
-		
-		for(ImgRequestDto dto : list) { // 리스트 순회
-			
-			MultipartFile file = dto.getFile(); // list 파일 인스턴스 선언
-			String oriFileName = file.getOriginalFilename(); // 파일 원본 이름 가져오기
-			String uuidStr = UUID.randomUUID().toString(); // 랜덤문자 가져오기
-			int extIndex = oriFileName.indexOf("."); // . 인덱스 가져오기
-			String ext = oriFileName.substring(extIndex); // .확장자 가져오기
-			LocalDateTime now = LocalDateTime.now(); // 현재시간 가져오기
-			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss"); // 시간 포맷 지정
-			String formatedNow = now.format(dateTimeFormatter); // 시간 포맷 변환
-			String newFileName = formatedNow + "_" + uuidStr + ext; // 시간_UUID.확장자 
-			
-			
+		// DB img(url) 수정 이미지 변경사항이 있다면
+		if(!newlist.isEmpty()) {
+			productImageRepository.updateById(newlist);	
 		}
 		
-		
-		
-		return false;
+	}
+
+	/**
+	 * 파일 업로드 기능
+	 * @param imgRequestDtosList
+	 * @return 새로운 파일 이름을 담은 list
+	 */
+	@Transactional
+	public List<ImgRequestDto> uploadFile(List<ImgRequestDto> imgRequestDtosList) {
+		for(ImgRequestDto dto : imgRequestDtosList) { // 리스트 순회
+			// 파일 가져오기
+			MultipartFile file = dto.getFile(); // list 파일 인스턴스 선언
+			// 중복 파일 이름 방지
+			String oriFileName = file.getOriginalFilename(); // 파일 원본 이름 가져오기
+			String uuidStr = UUID.randomUUID().toString(); // 랜덤문자 가져오기
+			LocalDate now = LocalDate.now(); // 현재시간 가져오기
+			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd"); // 시간 포맷 지정
+			String formatedNow = now.format(dateTimeFormatter); // 시간 포맷 변환
+			String newFileName = uuidStr;
+			if(oriFileName != null) {
+				int extIndex = oriFileName.indexOf("."); // . 인덱스 가져오기
+				String ext = oriFileName.substring(extIndex); // .확장자 가져오기
+				newFileName += ext; // 시간_UUID.확장자
+			}
+			String newDatefolderPath = filePath + formatedNow + File.separator; // 기존 폴더/연월일/
+			// 폴더 확인 없으면 업로드 날짜(yyyyMMdd)로 폴더 생성
+			File folder = new File(newDatefolderPath);
+			if(!folder.exists()) {
+				folder.mkdirs();
+			}
+			Path path = Paths.get(newDatefolderPath, newFileName); // 파일 생성(경로 + 파일)
+			// 파일 업로드!
+			try {
+				Files.write(path, file.getBytes());
+			} catch (Exception e) {
+				log.error(e.getMessage());
+			}
+			// 새로 만든 파일 이름 list로 set
+			String image = formatedNow + File.separator + newFileName;
+			dto.setImage(image);
+		}
+		return imgRequestDtosList;
 	}
 	
-	
+	// 1차 카테고리로 검색
+	public List<SecondCategory> getSecondCategoryListByFirstCategoryId(int firstCategoryId){
+		return secondCategoryRepository.findByFirstCategoryId(firstCategoryId);
+	}
 	
 	// product end
 }

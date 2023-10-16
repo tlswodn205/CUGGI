@@ -52,8 +52,7 @@ public class ProductService {
 	 * @return 상품 하나의 정보(이미지 여러개여서 list)
 	 */
 	public List<ProductResponseDto> productDetail(int productId) {
-		List<ProductResponseDto> productDto = productRepository.findByIdForCate(productId); // sql
-		return productDto;
+		return productRepository.findByIdForCate(productId);
 	}
 	
 	/**
@@ -68,7 +67,7 @@ public class ProductService {
 		int count = 0; // 개수제한 변수
 		
 		for(int i = 0; i < listSize; i++) {
-			if(i + 1 == listSize) break; // 최대 인덱스 벗어나는 경우 반복문 중단
+			if(i+1 == listSize) break; // 최대 인덱스 벗어나는 경우 반복문 중단
 			
 			// 현재 인덱스의 productId와 다음 인덱스의 productId가 다른 경우 count++
 			if(!productList.get(i).getProductId().equals(productList.get(i+1).getProductId())) {
@@ -92,7 +91,7 @@ public class ProductService {
 
 		for(ProductListResponseDto dto : listResponseDtos) {
 			Integer productId = dto.getProductId();
-			resultMap.computeIfAbsent(productId, ArrayList::new).add(dto); // productId를 기준으로 없으면 추가
+			resultMap.computeIfAbsent(productId, t -> new ArrayList<>()).add(dto); // productId를 기준으로 없으면 추가
 		}
 		return resultMap;
 	}

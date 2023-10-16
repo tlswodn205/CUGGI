@@ -29,13 +29,13 @@
 		UPDATE order_tb SET state="결제완료", purchase_date = now()
 		WHERE id = #{orderId};
 	</update>
-
+<!-- 
 	<update id="orderAdminUpdate">
 		UPDATE order_tb SET state="결제취소"
 		WHERE id =
 		#{orderId};
 	</update>
-	
+	 -->
 	<update id="orderAdminUpdate">
 		UPDATE order_tb SET state="결제취소"
 		WHERE id = #{orderId};

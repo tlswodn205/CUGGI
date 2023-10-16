@@ -28,6 +28,7 @@
   // 슬라이드 버튼 마우스 오버시 나타내기
   $('.product-one').on('mouseover mouseout', function () {
     $(this).find('p').toggleClass('active');
+    $(this).find('.product-hover').toggleClass('active')
   });
   
   // 상품 detail 이동 이벤트
@@ -122,3 +123,9 @@ function slideImg(tag, classNames) {
     isClickEnabled = true;
   }, 500);
 }
+
+/*psg 2023-10-13 list mouse over*/
+// 마우스 오버시 상품명 가격 나타내기
+  $('.detail-filter-current').on('mouseover', function () {
+    $('.detail-filter-option').addClass('active');
+  });

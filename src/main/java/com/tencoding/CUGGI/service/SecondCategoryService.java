@@ -23,4 +23,6 @@ public class SecondCategoryService {
 		List<SecondCategory> secondCategoryList = secondCategoryRepository.findByAll();
 		return secondCategoryList;
 	}
+
+	
 }
