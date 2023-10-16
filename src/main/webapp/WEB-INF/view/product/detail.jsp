@@ -77,7 +77,7 @@
         </div>
         <div class="info-2">
           <div class="product-info">
-            <img src="${productImage.image}" alt="상품사진" />
+            <img src="${productImage.image.startsWith('/') ? productImage.image : '/upload/' += item.image}" alt="상품사진" />
             <p>상품정보</p>
             <p>${productList[0].productFeature}</p>
             <ul>
