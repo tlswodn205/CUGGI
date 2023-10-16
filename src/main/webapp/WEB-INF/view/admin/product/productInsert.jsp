@@ -8,26 +8,26 @@
   <tbody>
     <tr>
       <td>상품 이름</td>
-      <td><input type="text" id="prduct-name" name="productName" value="" placeholder="상품 이름을 입력해주세요" required /></td>
+      <td><input type="text" id="prduct-name" name="product.productName" value="" placeholder="상품 이름을 입력해주세요" required /></td>
     </tr>
     <tr>
       <td>상품 가격</td>
-      <td><input type="number" id="prduct-price" name="price" value="" placeholder="상품 가격을 입력해주세요" required /></td>
+      <td><input type="number" id="prduct-price" name="product.price" value="" placeholder="상품 가격을 입력해주세요" required /></td>
     </tr>
     <tr>
       <td>상품 설명</td>
       <td>
-        <textarea rows="4" cols="140" id="product-feature" name="productFeature" style="resize: none" placeholder="상품 설명을 입력해주세요" required></textarea>
+        <textarea rows="4" cols="140" id="product-feature" name="product.productFeature" style="resize: none" placeholder="상품 설명을 입력해주세요" required></textarea>
       </td>
     </tr>
     <tr>
       <td>재고</td>
-      <td><input type="number" id="product-quantity" name="quantity" value="" placeholder="상품 재고를 입력해주세요" required /></td>
+      <td><input type="number" id="product-quantity" name="product.quantity" value="" placeholder="상품 재고를 입력해주세요" required /></td>
     </tr>
     <tr>
       <td>1차카테고리</td>
       <td>
-        <select name="firstCategoryId" id="first-category-id">
+        <select name="product.firstCategoryId" id="first-category-id">
           <option value="1">트래블</option>
           <option value="2">핸드백</option>
           <option value="3">지갑</option>
@@ -38,7 +38,7 @@
     <tr>
       <td>2차카테고리</td>
       <td>
-        <select name="secondCategoryId" id="second-category-id">
+        <select name="product.secondCategoryId" id="second-category-id">
           <option value="1">트롤리 & 캐리어</option>
           <option value="2">더플백</option>
           <option value="3">트래블 소품</option>

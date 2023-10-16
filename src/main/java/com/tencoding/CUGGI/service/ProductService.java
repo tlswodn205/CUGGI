@@ -30,9 +30,7 @@ public class ProductService {
 	 * @return 상품아이디별로 묶인 map
 	 */
 	public Map<Integer , List<ProductListResponseDto>> productList(Integer secondCategoryId, String filter, String searchData) {
-		
 		List<ProductListResponseDto> productList = productRepository.findByAllForCateOrderByDesc(secondCategoryId, filter, searchData); // sql 결과
-		
 		// 개수 20개 리스트로 바꾸고 맵 변환 or 바로 맵 변환
 		Map<Integer , List<ProductListResponseDto>> resultMap = new LinkedHashMap<>();
 		int listSize = productList.size();
@@ -45,8 +43,15 @@ public class ProductService {
 
 		return resultMap;
 	}
-	
-	
+	/**
+	 * 상품 목록 개수 체크
+	 * @param productList
+	 * @return 상품 목록 리스트 사이즈
+	 */
+	public Integer countProductListSize(Integer secondCategoryId, String filter, String searchData) {
+		List<ProductListResponseDto> productList = productRepository.findByAllForCateOrderByDesc(secondCategoryId, filter, searchData);
+		return productList.size();
+	}
 	/**
 	 * 상품 상세
 	 * @param productId
@@ -55,6 +60,10 @@ public class ProductService {
 	public List<ProductResponseDto> productDetail(int productId) {
 		return productRepository.findByIdForCate(productId);
 	}
+	
+	
+	
+	
 	
 	/**
 	 * 화면에 20개만 보여주기위해 list의 개수를 20개로 바꾸는 함수

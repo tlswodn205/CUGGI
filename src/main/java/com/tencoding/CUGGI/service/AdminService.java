@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.tencoding.CUGGI.dto.request.ImgRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
+import com.tencoding.CUGGI.dto.request.InsertProductRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
@@ -41,6 +42,8 @@ import com.tencoding.CUGGI.dto.response.QnaAnswerMailResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaListResponseDto;
+import com.tencoding.CUGGI.dto.response.UserInfoDetailDto;
+import com.tencoding.CUGGI.dto.response.UserInfoListDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.interfaces.FirstCategoryRepository;
 import com.tencoding.CUGGI.repository.interfaces.OfflineStoreRepository;
@@ -56,6 +59,7 @@ import com.tencoding.CUGGI.repository.interfaces.UserRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
 import com.tencoding.CUGGI.repository.model.Order;
 import com.tencoding.CUGGI.repository.model.Payment;
+import com.tencoding.CUGGI.repository.model.Product;
 import com.tencoding.CUGGI.repository.model.Qna;
 import com.tencoding.CUGGI.repository.model.SecondCategory;
 import com.tencoding.CUGGI.util.Mail;
@@ -343,9 +347,62 @@ public class AdminService {
 	}
 	
 	// 1차 카테고리로 검색
+	@Transactional
 	public List<SecondCategory> getSecondCategoryListByFirstCategoryId(int firstCategoryId){
 		return secondCategoryRepository.findByFirstCategoryId(firstCategoryId);
 	}
+	// 상품 일반 정보 입력
+	@Transactional
+	public void insertProduct(InsertProductRequestDto insertProductRequestDto) {
+		// 상품 일반
+		// retrun 자동증가된 상품의 ID
+		productRepository.insert(insertProductRequestDto.getProduct());
+		int autoIncreProductId = insertProductRequestDto.getProduct().getId();
+		System.out.println(autoIncreProductId);
+		// 상품 이미지
+		// 썸네일 구분하기
+		List<ImgRequestDto> thumbImgList = insertProductRequestDto.toImgReqDtoList(insertProductRequestDto.getThumbImg(), 1, autoIncreProductId);
+		List<ImgRequestDto> detailImgList = insertProductRequestDto.toImgReqDtoList(insertProductRequestDto.getDetailImg(), 0, autoIncreProductId);
+		// 파일 업로드 하고 바뀐 파일이름 받아오기
+		thumbImgList = uploadFile(thumbImgList);
+		detailImgList = uploadFile(detailImgList);
+		// 새로운 리스토로 합치기
+		List<ImgRequestDto> allImgList = new ArrayList<>();
+		allImgList.addAll(thumbImgList);
+		allImgList.addAll(detailImgList);
+		// 상품 이미지 정보 입력
+		productImageRepository.insert(allImgList);
+	}
+	// 상품 삭제
+	@Transactional
+	public void deleteProduct(Integer productId) {
+		// 일반 정보 삭제
+		productRepository.deleteById(productId);
+		
+		// 이미지 정보 삭제
+		productImageRepository.deleteById(productId);
+		
+		
+	}
 	
 	// product end
+	
+	// user start
+	@Transactional
+	public AdminPageListDto<UserInfoListDto> userList(String type, String kerword,Integer page, String status) {
+		if(page <= 0) {
+			page = 1;
+		}
+		PagingResponseDto PagingResponseDto = qnaRepository.findPaging(type, kerword, page, status);
+		int startNum = (page-1)*10;
+		List<UserInfoListDto> userList = userRepository.findByKeywordAndCurrentPage(type, kerword, startNum, status);
+		System.out.println(userList.get(0).getBirthday());
+		AdminPageListDto<UserInfoListDto> adminPageListDto = new AdminPageListDto<UserInfoListDto>(PagingResponseDto, kerword, type, null ,userList);
+		return adminPageListDto;
+	}
+
+	public UserInfoDetailDto userInfoDetail(int id) {
+		UserInfoDetailDto userInfoDetailDto = userRepository.findByIdAtAdmin(id);
+		return userInfoDetailDto;
+	}
 }

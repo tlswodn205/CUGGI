@@ -1,5 +1,6 @@
 package com.tencoding.CUGGI.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertPaymentRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertProductRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateProductReqeustDto;
+import com.tencoding.CUGGI.dto.request.UpdateUserDto;
 import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
@@ -42,6 +44,8 @@ import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaListResponseDto;
+import com.tencoding.CUGGI.dto.response.UserInfoDetailDto;
+import com.tencoding.CUGGI.dto.response.UserInfoListDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.model.FirstCategory;
 import com.tencoding.CUGGI.repository.model.Qna;
@@ -224,7 +228,7 @@ public class AdminController {
 	
 	// product start
 	/**
-	 * 상품관리 페이지 이동
+	 * 상품목록 페이지 이동
 	 * @return 상품관리페이지 이동
 	 */
 	@GetMapping("/products")
@@ -235,6 +239,9 @@ public class AdminController {
 			Model model) 
 	{
 		AdminPageListDto<ProductResponseDto> adminPageListDto = adminService.adminProductList(type, keyword, page);
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("page", page);
 		model.addAttribute("adminPageListDto", adminPageListDto);
 		return "/admin/product/productManagement";
 	}
@@ -288,10 +295,40 @@ public class AdminController {
 	// 상품 추가 기능
 	@PostMapping("/product")
 	public String productInsertProc(InsertProductRequestDto insertProductRequestDto) {
+		// 상품 정보 입력
+		adminService.insertProduct(insertProductRequestDto);
 		
 		System.out.println();
 		return "redirect:/admin/products/";
 	}
+	// 상품 삭제
+	@GetMapping("/deleteProduct/{productId}")
+	public String deleteProduct(@PathVariable Integer productId) {
+		adminService.deleteProduct(productId);
+		return "redirect:/admin/products";
+	}
 	
 	// product end
+	
+	// user start
+	@GetMapping("/userInfoList")
+	public String userInfoList문의사항리스트(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
+		AdminPageListDto<UserInfoListDto> adminPageListDto = adminService.userList(type, keyword, page, status);
+		model.addAttribute("adminPageListDto", adminPageListDto);
+		return "admin/user/userInfoList";
+	}
+	
+	@GetMapping("/userInfoDetail/{id}")
+	public String userInfoDetail(@PathVariable("id") int id, Model model) {
+		UserInfoDetailDto userInfoDetailDto = adminService.userInfoDetail(id);
+		model.addAttribute("userInfoDetail", userInfoDetailDto);
+		System.out.println(userInfoDetailDto.toString());
+		return "admin/user/userInfoDetail";
+	}
+	
+//	@PostMapping("userInfoDetail")
+//	public String userInfoDetail(UpdateUserDto updateuserDto) {
+//		int result = adminService.userInfoDetail(UpdateUserDto);
+//		return "redirect:userInfo";
+//	}
 }

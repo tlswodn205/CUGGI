@@ -89,7 +89,6 @@
 				</div>
 				<div>
 					<input type="text" placeholder="상세주소" id="address_detail" value="${updateUserDto.addressDetail}" name="addressDetail">
-					<input type="hidden" id="add_address">
 				</div>
 				<div>
 					<input type="email" placeholder="이메일" id="email" name="email" value="${updateUserDto.email}">
