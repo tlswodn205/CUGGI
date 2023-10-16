@@ -56,7 +56,7 @@
 		          <c:forEach var="product" items="${adminProductList}">
 		          	<c:if test="${product.isThumbnail == 1}">
 		          		<div>
-		          			<img src="${product.image.startsWith('/') ? product.image : '/images/' += product.image}" alt="${product.imgId}" style="width:70%"><br>
+		          			<img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="${product.imgId}" style="width:70%"><br>
 		          			<input type="file" name="${product.imgId}"><br>
 	          			</div>
 		          	</c:if>
