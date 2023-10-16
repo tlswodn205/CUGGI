@@ -22,13 +22,13 @@ $('.searchBtn').on('click', function () {
 // 회원 이벤트
 $('.profileBtn').on('click', function () {
   $('.account-area').slideToggle("slow");
-  $('.account-area').css("display","flex");
+  $('.account-area').css("display","block");
   $('.search-area').slideUp("fast");
   $(".submenu").slideUp("fast");
 });
 
 $('.basketBtn').on('click', function () {
-  alert('장바구니 이벤트');
+  location.href="/order/basket"
 });
 
 // 검색 유효성, submit이벤트

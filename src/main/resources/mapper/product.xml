@@ -130,4 +130,14 @@
 		WHERE pt.id = #{productId};
 	</select>
 	
+	<select id="findBySearchProductAll" resultType = "com.tencoding.CUGGI.dto.response.ProductSearchListResponseDto">	
+		select pt.second_category_id,pit.product_id, pt.product_name, pit.image
+		from 
+		product_image_tb pit
+		left join  product_tb pt
+		on pt.id = pit.product_id
+		where pt.product_name like CONCAT('%',#{searchData},'%') and pit.is_thumbnail=1
+        group by product_id
+        limit 9
+	</select>
 </mapper>

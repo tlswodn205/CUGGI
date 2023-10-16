@@ -38,7 +38,6 @@
 		width: 400px;
 		background-color: black;
 		color: white;
-		margin-bottom: 100px;
 		margin-top: 30px;
 	}
 	.sign-up input[type="submit"]:hover {
@@ -58,6 +57,10 @@
 	.sign-up .submit-btn{
 		text-align: center;
 	}
+	.sign-out {
+		text-align: center;
+	}
+	
 </style>
 	<div id="title">프로필 수정</div>
 	<div class="sign-up">
@@ -102,7 +105,7 @@
 			<div class="submit-btn">
 				<input type="submit" value="회원수정완료" onclick="update(this.form)">
 			</div>
-			<div>
+			<div class="sign-out">
 				<input type="button" onclick="deleteUser()" value="회원탈퇴" id="delete" name="delete">
 			</div>
 		</form>
