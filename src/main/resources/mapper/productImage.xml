@@ -22,7 +22,7 @@
 	</update>
 	
 	<delete id="deleteById">
-		DELETE FROM product_image_tb WHERE id = #{id};
+		DELETE FROM product_image_tb WHERE id = #{productImageId};
 	</delete>
 	
 	<select id="findById" resultType = "com.tencoding.CUGGI.repository.model.ProductImage">

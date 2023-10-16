@@ -378,11 +378,12 @@ public class AdminService {
 	public void deleteProduct(Integer productId) {
 		// 일반 정보 삭제
 		productRepository.deleteById(productId);
-		
-		// 이미지 정보 삭제
-		productImageRepository.deleteById(productId);
-		
-		
+		// 이미지 정보 삭제(productId)
+		productImageRepository.deleteByProductId(productId);
+	}
+	@Transactional
+	public int deleteImg(Integer productImageId) {
+		return productImageRepository.deleteById(productImageId);
 	}
 	
 	// product end

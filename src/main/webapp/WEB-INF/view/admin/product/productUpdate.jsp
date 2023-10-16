@@ -50,13 +50,13 @@
        		 </td>
 	      </tr>
 	      <tr>
-	        <td>썸네일</td>
+	        <td>썸네일<br><button type="button" class="btnAddImg">추가</button></td>
 	        <td class="tableImgTd" id="thumbnailImgTd">
 	          <div>
 		          <c:forEach var="product" items="${adminProductList}">
 		          	<c:if test="${product.isThumbnail == 1}">
-		          		<div>
-		          			<div><i class="fa-solid fa-x"></i></div>
+		          		<div class="imgDiv">
+		          			<div class="deleteImg"><i class="fa-solid fa-x"></i></div>
 		          			<img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="${product.imgId}"><br>
 		          			<input type="file" name="${product.imgId}"><br>
 	          			</div>
@@ -66,15 +66,15 @@
 	        </td>
 	      </tr>
 	      <tr>
-	        <td>상품 세부 이미지</td>
+	        <td>상품 세부 이미지<br><button type="button" class="btnAddImg">추가</button></td>
 	        <td class="tableImgTd" id="detailImglTd">
   	          <div>
 		          <c:forEach var="product" items="${adminProductList}">
 		          	<c:if test="${product.isThumbnail == 0}">
-		          		<div>
-		          			<div><i class="fa-solid fa-x"></i></div>
-		          			<img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="${product.imgId}" ><br>
-		          			<input type="file" name="${product.imgId}"><br>
+		          		<div class="imgDiv">
+		          			<div class="deleteImg"><i class="fa-solid fa-x"></i></div>
+		          			<img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="${product.imgId}" >
+		          			<input type="file" name="${product.imgId}">
 	          			</div>
 		          	</c:if>
 		          </c:forEach>
@@ -86,26 +86,5 @@
   <input type="submit" value="상품 수정" />
 </form>
 	
-<script>
-const firstSelect = document.getElementById('first-category-id');
-const secondSelect = document.getElementById('second-category-id');
-
-firstSelect.addEventListener('change', function (e) {
-  const fcId = e.target.value;
-  fetch("/admin/product/category/first/" + fcId)
-    .then((res) => res.json())
-    .then((data) => {
-      secondSelect.innerHTML = '';
-      data.forEach((e) => {
-        let scOption = document.createElement('option');
-        scOption.value = e.id;
-        scOption.textContent = e.secondCategoryName;
-        secondSelect.append(scOption);
-      });
-    })
-    .catch((err) => console.log(err));
-});
-
-
-</script>
+<script src="/js/admin/product/update.js"></script>
 <%@ include file ="/WEB-INF/view/admin/layout/footer.jsp" %>
