@@ -9,21 +9,27 @@ a {
     cursor: pointer;
 }
 
+html {
+	height: 100%;
+}
 body {
 	width: 100%;
 	height: 100%;
-	padding: 125px 0 0 0;
 	margin: 0;
+	padding: 0;
+}
+
+body > .body-container{
 	display: flex;
 	flex-direction: column;
+	height: 100%;
+	overflow: auto;
 }
 
 header {
 	min-height: 125px;
-	position: fixed;
+	position: sticky;
 	top: 0;
-	left: 0;
-	right: 0;
 	z-index: 2;
 	background-color: white;
 	border-bottom: 1px solid #ececec;
@@ -33,6 +39,16 @@ header nav .logo {
 	display: flex;
 	justify-content: center;
 	padding-top: 15px;
+}
+
+header nav .logo > .logo-service {
+	position: absolute;
+	left: 24rem;
+	top: 28px;
+}
+
+header nav .logo > .logo-service > span{
+	font-size: 13px;
 }
 
 header nav .logo > .account-area {
@@ -142,7 +158,7 @@ main .main-img > img {
 	width: -webkit-fill-available;
 }
 
-main .main-img > .see {
+main .main-img > .main-content {
 	position: absolute;
 	top: 70%;
 	left: 50%;
@@ -153,10 +169,15 @@ main .main-btn {
     background: white;
     border: none;
     border-radius: 3px;
+    font-weight: bold;
     box-shadow: none;
     height: 50px;
     width: 150px;
     cursor: pointer;
+}
+
+main .main-btn:hover {	
+    background: #b3b3b3;
 }
 
 main .product-hover {
@@ -195,9 +216,15 @@ footer {
     min-height: 100px;
 }
 
-footer div {
+footer .footer-content {
+	height: 100%;
     font-size: 10px;
-    margin: auto 0px auto 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+footer .footer-content .qna-content{
+	text-decoration-line: underline;
 }
 
 div.overlay.active{
@@ -233,6 +260,16 @@ div.overlay.active{
 
 .common-white-font {
     color: white;
+}
+
+.common-black-line-link {
+	color: black;
+	text-decoration-line: underline;
+}
+
+.common-white-line-link {
+	color: white;
+	text-decoration-line: underline;
 }
 
 /* 20231011 kjh*/
@@ -300,7 +337,7 @@ div.overlay.active{
 
 .logo > .logo-nav {
   position: absolute;
-  right: 380px;
+  right: 24rem;
   top: 12px;
   font-size: 24px;
   cursor: pointer;
