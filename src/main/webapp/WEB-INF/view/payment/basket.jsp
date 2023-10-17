@@ -64,9 +64,10 @@ content .shopping-bag-wrapper {
 	position: relative;
 	line-height: 3.5rem;
 }
-.eyerow{
-font-size: 14px;
-font-weight: normal 
+
+.eyerow {
+	font-size: 14px;
+	font-weight: normal
 }
 
 .order-detail {
@@ -81,15 +82,14 @@ font-weight: normal
 	letter-spacing: 0;
 }
 
-
 .basketTop {
 	display: list-item;
 	list-style: none;
 	text-align: -webkit-match-parent;
 }
 
-.basketTop .baglist-item-selected:first-child{
-border-top: solid 1px #c8c6c5;
+.basketTop .baglist-item-selected:first-child {
+	border-top: solid 1px #c8c6c5;
 }
 
 .basketTop .baglist-item-selected {
@@ -197,6 +197,10 @@ body.new-design.language-ko .baglist-item-availability {
 	word-break: keep-all;
 }
 
+#quantity {
+	width: 40px;
+}
+
 .baglist-item-availability {
 	font-family: GucciSans, Helvetica, Arial, sans-serif;
 	font-style: normal;
@@ -223,67 +227,74 @@ body.new-design.language-ko .baglist-item-availability {
 	letter-spacing: -.03em;
 	color: #000;
 }
+
 .shipping-info .subtitle {
-    font-size: 12px;
-    line-height: 16px;
-    font-weight: 400;
-    letter-spacing: -.03em;
-    color: #000;
-    font-style: normal;
-    
+	font-size: 12px;
+	line-height: 16px;
+	font-weight: 400;
+	letter-spacing: -.03em;
+	color: #000;
+	font-style: normal;
 }
+
 .basket .footer-item {
-    float: left;
-    width: 100%;
-    
+	float: left;
+	width: 100%;
 }
+
 .baglist-item-actions .edit-action {
-    display: inline-block;
-    position: relative;
-    margin-top: 15px;
-    
+	display: inline-block;
+	position: relative;
+	margin-top: 15px;
 }
+
 .baglist-item-actions .edit-action .delete {
-border : none;
-
-background-color: rgba(0,0,0,0);
-
-cursor: pointer;
-
-text-decoration: underline;
-}
-.product-total-price-style{
-font-size:18px;
-font-weight: bold;
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
+	cursor: pointer;
+	text-decoration: underline;
 }
 
-
+.product-total-price-style {
+	font-size: 18px;
+	font-weight: bold;
+	text-align: end;
+}
 
 .order-summary.order-details {
-    width: 345px;
-    float: right;
-    border: 1px solid #c8c6c5;
-    height: 430px;
-    margin-top: 77px;
-    
-}  
-
-
-
-.paybtn {
-    display:block;
-    width: 100%;
-    height: 68px;
-    background-color: black;
-    color: white;
-    font-size: 18px;
-    line-height: 65px;
-    text-align: center;
-    margin-top: 237px;
-    
+	width: 345px;
+	float: right;
+	border: 1px solid #c8c6c5;
+	height: 430px;
+	margin-top: 77px;
 }
 
+.payment {
+	width: 100%;
+	margin-top: 30px;
+}
 
+.payment-body {
+	text-align: center;
+}
+
+.payment .payment-body, input {
+	border: none;
+	outline: none;
+	text-align: center;
+}
+
+.paybtn {
+	display: block;
+	width: 100%;
+	height: 68px;
+	background-color: black;
+	color: white;
+	font-size: 18px;
+	line-height: 65px;
+	text-align: center;
+	margin-top: 237px;
+}
 </style>
 <script src="https://web.nicepay.co.kr/v3/webstd/js/nicepay-3.0.js"
 	type="text/javascript"></script>
@@ -420,23 +431,19 @@ function checkPlatform(ua) {
 		<div class="content gutter">
 			<div class="shopping-bag-wrapper" data-module="shoppingBag">
 				<div class="shopping-bag-content">
-
 					<div class="shopping-bag-column">
-
-						<form id="deleteForm" name="deleteForm" class="one-table-form"
-							method="post" action="../basket">
+					
+						<form id="deleteForm" name="deleteForm" class="one-table-form" method="post" action="../basket">
+						
 							<section class="your-selections">
 								<div class="your-selections-wrapper">
 									<div class="your-selections-header">
-									
+
 										<h2 class="eyerow">고객님의 셀렉션</h2>
-										
+
 										<div class="order-detail" id="order-detail">
 
-
-											<c:forEach var="orderBasket"
-												items="${orderBasketResponseDto}">
-
+											<c:forEach var="orderBasket" items="${orderBasketResponseDto}">
 												<div class="product-one-${orderBasket.id} basketTop">
 													<div class="baglist-item-selected group">
 														<div
@@ -448,53 +455,36 @@ function checkPlatform(ua) {
 																<div class="column-separator-wrapper">
 																	<h3 class="item-title">${orderBasket.productName}</h3>
 																	<div class="baglist-item-reference">${orderBasket.secondCategoryName}</div>
-																</div>																
-														
-															
-															<div class="footer-item">
+																</div>
+																<div class="footer-item">
 																	<div class="baglist-item-availability">
 																		<div class="shipping-info">
 																			<div class="title">
 																				수량 <input type="number" id="quantity"
 																					class="quantity" value="${orderBasket.quantity}"
-																					min="1"  style="width:40px;" >
+																					min="1">
 																			</div>
-																			
 																		</div>
 																	</div>
-																</div>		
-																</div>	
-																
-																<div class="footer-item">
-																<div class="baglist-item-actions">
-																<div class="edit-action">
-														 <span> <input type="button"
-															value="제거" class="delete"
-															onclick="deleteOrderProduct(${orderBasket.id})" ></span>
+																</div>
 															</div>
-															<span>상세보기</span>
-															
-															
-																	
-																		
-																			</div>
-																			</div>
-													</div>
-													<div class="product-total-price-style">
-														<span>₩<span class="product-total-price"
-																			id="product-total-price"><fmt:formatNumber
-																					type="number" maxFractionDigits="3"
-																					value="${orderBasket.price}" /></span>
-																		</span> <input type="hidden" class="price" id="price"
-																			readonly value="${orderBasket.price}"> <input
-																			type="hidden" class="orderId" id="orderId" readonly
-																			value="${orderBasket.orderId}">
-																</div>		
-																			
+															<div class="footer-item">
+																<div class="baglist-item-actions">
+																	<div class="edit-action">
+																		<span> <input type="button" value="제거" class="delete" onclick="deleteOrderProduct(${orderBasket.id})"></span>
+																	</div>
+																	<span>상세보기</span>
+																</div>
+															</div>
+														</div>
+														<div class="product-total-price-style">
+															<span>₩<span class="product-total-price" id="product-total-price">
+																<fmt:formatNumber type="number" maxFractionDigits="3" value="${orderBasket.price}" /></span>
+															</span> <input type="hidden" class="price" id="price" readonly value="${orderBasket.price}"> <input
+																type="hidden" class="orderId" id="orderId" readonly value="${orderBasket.orderId}">
+														</div>
 													</div>
 												</div>
-
-
 											</c:forEach>
 											<span><span type="hidden" id="total-price"></span></span>
 										</div>
@@ -502,78 +492,68 @@ function checkPlatform(ua) {
 							</section>
 						</form>
 					</div>
-
-
-
-
-
-
-<div class="order-details order-summary">
-					<form name="payForm" method="post" action="paymentResult">
-						<table class="payment" style="width:100%; margin-top: 30px;">
-						<tbody style="text-align: center; ">
-							<tr>
-								<input type="hidden" id="GoodsName" name="GoodsName" readonly
-									value="">
-								<input type="hidden" id="Amt" name="Amt" readonly>
-								<input type="hidden" id="MID" name="MID" readonly
-									value="nicepay00m">
-							</tr>
-							<tr>
-
-								<td><input type="hidden" id="Moid" name="Moid" readonly></td>
-							</tr>
-							<tr>
-								<th valign="middle"><span>구매자명</span></th>
-								<td valign="middle"><input type="text"  style="border: none; outline: none; text-align: right;" id="BuyerName" name="BuyerName"
-									readonly value="신재우"></td>
-							</tr>
-							<tr>
-								<th>구매자 이메일</th>
-								<td><input type="text" style="border: none; outline: none; text-align: right;" id="BuyerEmail" name="BuyerEmail"
-									readonly value="tlswodn205@naver.com"></td>
-							</tr>
-							<tr>
-								<th><span>구매자 연락처</span></th>
-								<td><input type="text" style="border: none; outline: none; text-align: right;"
-									id="BuyerTel" name="BuyerTel" readonly value="01025383724"></td>
-							</tr>
-
-							<tr>
-								<th><span> <!-- (모바일 결제창 전용)PC 결제창 사용시 필요 없음 -->
-								</span></th>
-								<td><input type="hidden" id="ReturnURL" name="ReturnURL"
-									value=""></td>
-							</tr>
-							<tr >
-								<th colspan="2"><span> <!-- (모바일 결제창 전용)PC 결제창 사용시 필요 없음 -->
-								<a href="#" class="btn_blue paybtn" onClick="nicepayStart();">결제하기</a></span></th>
-								
-							</tr>
-							
-
-							<!-- 옵션 -->
-							<input type="hidden" name="GoodsCl" value="1" />
-							<!-- 상품구분(실물(1),컨텐츠(0)) -->
-							<input type="hidden" name="TransType" value="0" />
-							<!-- 일반(0)/에스크로(1) -->
-							<input type="hidden" name="CharSet" value="utf-8" />
-							<!-- 응답 파라미터 인코딩 방식 -->
-							<input type="hidden" name="ReqReserved" value="" />
-							<!-- 상점 예약필드 -->
-
-							<!-- 변경 불가능 -->
-							<input type="hidden" id="EdiDate" name="EdiDate" value="" />
-							<!-- 전문 생성일시 -->
-							<input type="hidden" id="SignData" name="SignData" value="" />
-							<!-- 해쉬값 -->
-							</tbody>
-						</table>
-						
-
-					</form>
 					
-			</div>	
+					<div class="order-details order-summary">
+						<form name="payForm" method="post" action="paymentResult">
+							<table class="payment">
+								<tbody class="payment-body">
+									<tr>
+										<input type="hidden" id="GoodsName" name="GoodsName" readonly value="">
+										<input type="hidden" id="Amt" name="Amt" readonly>
+										<input type="hidden" id="MID" name="MID" readonly value="nicepay00m">
+									</tr>
+									<tr>
+										<td><input type="hidden" id="Moid" name="Moid" readonly></td>
+									</tr>
+									<tr>
+										<th valign="middle"><span>구매자명</span></th>
+										<td valign="middle"><input type="text" id="BuyerName"
+											name="BuyerName" readonly value="신재우"></td>
+									</tr>
+									<tr>
+										<th>구매자 이메일</th>
+										<td><input type="text" id="BuyerEmail" name="BuyerEmail"
+											readonly value="tlswodn205@naver.com"></td>
+									</tr>
+									<tr>
+										<th><span>구매자 연락처</span></th>
+										<td><input type="text" id="BuyerTel" name="BuyerTel"
+											readonly value="01025383724"></td>
+									</tr>
+
+									<tr>
+										<th><span> <!-- (모바일 결제창 전용)PC 결제창 사용시 필요 없음 -->
+										</span></th>
+										<td><input type="hidden" id="ReturnURL" name="ReturnURL"
+											value=""></td>
+									</tr>
+									<tr>
+										<th colspan="2"><span> <!-- (모바일 결제창 전용)PC 결제창 사용시 필요 없음 -->
+											<a href="#" class="btn_blue paybtn" onClick="nicepayStart();">결제하기</a>
+										</span></th>
+									</tr>
+
+									<!-- 옵션 -->
+									<input type="hidden" name="GoodsCl" value="1" />
+									<!-- 상품구분(실물(1),컨텐츠(0)) -->
+									<input type="hidden" name="TransType" value="0" />
+									<!-- 일반(0)/에스크로(1) -->
+									<input type="hidden" name="CharSet" value="utf-8" />
+									<!-- 응답 파라미터 인코딩 방식 -->
+									<input type="hidden" name="ReqReserved" value="" />
+									<!-- 상점 예약필드 -->
+									<!-- 변경 불가능 -->
+									<input type="hidden" id="EdiDate" name="EdiDate" value="" />
+									<!-- 전문 생성일시 -->
+									<input type="hidden" id="SignData" name="SignData" value="" />
+									<!-- 해쉬값 -->
+								</tbody>
+							</table>
+
+
+						</form>
+
+					</div>
 				</div>
 			</div>
 		</div>

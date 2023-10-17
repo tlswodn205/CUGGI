@@ -13,4 +13,5 @@ public class OrderBasketResponseDto {
 	int price;
 	int orderId;
 	int productId;
+	int isThumbnail;
 }
