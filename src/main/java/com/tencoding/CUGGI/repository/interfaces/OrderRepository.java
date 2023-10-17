@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.tencoding.CUGGI.dto.response.AdminOrderDetailListResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
@@ -33,6 +34,7 @@ public interface OrderRepository {
 	public Order findByUserId(int userId);
 	public int deleteBasket(int id);
 	public List<OrderListResponseDto> findByList(int id);
+	public List<AdminOrderDetailListResponseDto> findAdminOrderDetailId(int id);
 
 	
 }

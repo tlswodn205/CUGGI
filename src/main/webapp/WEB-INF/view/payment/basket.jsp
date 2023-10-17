@@ -313,6 +313,7 @@ function deleteOrderProduct(id){
         	$(removeClass).remove();
         	console.log($("#order-detail").children().eq(0));
         	console.log(removeClass);
+        	reloadTotalPrice();
         } else {
             alert("삭제 실패");
         }
@@ -328,18 +329,8 @@ function deleteOrderProduct(id){
 //결제창 최초 요청시 실행됩니다.
 function nicepayStart(){
 	
-    let quantity = document.getElementsByClassName("quantity");
-    let price = document.getElementsByClassName("price");
-	let totalprice = 0;
+	let totalprice = $("#Amt").val(); 
 	
-	for(let i=0; i < quantity.length; i++ ) {
- 	 		console.log(quantity[i].value);
-		 totalprice += quantity[i].value*price[i].value;
-	}
-	
-	console.log(totalprice);
-	
-	$("#Amt").val(totalprice); 
 	
 	$("#Moid").val($("#orderId").val()); 
 		
@@ -434,7 +425,7 @@ function checkPlatform(ua) {
 					<div class="shopping-bag-column">
 					
 						<form id="deleteForm" name="deleteForm" class="one-table-form" method="post" action="../basket">
-						
+											
 							<section class="your-selections">
 								<div class="your-selections-wrapper">
 									<div class="your-selections-header">
@@ -444,7 +435,7 @@ function checkPlatform(ua) {
 										<div class="order-detail" id="order-detail">
 
 											<c:forEach var="orderBasket" items="${orderBasketResponseDto}">
-												<div class="product-one-${orderBasket.id} basketTop">
+												<div id="product-one-${orderBasket.id}" class="product-one-${orderBasket.id} basketTop">
 													<div class="baglist-item-selected group">
 														<div
 															class="baglist-item-selected-column-wrapper image-column">
@@ -479,7 +470,7 @@ function checkPlatform(ua) {
 														</div>
 														<div class="product-total-price-style">
 															<span>₩<span class="product-total-price" id="product-total-price">
-																<fmt:formatNumber type="number" maxFractionDigits="3" value="${orderBasket.price}" /></span>
+																<fmt:formatNumber type="number" maxFractionDigits="3" value="${orderBasket.price*orderBasket.quantity}" /></span>
 															</span> <input type="hidden" class="price" id="price" readonly value="${orderBasket.price}"> <input
 																type="hidden" class="orderId" id="orderId" readonly value="${orderBasket.orderId}">
 														</div>
@@ -499,7 +490,6 @@ function checkPlatform(ua) {
 								<tbody class="payment-body">
 									<tr>
 										<input type="hidden" id="GoodsName" name="GoodsName" readonly value="">
-										<input type="hidden" id="Amt" name="Amt" readonly>
 										<input type="hidden" id="MID" name="MID" readonly value="nicepay00m">
 									</tr>
 									<tr>
@@ -520,6 +510,8 @@ function checkPlatform(ua) {
 										<td><input type="text" id="BuyerTel" name="BuyerTel"
 											readonly value="01025383724"></td>
 									</tr>
+									<th><span>총금액</span></th>
+										<td><input type="text" id="Amt" name="Amt" readonly value=""></td>
 
 									<tr>
 										<th><span> <!-- (모바일 결제창 전용)PC 결제창 사용시 필요 없음 -->
@@ -561,7 +553,21 @@ function checkPlatform(ua) {
 </main>
 <script>
 
+window.onload=()=>{
+	reloadTotalPrice();
+}
 
+function reloadTotalPrice(){
+	let quantitys = document.getElementsByClassName("quantity");
+	let prices = document.getElementsByClassName("price");
+	let totalprice = 0;
+	
+	for(let i=0; i < quantitys.length; i++ ) {
+		 totalprice += quantitys[i].value*prices[i].value;
+	}
+	
+	$("#Amt").val(totalprice); 
+}
 
 
 
@@ -573,14 +579,15 @@ $('input[type=number]').change( function() {
 	//console.log($(this).parent().parent().parent().find('#product-total-price'));
 	//console.log($(this).parent().parent().parent().find('#price').val());
 	
-	let a = $(this).parents().find('#price').val();
+	console.log($(this).closest('.basketTop'));
+	let a = $(this).closest('.basketTop').find('#price').val();
 	let b = Number(a);
 	let quantity = $(this).val()
 	console.log(b.toLocaleString('ko-KR'));
 	let price = a*quantity
-	$('#product-total-price').text(price.toLocaleString('ko-KR'))
+	$(this).closest('.basketTop').find('#product-total-price').text(price.toLocaleString('ko-KR'))
 			
-	
+	reloadTotalPrice();
 	
 })
 

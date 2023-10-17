@@ -78,7 +78,7 @@
         where o.user_id = #{id}
         and pi.is_thumbnail = 1
         and o.state = '장바구니'
-        group by pi.is_thumbnail;
+        group by pi.is_thumbnail,op.product_id;
 	</select>
 
 
@@ -127,6 +127,27 @@
 		where o.id = #{id};
 	</select>
 
+	<select id="findAdminOrderDetailId"
+		resultType="com.tencoding.CUGGI.dto.response.AdminOrderDetailListResponseDto">
+		   select o.id as id,
+        o.purchase_date,
+        o.user_id, 
+        op.product_name,
+        (select price*quantity from order_products_tb where order_id = o.id AND product_id = op.product_id)  as price,
+        p.tid,
+        o.state,
+        op.quantity
+		from order_tb o
+		left join order_products_tb op
+		on o.id = op.order_id
+        left join payment_tb p
+        on o.id = p.order_id 
+		where o.id = #{id};
+	</select>
+	
+	
+	
+
 	<select id="findPaging"
 		resultType="com.tencoding.CUGGI.dto.response.PagingResponseDto">
 		SELECT totalCount, totalPage, currentPage,
@@ -160,7 +181,10 @@
 
 	<select id="findByKeywordAndCurrentPage"
 		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
-		SELECT o.*, p.name, t.product_name,price
+		SELECT o.*,
+		 p.name,
+		(select group_concat(concat(ot.product_name," * ",ot.quantity )) from order_products_tb ot where ot.order_id= o.id group by ot.order_id) as productName,
+		(select sum(opt.price * opt.quantity) as price from order_tb ot left join order_products_tb opt on opt.order_id = ot.id where ot.id= o.id group by ot.id) as price
 		FROM order_tb o
 
 		LEFT
@@ -174,7 +198,7 @@
 		o.user_id
 		WHERE state != "장바구니"
 		<if test="type == 'id' and keyword != null">
-			WHERE o.id = #{keyword}
+			AND o.id = #{keyword}
 		</if>
 		<if test="type == 'name' and keyword != null">
 			AND p.name like CONCAT('%',#{keyword},'%')
@@ -182,6 +206,7 @@
 		<if test="status != ''">
 			AND state like CONCAT('%',#{status},'%')
 		</if>
+		group by o.id
 		ORDER BY id DESC
 		LIMIT #{startNum}, 10
 	</select>
