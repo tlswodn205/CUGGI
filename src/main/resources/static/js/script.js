@@ -1,3 +1,7 @@
+$('document').ready(function() {
+	$('header, main, footer').wrapAll('<div class="body-container"></div>');
+})
+
 $(".menu").on('click', ()=>{
     $(".submenu").slideDown("slow")
     $(".submenu").css("display","flex")

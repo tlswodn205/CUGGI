@@ -74,22 +74,22 @@
 	            <li>지갑</li>
 	            <li>쥬얼리&시계</li>
 	            <div class="submenu">
-		                	<span class="close">X</span>
-		                	<div class="subcategory">
-			                <ul>
-			                <c:forEach items="${secondCategoryList}" var="secondCategory" varStatus="loop">
-			                <c:if test="${not loop.first && secondCategory.firstCategoryId ne previousItem.firstCategoryId}">
-			                </ul>
-			                <ul>
-			                </c:if>
-			                <li><a href="/product/list?secondCategoryId=${secondCategory.id}">${secondCategory.secondCategoryName}</a></li>
-			                <c:if test="${loop.last}">
-			                </ul>
-			                </c:if>
-			                <c:set var="previousItem" value="${secondCategory}" />
-			                </c:forEach>
-			                </ul>
-		            	</div>
+                	<span class="close">X</span>
+                	<div class="subcategory">
+		                <ul>
+		                <c:forEach items="${secondCategoryList}" var="secondCategory" varStatus="loop">
+		                <c:if test="${not loop.first && secondCategory.firstCategoryId ne previousItem.firstCategoryId}">
+		                </ul>
+		                <ul>
+		                </c:if>
+		                <li><a href="/product/list?secondCategoryId=${secondCategory.id}">${secondCategory.secondCategoryName}</a></li>
+		                <c:if test="${loop.last}">
+		                </ul>
+		                </c:if>
+		                <c:set var="previousItem" value="${secondCategory}" />
+		                </c:forEach>
+		                </ul>
+            		</div>
 	            </div>
 	        </ul>
 	    </nav>

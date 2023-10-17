@@ -63,21 +63,22 @@
 
 	<select id="findByBasketList"
 		resultType="com.tencoding.CUGGI.dto.response.OrderBasketResponseDto">
-		select op.id ,o.id, op.quantity, p.price as price,
-		p.product_name, s.second_category_name, pi.image,pi.product_id as
-		productId,o.id as orderId
-		from order_products_tb op
-		left join order_tb o
-		on o.id = op.order_id
-		left join product_tb p
-		on p.id = op.product_id
-		left join second_category_tb s
-		on p.second_category_id = s.id
-		left join
-		product_image_tb pi
-		on p.id = pi.product_id
-		where o.user_id = #{id}
-		and o.state = '장바구니';
+		select op.id , op.quantity, p.price as price,
+        p.product_name, s.second_category_name, pi.image,pi.product_id as productId, o.id as orderId
+        from order_products_tb op
+        left join order_tb o
+        on o.id = op.order_id
+        left join product_tb p
+        on p.id = op.product_id
+        left join second_category_tb s
+        on p.second_category_id = s.id
+        left join
+        product_image_tb pi
+        on p.id = pi.product_id
+        where o.user_id = #{id}
+        and pi.is_thumbnail = 1
+        and o.state = '장바구니'
+        group by pi.is_thumbnail;
 
 	</select>
 

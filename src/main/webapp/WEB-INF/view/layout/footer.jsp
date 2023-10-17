@@ -7,7 +7,7 @@
 	<p>개인정보보호책임자: 한소희 / 호스팅 서비스: Rackspace Hosting</p>
 	</div>
 </footer>
-<div class="overlay"></div>
+
 </body>
 	<script src="/js/script.js"></script>
 </html>
