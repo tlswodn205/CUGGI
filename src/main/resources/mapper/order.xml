@@ -98,11 +98,11 @@
 		on p.id =
 		pi.product_id
 		where o.user_id = #{id}
-		and o.state = '취소 요청'
+		and o.state = '취소요청'
 		or o.state =
 		'결제완료'
 		or o.state =
-		'장바구니'
+		'결제취소'
         group by o.id;
 	</select>
 
