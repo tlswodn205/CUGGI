@@ -63,29 +63,29 @@
 
 	<select id="findByBasketList"
 		resultType="com.tencoding.CUGGI.dto.response.OrderBasketResponseDto">
-		select op.id ,o.id, op.quantity, p.price as price,
-		p.product_name, s.second_category_name, pi.image,pi.product_id as
-		productId,o.id as orderId
-		from order_products_tb op
-		left join order_tb o
-		on o.id = op.order_id
-		left join product_tb p
-		on p.id = op.product_id
-		left join second_category_tb s
-		on p.second_category_id = s.id
-		left join
-		product_image_tb pi
-		on p.id = pi.product_id
-		where o.user_id = #{id}
-		and o.state = '장바구니';
-
+		select op.id, op.quantity, p.price as price,
+        p.product_name, s.second_category_name, pi.image,pi.product_id as productId, o.id as orderId, pi.is_thumbnail as isThumbnail
+        from order_products_tb op
+        left join order_tb o
+        on o.id = op.order_id
+        left join product_tb p
+        on p.id = op.product_id
+        left join second_category_tb s
+        on p.second_category_id = s.id
+        left join
+        product_image_tb pi
+        on p.id = pi.product_id
+        where o.user_id = #{id}
+        and pi.is_thumbnail = 1
+        and o.state = '장바구니'
+        group by pi.is_thumbnail,op.product_id;
 	</select>
 
-	<select id="findByList"
+
+<select id="findByList"
 		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
 		select o.created_at , ot.product_name ,p.product_feature,
-		ot.product_name,
-		ot.price, pi.image, o.id, o.state
+		(select group_concat(concat(ot.product_name," * ",ot.quantity )) from order_products_tb ot where ot.order_id= o.id group by ot.order_id) as productName, pi.image, o.id, o.state, (select sum(opt.price * opt.quantity)  from order_tb ot left join order_products_tb opt on opt.order_id = ot.id  where ot.id= o.id  group by ot.id ) as price
 		from order_tb o
 		left
 		join
@@ -97,17 +97,14 @@
 		left join product_image_tb pi
 		on p.id =
 		pi.product_id
-		where o.user_id =
-		#{id}
-		and o.state = '취소 요청'
+		where o.user_id = #{id}
+		and o.state = '취소요청'
 		or o.state =
 		'결제완료'
 		or o.state =
 		'결제취소'
-		and pi.is_thumbnail = 1;
+        group by o.id;
 	</select>
-
-
 
 	<select id="findByListAdmin"
 		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
@@ -129,6 +126,27 @@
 		o.id = op.order_id
 		where o.id = #{id};
 	</select>
+
+	<select id="findAdminOrderDetailId"
+		resultType="com.tencoding.CUGGI.dto.response.AdminOrderDetailListResponseDto">
+		   select o.id as id,
+        o.purchase_date,
+        o.user_id, 
+        op.product_name,
+        (select price*quantity from order_products_tb where order_id = o.id AND product_id = op.product_id)  as price,
+        p.tid,
+        o.state,
+        op.quantity
+		from order_tb o
+		left join order_products_tb op
+		on o.id = op.order_id
+        left join payment_tb p
+        on o.id = p.order_id 
+		where o.id = #{id};
+	</select>
+	
+	
+	
 
 	<select id="findPaging"
 		resultType="com.tencoding.CUGGI.dto.response.PagingResponseDto">
@@ -163,7 +181,10 @@
 
 	<select id="findByKeywordAndCurrentPage"
 		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
-		SELECT o.*, p.name, t.product_name,price
+		SELECT o.*,
+		 p.name,
+		(select group_concat(concat(ot.product_name," * ",ot.quantity )) from order_products_tb ot where ot.order_id= o.id group by ot.order_id) as productName,
+		(select sum(opt.price * opt.quantity) as price from order_tb ot left join order_products_tb opt on opt.order_id = ot.id where ot.id= o.id group by ot.id) as price
 		FROM order_tb o
 
 		LEFT
@@ -177,7 +198,7 @@
 		o.user_id
 		WHERE state != "장바구니"
 		<if test="type == 'id' and keyword != null">
-			WHERE o.id = #{keyword}
+			AND o.id = #{keyword}
 		</if>
 		<if test="type == 'name' and keyword != null">
 			AND p.name like CONCAT('%',#{keyword},'%')
@@ -185,6 +206,7 @@
 		<if test="status != ''">
 			AND state like CONCAT('%',#{status},'%')
 		</if>
+		group by o.id
 		ORDER BY id DESC
 		LIMIT #{startNum}, 10
 	</select>

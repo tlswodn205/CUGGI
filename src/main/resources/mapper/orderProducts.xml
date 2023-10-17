@@ -39,11 +39,12 @@
 		resultType="com.tencoding.CUGGI.repository.model.OrderProducts">
 		SELECT * FROM order_products_tb
 	</select>
+	
 
 	<select id="findByDetailList"
 		resultType="com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto">
 		select op.order_id,pi.image, op.price, op.quantity, op.product_name,
-		s.second_category_name, o.state
+		s.second_category_name, o.state,op.id as productId
 		from order_products_tb op
 		left join product_tb p
 		on op.product_id = p.id
@@ -52,10 +53,12 @@
 		left join second_category_tb s
 		on p.second_category_id = s.id
 		left join first_category_tb f
-		on s.category_id = f.id
+		on s.first_category_id = f.id
 		left join order_tb o
         on      o.id = op.order_id
-		where op.order_id = #{orderId};
+		where op.order_id = #{orderId}
+        and pi.is_thumbnail = 1
+        group by op.id;
 	</select>
 
 	<select id="findByDetailPerson"
@@ -71,11 +74,12 @@
 
 	<select id="findByDetailPayment"
 		resultType="com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto">
-		select price
+		select op.quantity * op.price
 		from order_products_tb op
 		left join order_tb o
 		on op.order_id = o.id
 		where op.order_id = #{orderId}
+        and op.id = #{productId}
 	</select>
 	
 	<select id="findByOrderIdAndProductId"

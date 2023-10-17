@@ -33,6 +33,7 @@ import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateProductReqeustDto;
 import com.tencoding.CUGGI.dto.request.UpdateUserDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
+import com.tencoding.CUGGI.dto.response.AdminOrderDetailListResponseDto;
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
@@ -165,6 +166,7 @@ public class AdminService {
 		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
 		return orderList;
 	}
+	
   
 	@Transactional
 	public AdminPageListDto<OrderListResponseDto> OrderList(String type,String kerword,Integer page,String status){
@@ -181,8 +183,47 @@ public class AdminService {
 
 
 		AdminPageListDto<OrderListResponseDto> adminPageListDto = new AdminPageListDto<OrderListResponseDto>(PagingResponseDto, kerword, type, status ,orderListResponseDto);
+		
+		
+		String selection = "*,";
+		
+		int i = 0;
+		while(true) {
+			int changeCount = 0;
+			int j = 0;
+			while(true) {
+				if(orderListResponseDto.get(i).getProductName().charAt(j) == selection.charAt(0)) {
+					changeCount =1;
+					System.out.println(changeCount);
+				}
+				if((orderListResponseDto.get(i).getProductName().charAt(j) == ',')&&(changeCount ==1)) {
+					String newProductName = ""; 
+					newProductName = orderListResponseDto.get(i).getProductName().substring(0, j) + "<br>" + 
+							orderListResponseDto.get(i).getProductName().substring(j+1, orderListResponseDto.get(i).getProductName().length());
+					orderListResponseDto.get(i).setProductName(newProductName);
+					changeCount=0;
+				}
+				j++;
+				if(j>=orderListResponseDto.get(i).getProductName().length()) {
+					break;
+				}
+			}
+			i++;
+			if(i>=orderListResponseDto.size()) {
+				break;
+			}
+			
+		}
+		
 		return adminPageListDto; 
 	}
+	
+
+	public List<AdminOrderDetailListResponseDto> findAdminOrderDetailList(int id) {
+		List<AdminOrderDetailListResponseDto> orderAdminDetailList = orderRepository.findAdminOrderDetailId(id);
+		return orderAdminDetailList;
+	}
+
 
 	@Transactional
 	public OrderListResponseDto findOrderListById(int id) {
@@ -195,6 +236,8 @@ public class AdminService {
 
 		return orderListResponseDto;
 	}
+	
+	
 
 	@Transactional
 	public int updateOrderList(UpdateOrderListRequestDto updateOrderListRequestDto) {
@@ -206,8 +249,12 @@ public class AdminService {
 	@Transactional
 	public PaymentResponseDto findPayment(int id) {
 		Payment orderEntity = paymentRepository.findPayment(id);
-		PaymentResponseDto paymentResponseDto = PaymentResponseDto.fromEntity(orderEntity);
 		
+		if(orderEntity == null) {
+			throw new CustomRestfulException("결제 정보가 없습니다.", HttpStatus.BAD_REQUEST);
+		}
+		
+		PaymentResponseDto paymentResponseDto = PaymentResponseDto.fromEntity(orderEntity);
 		return paymentResponseDto;
 	}
 
@@ -423,5 +470,4 @@ public class AdminService {
 		personRepository.deleteByUserId(id);
 		return result;
 	}
-
 }

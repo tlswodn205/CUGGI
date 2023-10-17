@@ -2,44 +2,73 @@
 
 <%@ include file ="/WEB-INF/view/admin/layout/header.jsp" %>
 
-				<form class="one-table-form" method="post" action="/admin/cancelPayment/${orderListResponseDto.id}">
+				<form class="one-table-form" method="post" action="/admin/cancelPayment/${adminOrderDetailListResponseDto[0].id}">
 					<h2>주문 내역 취소 페이지</h2>
+					
+					
 					<table class = "one-table">
+					
 					    <tbody>
 					    <tr>
 					    	<td>주문 아이디</td>
-					    	<td><input type="text" id="id" name="id"value="${orderListResponseDto.id}"></td>
+					    	<td><input type="text" id="id" name="id"value="${adminOrderDetailListResponseDto[0].id}"></td>
 					        </tr>
 
 					        <tr>
 					            <td>주문날짜</td>
-					            <td><input type="text" id="purchase-Date" name="purchaseDate"  value="${orderListResponseDto.purchaseDate}" readonly></td>
+					            <td><input type="text" id="purchase-Date" name="purchaseDate"  value="${adminOrderDetailListResponseDto[0].purchaseDate}" readonly></td>
 					        </tr>
+					        
 					        <tr>
 					            <td>고객아이디</td>
-					            <td><input type="text" id="userId" name="userId"  value="${orderListResponseDto.userId}" readonly></td>
+					            <td><input type="text" id="userId" name="userId"  value="${adminOrderDetailListResponseDto[0].userId}" readonly></td>
+					        </tr>					        					      
+					        
+					        <tr>
+					            <td>원거래 ID</td>
+					            <td><input type="text" id="tid" name="tid"  value="${adminOrderDetailListResponseDto[0].tid}" readonly></td>
 					        </tr>
+					        					       					        
+					          <tr>
+					            <td>총금액</td>
+					            <td><input type="text" id=total-price name="total-price"  value="" readonly></td> 
+					        </tr>
+					        
+					        <tr>
+					            <td>취소여부</td>
+					            <td><input type="text" id="state" name="state"  value="${adminOrderDetailListResponseDto[0].state}" readonly>
+					            <c:if test="${adminOrderDetailListResponseDto[0].state eq '취소요청'}">
+					<input type="button" onclick="reqCancel(this.form)" value="결제 취소">
+					</c:if></td>
+					        </tr>
+					    </tbody>
+					  
+					</table>
+					 
+					
+					
+					<br>
+					<c:forEach  var="orderDetail" items="${adminOrderDetailListResponseDto}" varStatus="status">
+					<div>상품 ${status.count}</div>
+					<table class="one-table">
 					        <tr>
 					            <td>상품명</td>
-					            <td><input type="text" id="productName" name="productName" value="${orderListResponseDto.productName}" readonly></td>
+					            <td><input type="text" id="productName" name="productName" value="${orderDetail.productName}" readonly></td>
 					        </tr>
 					        <tr>
 					            <td>금액</td>
-					            <td><input type="text" id="price" name="price"  value="${orderListResponseDto.price}" readonly></td>
+					            <td><input type="text" id="price" name="price" class="price" value="${orderDetail.price}" readonly></td>
 					        </tr>
 					        <tr>
-					            <td>원거래 ID</td>
-					            <td><input type="text" id="tid" name="tid"  value="${paymentResponseDto.tid}" readonly></td>
+					            <td>수량</td>
+					            <td><input type="text" id="quantity" name="quantity"  value="${orderDetail.quantity}" readonly></td>
 					        </tr>
-					        <tr>
-					            <td>취소여부</td>
-					            <td><input type="text" id="state" name="state"  value="${orderListResponseDto.state}" readonly></td>
-					        </tr>
-					    </tbody>
-					</table>
-					<c:if test="${orderListResponseDto.state eq '취소요청'}">
-					<input type="button" onclick="reqCancel(this.form)" value="결제 취소">
-					</c:if>
+					        
+					        
+					        </table>
+					        <br>
+					        </c:forEach>
+					
 				</form>
 					
 <script>		
@@ -51,6 +80,16 @@ function reqCancel(form){
 	}
 	
 }
+
+window.onload=function(){
+	let prices= 0;
+	$(".one-table .price").each((a)=>{
+		prices += Number($(".one-table .price").eq(a).val());
+	})
+	$('#total-price').val(prices);
+};
+
+
 </script>
 
 
