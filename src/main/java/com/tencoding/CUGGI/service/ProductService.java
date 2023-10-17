@@ -1,9 +1,12 @@
 package com.tencoding.CUGGI.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,13 +32,14 @@ public class ProductService {
 	 * @param filter
 	 * @return 상품아이디별로 묶인 map
 	 */
-	public Map<Integer , List<ProductListResponseDto>> productList(Integer secondCategoryId, String filter, String searchData) {
+	public Map<Integer , List<ProductListResponseDto>> productList(Integer firstCategoryId, Integer secondCategoryId, String filter, String searchData) {
 		
-		List<ProductListResponseDto> productList = productRepository.findByAllForCateOrderByDesc(secondCategoryId, filter, searchData); // sql 결과
+		List<ProductListResponseDto> productList = productRepository.findByAllForCateOrderByDesc(firstCategoryId, secondCategoryId, filter, searchData); // sql 결과
+		int listSize = countProductListSize(firstCategoryId, secondCategoryId, filter, searchData);
 		
 		// 개수 20개 리스트로 바꾸고 맵 변환 or 바로 맵 변환
 		Map<Integer , List<ProductListResponseDto>> resultMap = new LinkedHashMap<>();
-		int listSize = productList.size();
+		
 		if(listSize >= 20) {
 			List<ProductListResponseDto> newList = limitListTo20(productList, listSize, 0);
 			resultMap = listToMap(newList);
@@ -46,13 +50,15 @@ public class ProductService {
 		return resultMap;
 	}
 	
-	public Map<Integer , List<ProductListResponseDto>> reloadProductList(Integer secondCategoryId, String filter, String searchData, int startNum) {
+	public Map<Integer , List<ProductListResponseDto>> reloadProductList(Integer firstCategoryId, Integer secondCategoryId, String filter, String searchData, int startNum) {
 		
-		List<ProductListResponseDto> productList = productRepository.findByAllForCateOrderByDesc(secondCategoryId, filter, searchData); // sql 결과
+		List<ProductListResponseDto> productList = productRepository.findByAllForCateOrderByDesc(firstCategoryId, secondCategoryId, filter, searchData); // sql 결과
 		
+		// 리스트 사이즈 체크 ( productId기준으로 20이 넘는지 안넘는지)
+		int listSize = countProductListSize(firstCategoryId, secondCategoryId, filter, searchData);
+
 		// 개수 20개 리스트로 바꾸고 맵 변환 or 바로 맵 변환
 		Map<Integer , List<ProductListResponseDto>> resultMap = new LinkedHashMap<>();
-		int listSize = productList.size();
 		if(listSize >= 20) {
 			List<ProductListResponseDto> newList = limitListTo20(productList, listSize, startNum);
 			resultMap = listToMap(newList);
@@ -63,14 +69,21 @@ public class ProductService {
 		return resultMap;
 	}
 	/**
-	 * 상품 목록 개수 체크
+	 * 상품 목록 개수 체크 ( productId기준으로 20이 넘는지 안넘는지)
 	 * @param productList
 	 * @return 상품 목록 리스트 사이즈
 	 */
-	public Integer countProductListSize(Integer secondCategoryId, String filter, String searchData) {
-		List<ProductListResponseDto> productList = productRepository.findByAllForCateOrderByDesc(secondCategoryId, filter, searchData);
-		return productList.size();
+	public Integer countProductListSize(Integer firstCategoryId, Integer secondCategoryId, String filter, String searchData) {
+		List<ProductListResponseDto> productList = productRepository.findByAllForCateOrderByDesc(firstCategoryId, secondCategoryId, filter, searchData);
+		Set<Integer> productIdSet = new HashSet<>(); // productId를 넣어 개수를 체크할 Set 생성 
+		// 반복문의로 productId를 Set에 넣어 중복제거
+		for(int i = 0; i < productList.size(); i++) {
+			int productId = productList.get(i).getProductId();
+			productIdSet.add(productId);
+		}
+		return productIdSet.size();
 	}
+	
 	/**
 	 * 상품 상세
 	 * @param productId
@@ -80,16 +93,12 @@ public class ProductService {
 		return productRepository.findByIdForCate(productId);
 	}
 	
-	
-	
-	
-	
 	/**
 	 * 화면에 20개만 보여주기위해 list의 개수를 20개로 바꾸는 함수
 	 * @param productList
 	 * @return newList
 	 */
-	// 개수 20개 리스트로 바꾸는 함수
+	// 개수 20개 리스트로 바꾸는 함수 -> 수정중
 	private List<ProductListResponseDto> limitListTo20(List<ProductListResponseDto> productList, int size, int startNum){
 		int listSize = productList.size(); // sql 리스트 사이즈
 		List<ProductListResponseDto> newList = new ArrayList<>(); // 새로운 리스트 생성

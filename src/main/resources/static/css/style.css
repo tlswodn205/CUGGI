@@ -484,6 +484,7 @@ main#product-list > .detail-category {
   width: 100%;
   height: 802px;
   position: relative;
+  overflow: hidden;
 }
 main#product-list .detail-category-img {
   width: 100%;

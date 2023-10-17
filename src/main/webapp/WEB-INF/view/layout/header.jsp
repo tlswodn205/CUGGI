@@ -96,8 +96,7 @@
 	    <script type="text/javascript">
 	    // 'request'라는 id를 가진 버튼 클릭 시 실행.
 	    $("#searchInput").keyup(function(){     
-	    		$('.search-productname').text('');
-	    		$('.search-image-area').text('');
+	    		
 	            let test = $('#searchInput').val();
 	         	// ajax 통신
 	         	if(test) {
@@ -106,6 +105,9 @@
 		                url : "/product/search?searchData="+test,      // 컨트롤러에서 대기중인 URL 주소이다.
 		                success : function(data){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
 		                    // 응답코드 > 0000
+		                    $('.search-productname').text('');
+	    					$('.search-image-area').text('');
+		                    console.log(data);
 		                    	for(var i=0 in data){                            
 		                            $('.search-productname').append('<p><a class="common-black-font" href="/product/detail?productId='+data[i].productId+'">'+data[i].productName+'</a></p>');
 		                            $('.search-image-area').append('<a href="/product/detail?productId='+data[i].productId+'"><img src='+data[i].image+'></a>');

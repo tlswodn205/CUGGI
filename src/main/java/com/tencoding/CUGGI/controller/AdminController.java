@@ -258,7 +258,7 @@ public class AdminController {
 	}
 	// 상품 수정
 	@PostMapping("/product/{productId}")
-	public String updateAdminProductProc(@PathVariable String productId, 
+	public String updateAdminProductProc(@PathVariable Integer productId, 
 			@RequestParam Map<String, MultipartFile> files, 
 			UpdateProductReqeustDto updateProductReqeustDto) {
 		
@@ -278,7 +278,7 @@ public class AdminController {
 		adminService.updateProduct(updateProductReqeustDto);
 				
 		// 이미지 정보 업데이트
-		adminService.updateProductImage(files);
+		adminService.updateProductImage(files, productId);
 		
 		return "redirect:/admin/product/" + productId;
 	}
