@@ -57,8 +57,8 @@
 		          	<c:if test="${product.isThumbnail == 1}">
 		          		<div class="imgDiv">
 		          			<div class="deleteImg"><i class="fa-solid fa-x"></i></div>
-		          			<img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="${product.imgId}"><br>
-		          			<input type="file" name="${product.imgId}"><br>
+		          			<img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="${product.imgId}">
+		          			<input type="file" class="updateFile" name="${product.imgId}">
 	          			</div>
 		          	</c:if>
 		          </c:forEach>
@@ -74,7 +74,7 @@
 		          		<div class="imgDiv">
 		          			<div class="deleteImg"><i class="fa-solid fa-x"></i></div>
 		          			<img src="${product.image.startsWith('/') ? product.image : '/upload/' += product.image}" alt="${product.imgId}" >
-		          			<input type="file" name="${product.imgId}">
+		          			<input type="file" class="updateFile" name="${product.imgId}">
 	          			</div>
 		          	</c:if>
 		          </c:forEach>

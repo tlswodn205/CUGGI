@@ -30,7 +30,8 @@
 	
 	<select id="findByAllForCateOrderByDesc" resultType = "com.tencoding.CUGGI.dto.response.ProductListResponseDto">
 		select pt.id productId, pt.second_category_id secondCategoryId,	pt.product_name productName, 
-		pt.price, pt.created_at createdAt, pit.image, sct.second_category_name secondCategoryName, fct.id firstCategoryId, fct.first_category_name firstCategoryName 
+		pt.price, pt.created_at createdAt, pit.image, sct.second_category_name secondCategoryName, 
+		fct.id firstCategoryId, fct.first_category_name firstCategoryName 
 		from product_tb pt
 		join product_image_tb pit 
 		on pt.id = pit.product_id 

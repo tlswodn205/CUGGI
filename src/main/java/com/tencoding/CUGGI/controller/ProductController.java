@@ -141,6 +141,7 @@ public class ProductController {
 		return "product/detail";
 	}
 	
+	// TODO 모두보기 ajax처리
 	
 	// 검색 -psg start
 	@GetMapping("search")

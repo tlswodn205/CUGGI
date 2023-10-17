@@ -68,11 +68,16 @@ for(const div of tableImgTdInnerDiv){
 			imgDiv.remove();
 		}
 	}
+	
+	// 사진 이미지 미리보기
+	if(currentTarget.classList.contains('updateFile')){
+		currentTarget.addEventListener('change', function(e){
+			console.log(this.previousElementSibling);
+			readURL(e.target);
+		});
+	}
   });	
 }
-
-
-
 
 // 이미지 추가 함수(이미지타입, 추가할 장소)
 let count = 0;
@@ -92,7 +97,7 @@ const makeImgDiv = (type, id) => {
 	newImgDiv.innerHTML = 
 	`<div class="deleteImg"><i class="fa-solid fa-x"></i></div>
 		<img src="https://via.placeholder.com/${size}" alt="temp" style="width:70%;">
-	<input type="file" name="${type}-${count}">
+	<input type="file" class="updateFile" name="${type}-${count}">
 	`;
 	const tdinnerDiv = document.querySelector(`#${id} > div`);
 	tdinnerDiv.append(newImgDiv); // 위의 코드를 조합해서 붙이기
@@ -112,13 +117,16 @@ for(const btn of btnList){
 	});
 }
 	
-
-
-
-
-
-
-
-
-
+// 이미지 미리보기
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      input.previousElementSibling.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  } else {
+    input.previousElementSibling.src = "";
+  }
+}
 
