@@ -322,13 +322,18 @@ public class AdminController {
 	public String userInfoDetail(@PathVariable("id") int id, Model model) {
 		UserInfoDetailDto userInfoDetailDto = adminService.userInfoDetail(id);
 		model.addAttribute("userInfoDetail", userInfoDetailDto);
-		System.out.println(userInfoDetailDto.toString());
 		return "admin/user/userInfoDetail";
 	}
 	
-//	@PostMapping("userInfoDetail")
-//	public String userInfoDetail(UpdateUserDto updateuserDto) {
-//		int result = adminService.userInfoDetail(UpdateUserDto);
-//		return "redirect:userInfo";
-//	}
+	@PostMapping("/userInfoDetail")
+	public String userInfoDetail(UpdateUserDto updateUserDto) {
+		int result = adminService.userInfoDetail(updateUserDto);
+		return "redirect:/admin/userInfoList/";
+	}
+	
+	@GetMapping("deleteUserInfo/{id}")
+	public String deleteUserInfo(@PathVariable("id") int id) {
+		int result = adminService.deleteUserInfo(id);
+		return "redirect:/admin/userInfoList";
+	}
 }

@@ -37,4 +37,8 @@
 		birthday = #{birthday}
 		WHERE user_id = #{userId};
 	</update>
+	
+	<delete id="deleteByUserId">
+		DELETE FROM person_tb WHERE user_id = #{userId};
+	</delete>
 </mapper>

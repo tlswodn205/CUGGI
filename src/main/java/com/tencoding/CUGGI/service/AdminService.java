@@ -31,6 +31,7 @@ import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateProductReqeustDto;
+import com.tencoding.CUGGI.dto.request.UpdateUserDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
@@ -59,9 +60,11 @@ import com.tencoding.CUGGI.repository.interfaces.UserRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
 import com.tencoding.CUGGI.repository.model.Order;
 import com.tencoding.CUGGI.repository.model.Payment;
+import com.tencoding.CUGGI.repository.model.Person;
 import com.tencoding.CUGGI.repository.model.Product;
 import com.tencoding.CUGGI.repository.model.Qna;
 import com.tencoding.CUGGI.repository.model.SecondCategory;
+import com.tencoding.CUGGI.repository.model.User;
 import com.tencoding.CUGGI.util.Mail;
 
 import lombok.extern.slf4j.Slf4j;
@@ -405,4 +408,20 @@ public class AdminService {
 		UserInfoDetailDto userInfoDetailDto = userRepository.findByIdAtAdmin(id);
 		return userInfoDetailDto;
 	}
+
+	public int userInfoDetail(UpdateUserDto updateUserDto) {
+		User userEntity = updateUserDto.toUserEntity();
+		Person personEntity = updateUserDto.toPersonEntity();
+		int result = userRepository.updateById(userEntity);
+		personRepository.updateByUserId(personEntity);
+		return result;
+	}
+
+
+	public int deleteUserInfo(int id) {
+		int result = userRepository.deleteById(id);
+		personRepository.deleteByUserId(id);
+		return result;
+	}
+
 }
