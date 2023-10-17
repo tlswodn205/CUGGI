@@ -115,6 +115,10 @@ public class OrderService {
 	public List<OrderBasketResponseDto> readOrderBasketList(int id) {
 		List<OrderBasketResponseDto> basketList = orderRepository.findByBasketList(id);
 		System.out.println(basketList);
+		if(basketList==null) {
+			Order basket = new Order(0, id, null, null, null, null, null, null, 0, 0);
+			orderRepository.insert(basket);
+		}
 		return basketList;
 	}
 
