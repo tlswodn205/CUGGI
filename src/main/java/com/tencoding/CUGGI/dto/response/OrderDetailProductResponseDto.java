@@ -1,5 +1,7 @@
 package com.tencoding.CUGGI.dto.response;
 
+import java.sql.Timestamp;
+
 import lombok.Data;
 
 @Data
@@ -17,5 +19,6 @@ public class OrderDetailProductResponseDto {
 	String email;
 	String secondCategoryName;
 	String state;
+	Timestamp createAt;
 
 }

@@ -2,7 +2,7 @@
 
 <%@ include file ="/WEB-INF/view/admin/layout/header.jsp" %>
 
-				<form class="oneTableForm" method="post" action="/admin/userInfoUpdate">
+				<form class="oneTableForm" method="post" action="/admin/userInfoDetail">
 					<input type="hidden" name="userId" value="${userInfoDetail.id}">
 					<h2>회원정보 상세보기 페이지</h2>
 					<table class = "list-table">

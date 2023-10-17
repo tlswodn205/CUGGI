@@ -39,12 +39,41 @@ public class OrderService {
 	@Autowired
 	ProductRepository productRepository;
 
-	@Transactional
 	public List<OrderListResponseDto> readOrderList(int id) {
 		List<OrderListResponseDto> list = orderRepository.findByList(id);
-		System.out.println(list.toString());
+		System.out.println("리스트 수량확인 : " + list.toString());
+		
+		String selection = "*,";
+		
+		int i = 0;
+		while(true) {
+			int changeCount = 0;
+			int j = 0;
+			while(true) {
+				if(list.get(i).getProductName().charAt(j) == selection.charAt(0)) {
+					changeCount =1;
+					System.out.println(changeCount);
+				}
+				if((list.get(i).getProductName().charAt(j) == ',')&&(changeCount ==1)) {
+					String newProductName = ""; 
+					newProductName = list.get(i).getProductName().substring(0, j) + "<br>" + 
+										list.get(i).getProductName().substring(j+1, list.get(i).getProductName().length());
+					list.get(i).setProductName(newProductName);
+					changeCount=0;
+				}
+				j++;
+				if(j>=list.get(i).getProductName().length()) {
+					break;
+				}
+			}
+			i++;
+			if(i>=list.size()) {
+				break;
+			}
+			
+		}
+		
 		return list;
-
 	}
 
 	@Transactional
@@ -67,7 +96,6 @@ public class OrderService {
 	@Transactional
 	public OrderDetailProductResponseDto readOrderDetaiPayment(int orderId) {
 		OrderDetailProductResponseDto detailPayment = orderProductsRepository.findByDetailPayment(orderId);
-		System.out.println(detailPayment.toString());
 		return detailPayment;
 	}
 
@@ -87,6 +115,10 @@ public class OrderService {
 	public List<OrderBasketResponseDto> readOrderBasketList(int id) {
 		List<OrderBasketResponseDto> basketList = orderRepository.findByBasketList(id);
 		System.out.println(basketList);
+		if(basketList==null) {
+			Order basket = new Order(0, id, null, null, null, null, null, null, 0, 0);
+			orderRepository.insert(basket);
+		}
 		return basketList;
 	}
 

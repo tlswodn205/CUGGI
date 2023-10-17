@@ -33,6 +33,7 @@ import com.tencoding.CUGGI.dto.request.UpdateUserDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.model.Person;
 import com.tencoding.CUGGI.repository.model.User;
+import com.tencoding.CUGGI.service.PersonService;
 import com.tencoding.CUGGI.service.UserService;
 import com.tencoding.CUGGI.util.Define;
 
@@ -215,7 +216,7 @@ public class UserController {
 			if (deleteUserDto.getPassword() == null || deleteUserDto.getPassword().isEmpty()) {
 				throw new CustomRestfulException("비밀번호를 입력하세요", HttpStatus.BAD_REQUEST);
 			} else {
-				userService.deleteUser(deleteUserDto, user);			
+				userService.deleteUser(deleteUserDto, user);
 			}			
 		}
 		else {

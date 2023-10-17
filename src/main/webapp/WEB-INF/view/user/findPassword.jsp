@@ -19,6 +19,13 @@
 		font-size: 30px;
 		margin-bottom: 30px;
 	}
+	#username {
+		width: 380px;
+		height: 56px;
+		font-size: 18px;
+		margin-bottom: 20px;
+		padding: 0px 10px;
+	}
 	#email {
 		width: 380px;
 		height: 56px;
@@ -42,6 +49,7 @@
     }
 
 </style>
+	<main>
 	<div id="body">
 		<div id="title">비밀번호 찾기</div>
 		<div id="subTitle">
@@ -52,11 +60,14 @@
 		<form action="/user/showPassword" method="post">
 			<div>			
 				<input type="text" placeholder="아이디*" id="username" name="username">
+			</div>
+			<div>
 				<input type="email" placeholder="email*" id="email" name="email">
 			</div>
 			<button type="submit"  onclick="findPassword()">비밀번호 찾기</button>
 		</form>
 	</div>
+	</main>
 	
 <script>
 	function findPassword() {

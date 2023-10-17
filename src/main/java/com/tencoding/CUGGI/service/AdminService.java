@@ -31,7 +31,9 @@ import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateProductReqeustDto;
+import com.tencoding.CUGGI.dto.request.UpdateUserDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
+import com.tencoding.CUGGI.dto.response.AdminOrderDetailListResponseDto;
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
@@ -59,9 +61,11 @@ import com.tencoding.CUGGI.repository.interfaces.UserRepository;
 import com.tencoding.CUGGI.repository.model.OfflineStore;
 import com.tencoding.CUGGI.repository.model.Order;
 import com.tencoding.CUGGI.repository.model.Payment;
+import com.tencoding.CUGGI.repository.model.Person;
 import com.tencoding.CUGGI.repository.model.Product;
 import com.tencoding.CUGGI.repository.model.Qna;
 import com.tencoding.CUGGI.repository.model.SecondCategory;
+import com.tencoding.CUGGI.repository.model.User;
 import com.tencoding.CUGGI.util.Mail;
 
 import lombok.extern.slf4j.Slf4j;
@@ -162,6 +166,7 @@ public class AdminService {
 		List<OrderListResponseDto> orderList = orderRepository.findByListAdmin();
 		return orderList;
 	}
+	
   
 	@Transactional
 	public AdminPageListDto<OrderListResponseDto> OrderList(String type,String kerword,Integer page,String status){
@@ -178,8 +183,47 @@ public class AdminService {
 
 
 		AdminPageListDto<OrderListResponseDto> adminPageListDto = new AdminPageListDto<OrderListResponseDto>(PagingResponseDto, kerword, type, status ,orderListResponseDto);
+		
+		
+		String selection = "*,";
+		
+		int i = 0;
+		while(true) {
+			int changeCount = 0;
+			int j = 0;
+			while(true) {
+				if(orderListResponseDto.get(i).getProductName().charAt(j) == selection.charAt(0)) {
+					changeCount =1;
+					System.out.println(changeCount);
+				}
+				if((orderListResponseDto.get(i).getProductName().charAt(j) == ',')&&(changeCount ==1)) {
+					String newProductName = ""; 
+					newProductName = orderListResponseDto.get(i).getProductName().substring(0, j) + "<br>" + 
+							orderListResponseDto.get(i).getProductName().substring(j+1, orderListResponseDto.get(i).getProductName().length());
+					orderListResponseDto.get(i).setProductName(newProductName);
+					changeCount=0;
+				}
+				j++;
+				if(j>=orderListResponseDto.get(i).getProductName().length()) {
+					break;
+				}
+			}
+			i++;
+			if(i>=orderListResponseDto.size()) {
+				break;
+			}
+			
+		}
+		
 		return adminPageListDto; 
 	}
+	
+
+	public List<AdminOrderDetailListResponseDto> findAdminOrderDetailList(int id) {
+		List<AdminOrderDetailListResponseDto> orderAdminDetailList = orderRepository.findAdminOrderDetailId(id);
+		return orderAdminDetailList;
+	}
+
 
 	@Transactional
 	public OrderListResponseDto findOrderListById(int id) {
@@ -192,6 +236,8 @@ public class AdminService {
 
 		return orderListResponseDto;
 	}
+	
+	
 
 	@Transactional
 	public int updateOrderList(UpdateOrderListRequestDto updateOrderListRequestDto) {
@@ -203,8 +249,12 @@ public class AdminService {
 	@Transactional
 	public PaymentResponseDto findPayment(int id) {
 		Payment orderEntity = paymentRepository.findPayment(id);
-		PaymentResponseDto paymentResponseDto = PaymentResponseDto.fromEntity(orderEntity);
 		
+		if(orderEntity == null) {
+			throw new CustomRestfulException("결제 정보가 없습니다.", HttpStatus.BAD_REQUEST);
+		}
+		
+		PaymentResponseDto paymentResponseDto = PaymentResponseDto.fromEntity(orderEntity);
 		return paymentResponseDto;
 	}
 
@@ -404,5 +454,20 @@ public class AdminService {
 	public UserInfoDetailDto userInfoDetail(int id) {
 		UserInfoDetailDto userInfoDetailDto = userRepository.findByIdAtAdmin(id);
 		return userInfoDetailDto;
+	}
+
+	public int userInfoDetail(UpdateUserDto updateUserDto) {
+		User userEntity = updateUserDto.toUserEntity();
+		Person personEntity = updateUserDto.toPersonEntity();
+		int result = userRepository.updateById(userEntity);
+		personRepository.updateByUserId(personEntity);
+		return result;
+	}
+
+
+	public int deleteUserInfo(int id) {
+		int result = userRepository.deleteById(id);
+		personRepository.deleteByUserId(id);
+		return result;
 	}
 }

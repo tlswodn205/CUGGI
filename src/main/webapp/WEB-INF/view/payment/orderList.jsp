@@ -7,35 +7,43 @@
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
 
 <style>
+#order-list-title {
+text-align: center
+}
 	table {
         
         border-collapse: collapse;
         text-align: center;
       }
+    #list-thead {
+    height: 70px;
+    }
       
-    th, td {
-    	border-bottom: 1px solid #444444;
+    td {
+    	border-top: 1px solid #444444;
      	padding: 10px;
   	}
   	
   	
- 	 th {
-  		background-color: #b3b3b3;
-  	}
+ 	th:first-child{
+ 	border-top:first-child
+ 	}
   	
     th:first-child, td:first-child {
+    
     	border-left: none;
+    	
   	}
 </style>
 <main>
 	<div class="main-column">
 	<form action="/order/orderList">
-	 <h2 style="text-align: center">주문 내역 리스트</h2>
+	 <h2 id = "order-list-title">Order</h2>
 	 
 		<c:choose>
 			<c:when test="${orderList != null}">
 				<table >
-					<thead>
+					<thead id = "list-thead">
 						<tr  class="thead-dark">
 							<th>주문날짜</th>
 							<th>이미지</th>

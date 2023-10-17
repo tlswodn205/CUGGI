@@ -46,6 +46,18 @@
         border-radius: 0px;
         cursor: pointer;
     }
+	.sign-up #delete {
+		width: 400px;
+		background-color: white;
+		color: black;
+
+	}
+	.sign-up #delete:hover {
+        background-color: black;
+        color: white;
+        border-radius: 0px;
+        cursor: pointer;
+    }
     .sign-up #address {
    		width: 308px;
    		height: 56px;
@@ -62,6 +74,7 @@
 	}
 	
 </style>
+	<main>
 	<div id="title">프로필 수정</div>
 	<div class="sign-up">
 		<form action="/user/updateUser" method="post">
@@ -108,8 +121,10 @@
 			<div class="sign-out">
 				<input type="button" onclick="deleteUser()" value="회원탈퇴" id="delete" name="delete">
 			</div>
+			<br>
 		</form>
 	</div>
+	</main>
 
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-1.10.2.min.js" /></script>

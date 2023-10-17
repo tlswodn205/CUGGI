@@ -16,7 +16,7 @@ import com.tencoding.CUGGI.repository.model.User;
 public interface UserRepository {
 	public int insert(SignUpDto user);
 	public int updateById(@Param("user") User user);
-	public int deleteById(User user);
+	public int deleteById(int id);
 	public User findById(int id);
 	public List<User> findByAll();
 	public User findByUsernameAndPassword(SignInDto signInDto);
@@ -25,4 +25,5 @@ public interface UserRepository {
 	public User findByUsernameAndEmail(@Param("username") String username, @Param("email") String email);
 	public List<UserInfoListDto> findByKeywordAndCurrentPage(@Param("type")String type, @Param("keyword")String keyword, @Param("startNum")Integer startNum, @Param("status")String status);
 	public UserInfoDetailDto findByIdAtAdmin(int id);
+
 }
