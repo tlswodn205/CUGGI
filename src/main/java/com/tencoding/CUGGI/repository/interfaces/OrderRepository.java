@@ -22,7 +22,6 @@ public interface OrderRepository {
 	public int deleteById(int orderId);
 	public Order findById(int id);
 	public List<Order> findByAll();
-	public List<OrderListResponseDto> findByList(int id);
 	public List<OrderListResponseDto> findByListAdmin();
 	public Order findByDetailId(int id);
 	public PagingResponseDto findPaging(@Param("type")String type, @Param("keyword")String keyword, @Param("page")Integer page,@Param("status")String status);
@@ -33,6 +32,7 @@ public interface OrderRepository {
 	public int orderAdminUpdate(Order order);
 	public Order findByUserId(int userId);
 	public int deleteBasket(int id);
+	public List<OrderListResponseDto> findByList(int id);
 
 	
 }
