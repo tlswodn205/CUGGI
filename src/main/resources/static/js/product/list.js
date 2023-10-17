@@ -29,6 +29,7 @@
   // 슬라이드 버튼 마우스 오버시 나타내기
   $(document).on('mouseover mouseout', '.product-one', function () {
     $(this).find('p').toggleClass('active');
+    $(this).find('.product-hover').toggleClass('active');
   });
   
   // 상품 detail 이동 이벤트

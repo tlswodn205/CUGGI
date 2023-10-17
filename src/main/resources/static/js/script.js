@@ -1,3 +1,7 @@
+$('document').ready(function() {
+	$('header, main, footer').wrapAll('<div class="body-container"></div>');
+})
+
 $(".menu").on('click', ()=>{
     $(".submenu").slideDown("slow")
     $(".submenu").css("display","flex")
@@ -16,6 +20,7 @@ $(".close").on('click', (e)=>{
 // 검색 영역 토글 이벤트
 $('.searchBtn').on('click', function () {
   $('.search-area').slideToggle();
+  $('#searchInput').focus();
   $('.account-area').slideUp("fast");
   $(".submenu").slideUp("fast");
 });
