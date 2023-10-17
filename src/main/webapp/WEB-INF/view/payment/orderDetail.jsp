@@ -143,7 +143,7 @@ color: black;
 					<td><span>진행상태</span>
 					<td><input type="text" id="status" id = "status" name="status" readonly value="${order.state}"></td>
 					<td class="deletebtn-top"><c:if test="${order.state eq '결제완료'}">
-					<input type="submit" id="deletebtn" value="취소 요청" onclick="isDelete(this.form)">
+					<input type="button" id="deletebtn" value="취소 요청" onclick="isDelete(this.form)">
 					</c:if></td>
 					</tr>
 
