@@ -301,8 +301,6 @@ public class AdminService {
 	//qna end
 	
 	// product start
-
-
 	
 	// 관리자 상품 목록
 	@Transactional
@@ -327,31 +325,54 @@ public class AdminService {
 	}
 	/**
 	 *  관리자 상품 정보 업데이트 (이미지)
+	 * @param productId 
 	 * @param Map files
 	 */
 	@Transactional
-	public void updateProductImage(Map<String, MultipartFile> files) {
+	public void updateProductImage(Map<String, MultipartFile> files, Integer productId) {
 		// List 선언
-		List<ImgRequestDto> list = new ArrayList<>();
+		List<ImgRequestDto> updateList = new ArrayList<>(); // 수정
+		List<ImgRequestDto> insertList = new ArrayList<>(); // 추가
+		
 		// 키값을 Set으로 가져오기
 		Set<String> keys = files.keySet();
 		for (String key : keys) {		// Set 순회
 			if(files.get(key).getSize() != 0) { // 키값으로 찾은 multifile의 사이즈가 0이 아니라면(파일이 존재한다면)
-				ImgRequestDto dto = ImgRequestDto.builder() // 객체 생성
-												.id(key)
-												.file(files.get(key))
-												.build();
-				list.add(dto); // 리스트로 추가
+				
+				if(key.contains("-")) { // 새로 추가한 이미지 라면 
+					ImgRequestDto dto = new ImgRequestDto(); // 객체 생성
+					if(key.contains("detail")) { // 상세 이미지라면
+						dto.setIsThumbnail(0);
+					}else if(key.contains("thumb")){ // 썸네일 이라면
+						dto.setIsThumbnail(1);
+					}
+					dto.setFile(files.get(key)); // multifile 추가
+					dto.setProductId(productId); // 상품 아이디 추가
+					insertList.add(dto); // 리스트로 추가
+					
+				}else { // 기존 이미지를 수정한다면 
+					ImgRequestDto dto = ImgRequestDto.builder() // 객체 생성
+							.id(key)
+							.file(files.get(key))
+							.build();
+					updateList.add(dto); // 리스트로 추가
+				}
 			}
 		}
 		// 파일 업로드 기능
-		List<ImgRequestDto> newlist = uploadFile(list);
+		List<ImgRequestDto> newUpdateList = uploadFile(updateList);
+		
+		// 파일 추가 기능
+		List<ImgRequestDto> newInsertList = uploadFile(insertList);
 		
 		// DB img(url) 수정 이미지 변경사항이 있다면
-		if(!newlist.isEmpty()) {
-			productImageRepository.updateById(newlist);	
+		if(!newUpdateList.isEmpty()) {
+			productImageRepository.updateById(newUpdateList);	
 		}
-		
+		// DB img 추가
+		if(!newInsertList.isEmpty()) {
+			productImageRepository.insert(newInsertList);
+		}
 	}
 
 	/**
@@ -408,7 +429,6 @@ public class AdminService {
 		// retrun 자동증가된 상품의 ID
 		productRepository.insert(insertProductRequestDto.getProduct());
 		int autoIncreProductId = insertProductRequestDto.getProduct().getId();
-		System.out.println(autoIncreProductId);
 		// 상품 이미지
 		// 썸네일 구분하기
 		List<ImgRequestDto> thumbImgList = insertProductRequestDto.toImgReqDtoList(insertProductRequestDto.getThumbImg(), 1, autoIncreProductId);
@@ -428,11 +448,12 @@ public class AdminService {
 	public void deleteProduct(Integer productId) {
 		// 일반 정보 삭제
 		productRepository.deleteById(productId);
-		
-		// 이미지 정보 삭제
-		productImageRepository.deleteById(productId);
-		
-		
+		// 이미지 정보 삭제(productId)
+		productImageRepository.deleteByProductId(productId);
+	}
+	@Transactional
+	public int deleteImg(Integer productImageId) {
+		return productImageRepository.deleteById(productImageId);
 	}
 	
 	// product end

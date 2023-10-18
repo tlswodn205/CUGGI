@@ -60,7 +60,7 @@
 
   // TODO
   $('.product-all-btn').on('click', function () {
-	let secondCategoryId   =$('#second-category-id').val();
+	let secondCategoryId = $('#second-category-id').val();
     let URL = "/product/reloadList?secondCategoryId="+secondCategoryId+"&startNum="+numberOfProduct;
     console.log($('.product-all-btn').eq(0));
     console.log($('#second-category-id').val());
@@ -71,11 +71,17 @@
                }
            }).done((res) => {
 			   for(key in res){
+				   	 let price = res[key][0].price.toLocaleString('ko-KR');
+				   
 				     let html = ' <div class="product-one" id="'+key+'">';
 				               html += '<div class="slide">';
 				               res[key].forEach((item)=>{
 				               		html += '<img src="'+item.image+'" alt="" />';
 							   })
+				               html += '</div>';
+				               html += '<div class="product-hover">';
+				               html += `<div>${res[key][0].productName}</div>`;
+				               html += `<div>&#8361;${price}</div>`;
 				               html += '</div>';
 				               html += '<p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>';
 				               html += '<p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>';
@@ -84,7 +90,7 @@
 				               
 				               $('.detail-main').eq(0).append(html);
 				               
-				               let lastOfProduct = $('.detail-main .slide').last();
+				                let lastOfProduct = $('.detail-main .slide').last();
 							    let firstImg = $(lastOfProduct).find('img:first').clone(); // 처음 이미지 복사
 							    let lastImg = $(lastOfProduct).find('img:last').clone(); // 마지막 이미지 복사
 							    
@@ -92,9 +98,10 @@
 							    $(lastOfProduct).prepend(lastImg); // 마지막 이미지 처음 앞에 붙이기
 							    $(lastOfProduct).css('transition', 'none'); // 새로고침시 움직임 없애기
 							    $(lastOfProduct).css('left', '-380px'); // 보여줄 이미지 위치 변경
-				}
-            	   numberOfProduct += 20;
+			   }
+               numberOfProduct += 20;
            });
+		$(this).remove();
   });
 });
 

@@ -103,7 +103,6 @@
 	    // 헤더 검색
 	    $("#searchInput").keyup(function(){     
 	            let searchData = $('#searchInput').val().trim();
-
 	         	// ajax 통신
 	         	if(searchData) {
 		            $.ajax({
@@ -111,7 +110,7 @@
 		                url : "/product/search?searchData="+encodeURIComponent(searchData),    
 		                success : function(data){ 
 		                    $('.search-productname').text('');
-	    					$('.search-image-area').text('');
+	    					        $('.search-image-area').text('');
 		                    	for(var i=0 in data){                            
 		                            $('.search-productname').append('<p><a class="common-black-font" href="/product/detail?productId='+data[i].productId+'">'+data[i].productName+'</a></p>');
 		                            $('.search-image-area').append('<a href="/product/detail?productId='+data[i].productId+'"><img src='+data[i].image+'></a>');
@@ -122,8 +121,8 @@
 		                }
 		            });
 	         	}else{
-                    $('.search-productname').text('');
-					$('.search-image-area').text('');
+                $('.search-productname').text('');
+					      $('.search-image-area').text('');
 	         	}
 	        });
 	    </script>
