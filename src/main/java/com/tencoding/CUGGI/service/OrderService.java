@@ -45,34 +45,35 @@ public class OrderService {
 		
 		String selection = "*,";
 		
-		int i = 0;
-		while(true) {
-			int changeCount = 0;
-			int j = 0;
+		if(list.size()>0) {
+			int i = 0;
 			while(true) {
-				if(list.get(i).getProductName().charAt(j) == selection.charAt(0)) {
-					changeCount =1;
-					System.out.println(changeCount);
+				int changeCount = 0;
+				int j = 0;
+				while(true) {
+					if(list.get(i).getProductName().charAt(j) == selection.charAt(0)) {
+						changeCount =1;
+						System.out.println(changeCount);
+					}
+					if((list.get(i).getProductName().charAt(j) == ',')&&(changeCount ==1)) {
+						String newProductName = ""; 
+						newProductName = list.get(i).getProductName().substring(0, j) + "<br>" + 
+											list.get(i).getProductName().substring(j+1, list.get(i).getProductName().length());
+						list.get(i).setProductName(newProductName);
+						changeCount=0;
+					}
+					j++;
+					if(j>=list.get(i).getProductName().length()) {
+						break;
+					}
 				}
-				if((list.get(i).getProductName().charAt(j) == ',')&&(changeCount ==1)) {
-					String newProductName = ""; 
-					newProductName = list.get(i).getProductName().substring(0, j) + "<br>" + 
-										list.get(i).getProductName().substring(j+1, list.get(i).getProductName().length());
-					list.get(i).setProductName(newProductName);
-					changeCount=0;
-				}
-				j++;
-				if(j>=list.get(i).getProductName().length()) {
+				i++;
+				if(i>=list.size()) {
 					break;
 				}
+				
 			}
-			i++;
-			if(i>=list.size()) {
-				break;
-			}
-			
 		}
-		
 		return list;
 	}
 
