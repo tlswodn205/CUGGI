@@ -126,7 +126,9 @@ public class UserService {
 	
 	public void findPassword(String username, String email, String newPwd) {
 		User userEntity = userRepository.findByUsernameAndEmail(username, email);
-		
+		if (userEntity == null) {
+			throw new CustomRestfulException("존재하지 않은 계정입니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		String hashPwd = passwordEncoder.encode(newPwd);
 		userEntity.setPassword(hashPwd);
 		userRepository.updateById(userEntity);
