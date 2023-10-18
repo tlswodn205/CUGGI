@@ -69,7 +69,7 @@ public class AdminController {
 	
 	//offlinestore start
 	
-	@GetMapping(""+"offlineStoreManagement")
+	@GetMapping("offlineStoreManagement")
 	public String offlineStoreManagement(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page, Model model) {
 		AdminPageListDto<OfflineStoreListResponseDto> adminPageListDto = adminService.OfflineStoreList(type, keyword, page);
 		model.addAttribute("adminPageListDto", adminPageListDto);
@@ -322,7 +322,7 @@ public class AdminController {
 	// product end
 	
 	// user start
-	@GetMapping("/userInfoList")
+	@GetMapping(value = {"", "/userInfoList"})
 	public String userInfoList문의사항리스트(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
 		AdminPageListDto<UserInfoListDto> adminPageListDto = adminService.userList(type, keyword, page, status);
 		model.addAttribute("adminPageListDto", adminPageListDto);
