@@ -24,8 +24,7 @@ public class OrderListResponseDto {
 	Timestamp createdAt;
 	String name;
 	String state;
-	
-
+  
 	public static OrderListResponseDto fromEntity(Order order){
 		System.out.println(order.getPrice());
 		return new OrderListResponseDto(
@@ -41,4 +40,6 @@ public class OrderListResponseDto {
 				order.getState()
 				);
 	}
+
+
 }

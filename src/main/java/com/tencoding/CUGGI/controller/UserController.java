@@ -2,8 +2,11 @@ package com.tencoding.CUGGI.controller;
 
 import org.springframework.http.HttpHeaders;
 
+import java.util.Random;
+
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.tencoding.CUGGI.dto.request.DeleteUserDto;
+import com.tencoding.CUGGI.dto.request.FindPasswordDto;
 import com.tencoding.CUGGI.dto.request.KakaoProfile;
 import com.tencoding.CUGGI.dto.request.OAuthToken;
 import com.tencoding.CUGGI.dto.request.SignInDto;
@@ -29,6 +33,7 @@ import com.tencoding.CUGGI.dto.request.UpdateUserDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.model.Person;
 import com.tencoding.CUGGI.repository.model.User;
+import com.tencoding.CUGGI.service.PersonService;
 import com.tencoding.CUGGI.service.UserService;
 import com.tencoding.CUGGI.util.Define;
 
@@ -66,8 +71,7 @@ public class UserController {
 				throw new CustomRestfulException("비밀번호가 일치하지 않습니다", HttpStatus.BAD_REQUEST);
 			}
 		}
-		System.out.println("1 "+ signUpDto.getPassword());
-		System.out.println("2 "+ signUpDto.getPasswordCheck());
+
 		if (signUpDto.getName() == null || signUpDto.getName().isEmpty()) {
 			throw new CustomRestfulException("이름을 입력하세요", HttpStatus.BAD_REQUEST);
 		}
@@ -98,7 +102,7 @@ public class UserController {
 		principal.setPassword(null);
 		session.setAttribute(Define.PRINCIPAL, principal);
 		
-		return "redirect:/user/updateForm";
+		return "redirect:/";
 	}
 	
 	@GetMapping("/logout")
@@ -161,7 +165,7 @@ public class UserController {
 		session.setAttribute(Define.PRINCIPAL, oldUser);
 		
 		//session.setAttribute(Define.PRINCIPAL, oldUser);
-		return "redirect:/user/updateForm";
+		return "redirect:/";
 		
 	}
 	
@@ -212,7 +216,7 @@ public class UserController {
 			if (deleteUserDto.getPassword() == null || deleteUserDto.getPassword().isEmpty()) {
 				throw new CustomRestfulException("비밀번호를 입력하세요", HttpStatus.BAD_REQUEST);
 			} else {
-				userService.deleteUser(deleteUserDto, user);			
+				userService.deleteUser(deleteUserDto, user);
 			}			
 		}
 		else {
@@ -268,16 +272,12 @@ public class UserController {
 		return "/user/findPassword";
 	}
 	
-	@PostMapping("findPassword")
-	public String findPassword(String username, String email, Model model) {
-		if (username == null) {
-			throw new CustomRestfulException("아이디를 입력하세요", HttpStatus.BAD_REQUEST);
-		}
-		if (email ==null) {
-			throw new CustomRestfulException("이메일을 입력하세요", HttpStatus.BAD_REQUEST);
-		}
+	@PostMapping("/showPassword")
+	public String findPassword(FindPasswordDto findPasswordDto, Model model) {
 		
-		String password = userService.findPassword(username, email);
+		String newPwd = RandomStringUtils.randomAlphanumeric(10);
+		userService.findPassword(findPasswordDto.getUsername(), findPasswordDto.getEmail(), newPwd);
+		model.addAttribute("newPassword", newPwd);
 		
 		return "/user/showPassword";
 	}

@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
+import com.tencoding.CUGGI.dto.response.ProductSearchListResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
 import com.tencoding.CUGGI.repository.model.ProductImage;
 import com.tencoding.CUGGI.service.ProductImageService;
@@ -38,7 +40,7 @@ public class ProductController {
 	 * @return 제품목록 페이지
 	 */
 	@GetMapping("list")
-	public String productList(Integer secondCategoryId, 
+	public String productList(Integer firstCategoryId, Integer secondCategoryId, 
 			@RequestParam(defaultValue = "createAt", required = true )String filter, 
 			@RequestParam(required = false) String searchData, 
 			Model model) {
@@ -46,7 +48,52 @@ public class ProductController {
 		// secondCategoryId = 1; // 임시 변수
 		
 		// 1. 제품 목록 가져오기
-		Map<Integer , List<ProductListResponseDto>> productMap = productService.productList(secondCategoryId, filter, searchData);
+		Map<Integer , List<ProductListResponseDto>> productMap = productService.productList(firstCategoryId, secondCategoryId, filter, searchData);
+		
+		// 2. 2차 카테고리 이름 가져오기
+		String secondCategoryName = "";
+		String firstCategoryName = "";
+		// 검색어가 없다면
+		if(searchData == null || searchData.trim().isEmpty()) {
+			// 반복문 한번에 탈출하기(맵의 리스트를 추출하여 2차카테고리명을 가져옴)
+			loopOut:
+			for(Map.Entry<Integer, List<ProductListResponseDto>> entry : productMap.entrySet()) {
+				List<ProductListResponseDto> productListDtos =  entry.getValue();
+				for(ProductListResponseDto dto : productListDtos) {
+					secondCategoryName = dto.getSecondCategoryName();
+					firstCategoryName = dto.getFirstCategoryName();
+					break loopOut;
+				}
+			}
+		}else {
+			secondCategoryName = "검색결과 : " + searchData;
+		}
+		
+		// 목록 개수
+		int productCount = productService.countProductListSize(firstCategoryId, secondCategoryId, filter, searchData);
+		
+		model.addAttribute("productCount", productCount);
+		model.addAttribute("productMap", productMap);
+		model.addAttribute("searchData", searchData);
+		model.addAttribute("filter", filter);
+		model.addAttribute("firstCategoryId", firstCategoryId);
+		model.addAttribute("firstCategoryName", firstCategoryName);
+		model.addAttribute("secondCategoryId", secondCategoryId);
+		model.addAttribute("secondCategoryName", secondCategoryName);
+		return "product/list";
+	}
+	
+
+	@GetMapping("reloadList")
+	@ResponseBody
+	public Map<Integer , List<ProductListResponseDto>> reloadProductList(Integer firstCategoryId, Integer secondCategoryId, 
+			@RequestParam(defaultValue = "createAt", required = true )String filter, 
+			@RequestParam(required = false) String searchData, Integer startNum,
+			Model model) {
+		// 서비스 호출
+		// secondCategoryId = 1; // 임시 변수
+		// 1. 제품 목록 가져오기
+		Map<Integer , List<ProductListResponseDto>> productMap = productService.reloadProductList(firstCategoryId, secondCategoryId, filter, searchData, startNum);
 		
 		// 2. 2차 카테고리 이름 가져오기
 		String secondCategoryName = null;
@@ -67,16 +114,11 @@ public class ProductController {
 		
 		// 목록 개수
 		int productCount = productMap.size();
+		System.out.println(secondCategoryId);
 		
-		model.addAttribute("productMap", productMap);
-		model.addAttribute("secondCategoryName", secondCategoryName);
-		model.addAttribute("searchData", searchData);
-		model.addAttribute("secondCategoryId", secondCategoryId);
-		model.addAttribute("filter", filter);
-		model.addAttribute("productCount", productCount);
-		
-		return "product/list";
+		return productMap;
 	}
+
 	
 	
 	/**
@@ -100,4 +142,16 @@ public class ProductController {
 	}
 	
 	// TODO 모두보기 ajax처리
+	
+	// 검색 -psg start
+	@GetMapping("search")
+	@ResponseBody
+	public List<ProductSearchListResponseDto> SearchProductList(@RequestParam(defaultValue = "") String searchData) {
+		System.out.println(searchData);
+		// 서비스 호출
+		// 1. 제품 목록 가져오기
+		List<ProductSearchListResponseDto> searchList = productService.searchProductList(searchData);
+		return searchList;
+	}
+	// 검색 -psg end
 }

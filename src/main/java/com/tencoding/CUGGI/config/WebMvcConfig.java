@@ -17,12 +17,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Autowired
 	private AuthInterceptor authInterceptor;
 	
+	@Autowired
+	private AdminInterceptor amdinInterceptor;
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(authInterceptor)
 		.addPathPatterns("/order/**");
+		
+		registry.addInterceptor(amdinInterceptor).addPathPatterns("/admin/**");
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -37,4 +42,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/upload/**")
 				.addResourceLocations("file:///" + filePath);
 	}
+	
+	
 }

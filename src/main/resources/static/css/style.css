@@ -8,22 +8,31 @@ a {
     outline: none;
     cursor: pointer;
 }
+html{
+	height: 100%;
+}
 
+html {
+	height: 100%;
+}
 body {
 	width: 100%;
 	height: 100%;
-	padding: 125px 0 0 0;
 	margin: 0;
+	padding: 0;
+}
+
+body > .body-container{
 	display: flex;
 	flex-direction: column;
+	height: 100%;
+	overflow: auto;
 }
 
 header {
 	min-height: 125px;
-	position: fixed;
+	position: sticky;
 	top: 0;
-	left: 0;
-	right: 0;
 	z-index: 2;
 	background-color: white;
 	border-bottom: 1px solid #ececec;
@@ -35,6 +44,16 @@ header nav .logo {
 	padding-top: 15px;
 }
 
+header nav .logo > .logo-service {
+	position: absolute;
+	left: 24rem;
+	top: 28px;
+}
+
+header nav .logo > .logo-service > span{
+	font-size: 13px;
+}
+
 header nav .logo > .account-area {
   position: absolute;
   right: 21.25rem;
@@ -42,23 +61,28 @@ header nav .logo > .account-area {
   border: 1px solid #313131;
   box-sizing: border-box;
   width: 180px;
-  height: 65px;
   background-color: #fff;
   padding: 20px;
   border-radius: 4px;
   z-index: 2;
   display: none;
-  justify-content: space-between;
-}
-header nav .logo > .account-area input {
-  width: 400px;
-  height: 26px;
-  line-height: 30px;
-  padding-left: 10px;
-  outline: none;
 }
 
-header nav .logo img {
+header nav .logo > .account-area > .login-no {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+header nav .logo > .account-area > .login-ok {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+header nav .logo > .logo-image img {
 	width: 190px;
 }
 
@@ -137,7 +161,7 @@ main .main-img > img {
 	width: -webkit-fill-available;
 }
 
-main .main-img > .see {
+main .main-img > .main-content {
 	position: absolute;
 	top: 70%;
 	left: 50%;
@@ -148,10 +172,15 @@ main .main-btn {
     background: white;
     border: none;
     border-radius: 3px;
+    font-weight: bold;
     box-shadow: none;
     height: 50px;
     width: 150px;
     cursor: pointer;
+}
+
+main .main-btn:hover {	
+    background: #b3b3b3;
 }
 
 main .product-hover {
@@ -190,9 +219,15 @@ footer {
     min-height: 100px;
 }
 
-footer div {
+footer .footer-content {
+	height: 100%;
     font-size: 10px;
-    margin: auto 0px auto 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+footer .footer-content .qna-content{
+	text-decoration-line: underline;
 }
 
 div.overlay.active{
@@ -230,6 +265,16 @@ div.overlay.active{
     color: white;
 }
 
+.common-black-line-link {
+	color: black;
+	text-decoration-line: underline;
+}
+
+.common-white-line-link {
+	color: white;
+	text-decoration-line: underline;
+}
+
 /* 20231011 kjh*/
 .logo > div:nth-child(1) {
   height: 50px;
@@ -251,8 +296,7 @@ div.overlay.active{
   top: 48px;
   border: 1px solid #313131;
   box-sizing: border-box;
-  width: 450px;
-  height: 160px;
+  width: 600px;
   background-color: #fff;
   padding: 20px;
   border-radius: 4px;
@@ -260,15 +304,43 @@ div.overlay.active{
   display: none;
 }
 .logo > .search-area input {
-  width: 400px;
+  width: 97%;
   height: 26px;
   line-height: 30px;
   padding-left: 10px;
   outline: none;
+  border: none;
+  border-bottom: 1px solid #b3b3b3;
+  
 }
+
+.logo > .search-area > .content-area{
+	display: flex;
+	gap: 1rem;
+}
+
+.logo > .search-area > .content-area > .search-product-name {
+	width: 100%;
+}
+
+.logo > .search-area > .content-area > .search-productname > p{
+	font-size: 13px;
+}
+
+.logo > .search-area > .content-area > .search-image-area {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	align-content: space-between;
+}
+
+.logo > .search-area > .content-area > .search-image-area img {
+	width: 100px;
+	
+}
+
 .logo > .logo-nav {
   position: absolute;
-  right: 380px;
+  right: 24rem;
   top: 12px;
   font-size: 24px;
   cursor: pointer;
@@ -452,6 +524,7 @@ main#product-list > .detail-category {
   width: 100%;
   height: 802px;
   position: relative;
+  overflow: hidden;
 }
 main#product-list .detail-category-img {
   width: 100%;
@@ -568,7 +641,7 @@ main#product-list .product-one .btnPrev {
 }
 
 main#product-list .product-one .btnNext {
-  left: 344px;
+  right: 0px;
   margin-right: 10px;
   margin-left: 10px;
 }

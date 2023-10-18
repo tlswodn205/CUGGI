@@ -3,18 +3,46 @@
 	<%@ include file="/WEB-INF/view/layout/header.jsp" %>
 
     <main id="product-list">
+    
     <c:if test="${!empty firstCategoryId}">
       <div class="detail-category">
-        <div class="detail-category-title">검색 결과가 없습니다.</div>
-        <img
-          class="detail-category-img"
-          src="https://media.gucci.com/content/HeroRegularStandard_3200x1350/1693406735/HeroRegularStandard_FW-Tier2-Anticipated-Aug23-01_001_Default.jpg"
-          alt="1차 카테고리 이미지"
-        />
+        <div class="detail-category-title">${firstCategoryName}</div>
+        <c:choose>
+        	<c:when test="${firstCategoryId eq 1}">
+        		<img class="detail-category-img" 
+        		src="https://media.gucci.com/content/HeroRegularStandard_3200x1350/1695923119/HeroRegularStandard_Gucci-Valigeria-Campaign-Oct2023-002_001_Default.jpg" 
+        		alt="1차 카테고리 이미지"
+        		/>
+        	</c:when>
+        	<c:when test="${firstCategoryId eq 2}">
+        		<img class="detail-category-img" 
+        		src="https://media.gucci.com/content/HeroRegularStandard_3200x1350/1693406735/HeroRegularStandard_FW-Tier2-Anticipated-Aug23-01_001_Default.jpg" 
+        		alt="1차 카테고리 이미지"
+        		/>
+        	</c:when>
+        	<c:when test="${firstCategoryId eq 3}">
+        		<img class="detail-category-img" 
+        		src="https://media.gucci.com/content/HeroRegularStandard_3200x1350/1695632450/HeroRegularStandard_FW-Tier2-Still-Life-Sept23-019_001_Default.jpg" 
+        		alt="1차 카테고리 이미지"
+        		/>
+        	</c:when>
+        	<c:when test="${firstCategoryId eq 4}">
+        		<img class="detail-category-img" 
+        		src="https://media.gucci.com/content/HeroRegularStandard_3200x1350/1690789531/HeroRegularStandard_758937J85008000_001_Default.jpg" 
+        		alt="1차 카테고리 이미지"
+        		/>
+        	</c:when>
+        </c:choose>
       </div>
-	</c:if>      
+	</c:if>  
+	  <input type="hidden" id="second-category-id" value="${secondCategoryId}">    
       <div class="detail-filter">
-      	<div>${secondCategoryName}</div>
+      	<div>
+      		<c:if test="${!empty firstCategofyName}">
+      			<a href="/product/list?firstCategofyId=${firstCategofyId}">${firstCategofyName}</a> /
+      		</c:if>
+      		<a href="/product/list?secondCategoryId=${secondCategoryId}">${secondCategoryName}</a>
+      	</div>
         <div>
           <div class="detail-filter-current">정렬기준 : <span>
           <c:choose>
@@ -25,10 +53,9 @@
         </div>
         <div class="detail-filter-option">
           <ul>
-          	
-            <li class="option-list ${filter == 'createAt' ? 'on' : ''} createAt"><a href="/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=createAt">신상품</a></li>
-            <li class="option-list ${filter == 'priceDESC' ? 'on' : ''} priceDESC"><a href="/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceDESC">가격 - 높은 가격순</a></li>
-            <li class="option-list ${filter == 'priceASC' ? 'on' : ''} priceASC"><a href="/product/list?secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceASC">가격 - 낮은 가격순</a></li>
+            <li class="option-list ${filter == 'createAt' ? 'on' : ''} createAt"><a href="/product/list?firstCategoryId=${firstCategoryId}&secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=createAt">신상품</a></li>
+            <li class="option-list ${filter == 'priceDESC' ? 'on' : ''} priceDESC"><a href="/product/list?firstCategoryId=${firstCategoryId}&secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceDESC">가격 - 높은 가격순</a></li>
+            <li class="option-list ${filter == 'priceASC' ? 'on' : ''} priceASC"><a href="/product/list?firstCategoryId=${firstCategoryId}&secondCategoryId=${secondCategoryId}&searchData=${searchData}&filter=priceASC">가격 - 낮은 가격순</a></li>
           </ul>
         </div>
       </div>

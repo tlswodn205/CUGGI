@@ -3,9 +3,9 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tencoding.CUGGI.repository.interfaces.ProductRepository"> 
 
-	<insert id= "insert">
-		INSERT INTO product_tb(category_id , product_name, price, product_feature, quantity, created_at)
-		values(#{categoryId},#{productName},#{price},#{productFeature},#{quantity},now());
+	<insert id= "insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO product_tb(second_category_id , product_name, price, product_feature, quantity, created_at)
+		values(#{secondCategoryId},#{productName},#{price},#{productFeature},#{quantity},now());
 	</insert>
 	
 	<update id="updateById">
@@ -30,14 +30,20 @@
 	
 	<select id="findByAllForCateOrderByDesc" resultType = "com.tencoding.CUGGI.dto.response.ProductListResponseDto">
 		select pt.id productId, pt.second_category_id secondCategoryId,	pt.product_name productName, 
-		pt.price, pt.created_at createdAt, pit.image, sct.second_category_name secondCategoryName  
+		pt.price, pt.created_at createdAt, pit.image, sct.second_category_name secondCategoryName, 
+		fct.id firstCategoryId, fct.first_category_name firstCategoryName 
 		from product_tb pt
 		join product_image_tb pit 
 		on pt.id = pit.product_id 
-		join second_category_tb sct 
-		on pt.second_category_id = sct.id
+		JOIN second_category_tb sct 
+		ON pt.second_category_id = sct.id
+		JOIN first_category_tb fct 
+		ON sct.first_category_id = fct.id
 		<where>
 			pit.is_thumbnail = 1
+			<if test="firstCategoryId != null">
+				and first_category_id = #{firstCategoryId}
+			</if> 
 			<if test="secondCategoryId != null">
 				and second_category_id = #{secondCategoryId}
 			</if>
@@ -130,4 +136,14 @@
 		WHERE pt.id = #{productId};
 	</select>
 	
+	<select id="findBySearchProductAll" resultType = "com.tencoding.CUGGI.dto.response.ProductSearchListResponseDto">	
+		select pt.second_category_id,pit.product_id, pt.product_name, pit.image
+		from 
+		product_image_tb pit
+		left join  product_tb pt
+		on pt.id = pit.product_id
+		where pt.product_name like CONCAT('%',#{searchData},'%') and pit.is_thumbnail=1
+        group by pt.second_category_id,pit.product_id, pt.product_name, pit.image
+        limit 9
+	</select>
 </mapper>

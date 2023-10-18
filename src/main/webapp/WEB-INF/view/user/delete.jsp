@@ -18,7 +18,22 @@
 	#subTitle {
 		font-size: 30px;
 		margin-bottom: 30px;
+		text-align: center;
 	}
+	#deleteBtn {
+		width: 400px;
+		height:56px;
+		background-color: white;
+		color: black;
+		font-size: 18px;
+
+	}
+	#deleteBtn:hover {
+        background-color: black;
+        color: white;
+        border-radius: 0px;
+        cursor: pointer;
+    }
 
 </style>
 	<main>
@@ -39,7 +54,7 @@
 					name="password">
 				</c:if>
 			</div>
-			<button type="submit"  onclick="delete()">회원 탈퇴</button>
+			<button type="submit"  onclick="delete()" id="deleteBtn">회원 탈퇴</button>
 		</form>
 	</div>
 	</main>

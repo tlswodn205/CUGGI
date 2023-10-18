@@ -18,8 +18,8 @@
 	</insert>
 	
 	<update id="updateById">
-		UPDATE user_tb SET username = #{user.username},level = #{user.level},
-		<if test="user.password != null">password = #{user.password}</if>
+		UPDATE user_tb SET username = #{user.username},level = #{user.level}
+		<if test="user.password != null">,password = #{user.password}</if>
 		WHERE id = #{user.id};
 	</update>
 	
@@ -40,6 +40,33 @@
 	</select>
 	
 	<select id="findByUsernameAndEmail" resultType = "com.tencoding.CUGGI.repository.model.User">
-		SELECT u.* FROM user_tb u LEFT JOIN person_tb p ON u.id = p.user_id WHERE u.username = #{username}, p.email = #{email};
+		SELECT u.* FROM user_tb u LEFT JOIN person_tb p ON u.id = p.user_id WHERE u.username = #{username} AND p.email = #{email};
+	</select>
+	
+	<select id="findByKeywordAndCurrentPage" resultType = "com.tencoding.CUGGI.dto.response.UserInfoListDto">
+		select u.id, u.username, u.level, p.name, p.address, p.address_detail, p.email, p.phone_number, p.birthday
+		from user_tb u
+		left join person_tb p
+		on u.id = p.user_id
+		WHERE 1= 1
+		<if test="type == 'name' and keyword != null">
+			 and p.name like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="type == 'username' and keyword != null">
+			 and u.username like CONCAT('%',#{keyword},'%')
+		</if>
+		<if test="status != null and keyword != null">
+			 and qt.state like CONCAT('%',#{status},'%')
+		</if>
+		ORDER BY id DESC
+		LIMIT #{startNum}, 10;
+	</select>
+	
+	<select id="findByIdAtAdmin" resultType = "com.tencoding.CUGGI.dto.response.UserInfoDetailDto">
+		select u.id, u.username, u.level, p.name, p.address, p.address_detail, p.email, p.phone_number, p.birthday
+		from user_tb u
+		left join person_tb p
+		on u.id = p.user_id
+		WHERE u.id= ${id};
 	</select>
 </mapper>

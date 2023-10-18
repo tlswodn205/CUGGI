@@ -3,7 +3,7 @@
 <style>
 
 .form-group {
-	margin:30px 0;
+	margin:25px 0;
 	
 }
 
@@ -38,6 +38,19 @@
   resize:none;
 }
 
+.qna-btn {
+	width: 100%;
+	height: 56px;
+	font-size: 18px;
+	cursor: pointer;
+	border: none;
+}
+.qna-btn:hover {
+	background-color: white;
+	color: black;	
+	border: 2px solid black;
+}
+
 	</style>
         <main>
         	<div class="main-column">
@@ -64,7 +77,7 @@
 	            		<textarea rows="10" id="content" name="content" placeholder="Q&A" required></textarea>
 	            	</div>
 	            	<div class="form-group rt">
-	            		<button class="btn-sm common-black-background common-white-font" type="button">문의하기</button>
+	            		<button class="qna-btn common-black-background common-white-font" type="button">문의하기</button>
 	            	</div>
 	            </form>
             </div>

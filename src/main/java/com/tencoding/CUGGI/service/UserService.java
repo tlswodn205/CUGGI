@@ -98,6 +98,7 @@ public class UserService {
 
 	public void deleteUser(DeleteUserDto deleteUserDto, User user) {
 		User userEntity = userRepository.findById(user.getId());
+//		Person personEntity = personRepository.findByUserId(person.getUserId());
 		
 		if (!userEntity.getUsername().contains("_kakao")) {		
 			boolean isPwdMatched = passwordEncoder.matches(deleteUserDto.getPassword(), userEntity.getPassword());
@@ -105,11 +106,13 @@ public class UserService {
 				throw new CustomRestfulException("잘못 입력하셨습니다", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			if (isPwdMatched == true) {
-				userRepository.deleteById(userEntity);
+				userRepository.deleteById(userEntity.getId());
+				personRepository.deleteByUserId(userEntity.getId());
 			}
 		}
 		else{
-			userRepository.deleteById(userEntity);
+			userRepository.deleteById(userEntity.getId());
+			personRepository.deleteByUserId(userEntity.getId());
 		}
 	}
 	
@@ -121,9 +124,12 @@ public class UserService {
 		return userEntity.getUsername();
 	}
 	
-	public String findPassword(String username, String email) {
+	public void findPassword(String username, String email, String newPwd) {
 		User userEntity = userRepository.findByUsernameAndEmail(username, email);
 		
-		return userEntity.getPassword();
+		String hashPwd = passwordEncoder.encode(newPwd);
+		userEntity.setPassword(hashPwd);
+		userRepository.updateById(userEntity);
+		
 	}
 }

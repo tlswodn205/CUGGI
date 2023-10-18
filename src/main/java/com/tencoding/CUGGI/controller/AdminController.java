@@ -1,5 +1,7 @@
 package com.tencoding.CUGGI.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +29,7 @@ import com.tencoding.CUGGI.dto.request.InsertOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertPaymentRequestDto;
 import com.tencoding.CUGGI.dto.request.InsertProductRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateProductReqeustDto;
+import com.tencoding.CUGGI.dto.request.UpdateUserDto;
 import com.tencoding.CUGGI.dto.request.InsertQnaAnswerDto;
 import com.tencoding.CUGGI.dto.request.UpdateOfflineStoreRequestDto;
 import com.tencoding.CUGGI.dto.request.UpdateOrderListRequestDto;
@@ -34,7 +38,7 @@ import com.tencoding.CUGGI.dto.response.PaymentResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.repository.model.User;
-
+import com.tencoding.CUGGI.dto.response.AdminOrderDetailListResponseDto;
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
@@ -42,6 +46,8 @@ import com.tencoding.CUGGI.dto.response.OfflineStoreResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderBasketResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaAnswerResponseDto;
 import com.tencoding.CUGGI.dto.response.QnaListResponseDto;
+import com.tencoding.CUGGI.dto.response.UserInfoDetailDto;
+import com.tencoding.CUGGI.dto.response.UserInfoListDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.model.FirstCategory;
 import com.tencoding.CUGGI.repository.model.Qna;
@@ -127,26 +133,24 @@ public class AdminController {
 	public String orderListManagent관리자주문내역(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
 		
 		AdminPageListDto<OrderListResponseDto> OrderadminPageListDto = adminService.OrderList(type, keyword, page,status);
+		
 		model.addAttribute("OrderadminPageListDto", OrderadminPageListDto);
-
+		
 		
 		return "admin/order/orderManagement";
 	}
 	
+	// orderId로 받아옴
 	@GetMapping("updateOrderList/{id}")
 	public String updateOrderList주문내역수정(@PathVariable("id") int id, Model model) {
-		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(id);
-		model.addAttribute("orderListResponseDto", orderListResponseDto);
+		
+		List<AdminOrderDetailListResponseDto> adminOrderDetailListResponseDto = adminService.findAdminOrderDetailList(id);
+		model.addAttribute("adminOrderDetailListResponseDto", adminOrderDetailListResponseDto);
 		
 		PaymentResponseDto paymentResponseDto = adminService.findPayment(id);
 		model.addAttribute("paymentResponseDto", paymentResponseDto);
-		
-		
-		
-		
-		System.out.println(paymentResponseDto);
-		
-
+							
+		System.out.println(paymentResponseDto);		
 		
 		return "admin/order/orderListUpdate";
 	}
@@ -167,6 +171,7 @@ public class AdminController {
 	
 	@PostMapping("/cancelPayment/{orderId}")
 	public String cancelPayment취소(@PathVariable("orderId") int orderId, Model model) {
+		
 		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(orderId);
 		model.addAttribute("orderListResponseDto", orderListResponseDto);
 		
@@ -224,7 +229,7 @@ public class AdminController {
 	
 	// product start
 	/**
-	 * 상품관리 페이지 이동
+	 * 상품목록 페이지 이동
 	 * @return 상품관리페이지 이동
 	 */
 	@GetMapping("/products")
@@ -235,6 +240,9 @@ public class AdminController {
 			Model model) 
 	{
 		AdminPageListDto<ProductResponseDto> adminPageListDto = adminService.adminProductList(type, keyword, page);
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("page", page);
 		model.addAttribute("adminPageListDto", adminPageListDto);
 		return "/admin/product/productManagement";
 	}
@@ -249,7 +257,7 @@ public class AdminController {
 	}
 	// 상품 수정
 	@PostMapping("/product/{productId}")
-	public String updateAdminProductProc(@PathVariable String productId, 
+	public String updateAdminProductProc(@PathVariable Integer productId, 
 			@RequestParam Map<String, MultipartFile> files, 
 			UpdateProductReqeustDto updateProductReqeustDto) {
 		
@@ -269,7 +277,7 @@ public class AdminController {
 		adminService.updateProduct(updateProductReqeustDto);
 				
 		// 이미지 정보 업데이트
-		adminService.updateProductImage(files);
+		adminService.updateProductImage(files, productId);
 		
 		return "redirect:/admin/product/" + productId;
 	}
@@ -288,10 +296,55 @@ public class AdminController {
 	// 상품 추가 기능
 	@PostMapping("/product")
 	public String productInsertProc(InsertProductRequestDto insertProductRequestDto) {
+		// 상품 정보 입력
+		adminService.insertProduct(insertProductRequestDto);
 		
 		System.out.println();
 		return "redirect:/admin/products/";
 	}
+	// 상품 삭제
+	@GetMapping("/deleteProduct/{productId}")
+	public String deleteProduct(@PathVariable Integer productId) {
+		adminService.deleteProduct(productId);
+		return "redirect:/admin/products";
+	}
+	
+	// 이미지 삭제
+	@ResponseBody
+	@DeleteMapping("/product/{productImageId}")
+	public Map<String, Integer> deleteImg(@PathVariable Integer productImageId){
+		int result = adminService.deleteImg(productImageId);
+		Map<String, Integer> jsonData = new HashMap<>();
+		jsonData.put("result", result);
+		return jsonData;
+	}
 	
 	// product end
+	
+	// user start
+	@GetMapping("/userInfoList")
+	public String userInfoList문의사항리스트(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
+		AdminPageListDto<UserInfoListDto> adminPageListDto = adminService.userList(type, keyword, page, status);
+		model.addAttribute("adminPageListDto", adminPageListDto);
+		return "admin/user/userInfoList";
+	}
+	
+	@GetMapping("/userInfoDetail/{id}")
+	public String userInfoDetail(@PathVariable("id") int id, Model model) {
+		UserInfoDetailDto userInfoDetailDto = adminService.userInfoDetail(id);
+		model.addAttribute("userInfoDetail", userInfoDetailDto);
+		return "admin/user/userInfoDetail";
+	}
+	
+	@PostMapping("/userInfoDetail")
+	public String userInfoDetail(UpdateUserDto updateUserDto) {
+		int result = adminService.userInfoDetail(updateUserDto);
+		return "redirect:/admin/userInfoList/";
+	}
+	
+	@GetMapping("deleteUserInfo/{id}")
+	public String deleteUserInfo(@PathVariable("id") int id) {
+		int result = adminService.deleteUserInfo(id);
+		return "redirect:/admin/userInfoList";
+	}
 }

@@ -28,7 +28,7 @@
 	<header>
 	    <nav>
 		    <div class="logo">
-		      <div>
+		      <div class="logo-image">
 		        <a href="/"><img src="/images/logo/logo.png" alt="" /></a>
 		      </div>
 		      <div class="logo-nav">
@@ -38,14 +38,40 @@
 		          <li class="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></li>
 		        </ul>
 		      </div>
+		      <div class="logo-service">
+		      	<span><a class="common-black-line-link" href="/offlineStore">오프라인스토어</a></span>
+		      </div>
 		      <div class="account-area">
-		      	<div><a href="/user/signIn">로그인</a></div>
-		      	<div><a href="/user/signUp">회원가입</a></div>
+		      	<c:choose>
+		      	<c:when test="${principal == null}">
+		      	<div class="login-no">
+			      	<div><a class="common-black-font" href="/user/signIn">로그인</a></div>
+			      	<div><a class="common-black-font" href="/user/signUp">회원가입</a></div>
+			    </div>
+			    </c:when>
+			    <c:otherwise>
+			    <div class="login-ok">
+			    	<div><a class="common-black-font" href="/user/updateForm">마이페이지</a></div>
+			    	<div><a class="common-black-font" href="/user/logout">로그아웃</a></div>
+			    	<c:if test="${principal.level >= 5 }">
+			    	<div><a class="common-black-font" href="/admin">관리자페이지</a></div>
+			    	</c:if>
+			    </div>
+			    </c:otherwise>
+		      	</c:choose>
 		      </div>
 		      <div class="search-area">
-		        <form action="/product/list" id="searchForm">
-		          <input type="text" name="searchData" id="searchInput" />
+		        <form action="/product/list" id="searchForm" autocomplete="off">
+		          <input type="text" name="searchData" id="searchInput" placeholder="검색어를 입력하세요."/>
 		        </form>
+		        <div class="content-area">
+		        	<div class="search-productname">
+
+		        	</div>
+		        	<div class="search-image-area">
+
+		        	</div>
+		        </div>
 		      </div>
 		    </div>
 	        <ul class="menu">
@@ -73,4 +99,31 @@
 	            </div>
 	        </ul>
 	    </nav>
+	    <script type="text/javascript">
+	    // 헤더 검색
+	    $("#searchInput").keyup(function(){     
+	            let searchData = $('#searchInput').val().trim();
+	         	// ajax 통신
+	         	if(searchData) {
+		            $.ajax({
+		                type : "GET",            
+		                url : "/product/search?searchData="+encodeURIComponent(searchData),    
+		                success : function(data){ 
+		                    $('.search-productname').text('');
+	    					        $('.search-image-area').text('');
+		                    	for(var i=0 in data){                            
+		                            $('.search-productname').append('<p><a class="common-black-font" href="/product/detail?productId='+data[i].productId+'">'+data[i].productName+'</a></p>');
+		                            $('.search-image-area').append('<a href="/product/detail?productId='+data[i].productId+'"><img src='+data[i].image+'></a>');
+		                        }     
+		                },
+		                error : function(XMLHttpRequest, textStatus, errorThrown){ 
+		                    alert("통신 실패.");
+		                }
+		            });
+	         	}else{
+                $('.search-productname').text('');
+					      $('.search-image-area').text('');
+	         	}
+	        });
+	    </script>
 	</header>

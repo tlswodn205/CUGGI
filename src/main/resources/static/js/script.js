@@ -1,3 +1,7 @@
+$('document').ready(function() {
+	$('header, main, footer').wrapAll('<div class="body-container"></div>');
+})
+
 $(".menu").on('click', ()=>{
     $(".submenu").slideDown("slow")
     $(".submenu").css("display","flex")
@@ -16,19 +20,20 @@ $(".close").on('click', (e)=>{
 // 검색 영역 토글 이벤트
 $('.searchBtn').on('click', function () {
   $('.search-area').slideToggle();
+  $('#searchInput').focus();
   $('.account-area').slideUp("fast");
   $(".submenu").slideUp("fast");
 });
 // 회원 이벤트
 $('.profileBtn').on('click', function () {
   $('.account-area').slideToggle("slow");
-  $('.account-area').css("display","flex");
+  $('.account-area').css("display","block");
   $('.search-area').slideUp("fast");
   $(".submenu").slideUp("fast");
 });
 
 $('.basketBtn').on('click', function () {
-  alert('장바구니 이벤트');
+  location.href="/order/basket"
 });
 
 // 검색 유효성, submit이벤트

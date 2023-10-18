@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/e8f010a863.js" crossorigin="anonymous"></script>
 <style>
 a{
 	color: #000; 
@@ -172,6 +173,36 @@ li{
 
 ul {
 	list-style: none;
+}
+
+/* updateProduct kjh */
+.admin-wrap .updateProduct textarea {
+  resize: none;
+  width: 99%;
+}
+.admin-wrap .updateProduct .tableImgTd > div {
+  display: flex; 
+  justify-content: center; 
+  text-align: center;
+}
+.admin-wrap .updateProduct .tableImgTd > div > div {
+  position: relative;
+}
+.admin-wrap .updateProduct .tableImgTd > div > div > div {
+  position: absolute;
+  top: 5px;
+  right: 45px;
+  background: #EA4F37; 
+  color: #fff;
+  border: 1px solid #EA4F37;
+  box-sizing: border-box;
+  width: 17px;
+  border-radius: 9px;
+  font-size: 11px;
+  
+}
+.admin-wrap .updateProduct .tableImgTd > div > div > img {
+  width: 70%;
 }
 </style>
 

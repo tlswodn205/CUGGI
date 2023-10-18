@@ -38,12 +38,23 @@
 		width: 400px;
 		background-color: black;
 		color: white;
-		margin-bottom: 100px;
 		margin-top: 30px;
 	}
 	.sign-up input[type="submit"]:hover {
         background-color: white;
         color: black;
+        border-radius: 0px;
+        cursor: pointer;
+    }
+	.sign-up #delete {
+		width: 400px;
+		background-color: white;
+		color: black;
+
+	}
+	.sign-up #delete:hover {
+        background-color: black;
+        color: white;
         border-radius: 0px;
         cursor: pointer;
     }
@@ -58,10 +69,14 @@
 	.sign-up .submit-btn{
 		text-align: center;
 	}
+	.sign-out {
+		text-align: center;
+	}
+	
 </style>
+	<main>
 	<div id="title">프로필 수정</div>
 	<div class="sign-up">
-	<a href="/user/logout">로그아웃</a>
 		<form action="/user/updateUser" method="post">
 			<div id="info">
 				<div>
@@ -87,7 +102,6 @@
 				</div>
 				<div>
 					<input type="text" placeholder="상세주소" id="address_detail" value="${updateUserDto.addressDetail}" name="addressDetail">
-					<input type="hidden" id="add_address">
 				</div>
 				<div>
 					<input type="email" placeholder="이메일" id="email" name="email" value="${updateUserDto.email}">
@@ -104,11 +118,13 @@
 			<div class="submit-btn">
 				<input type="submit" value="회원수정완료" onclick="update(this.form)">
 			</div>
-			<div>
+			<div class="sign-out">
 				<input type="button" onclick="deleteUser()" value="회원탈퇴" id="delete" name="delete">
 			</div>
+			<br>
 		</form>
 	</div>
+	</main>
 
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-1.10.2.min.js" /></script>
