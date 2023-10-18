@@ -123,7 +123,7 @@ public class UserController {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
 		params.add("client_id", "01b88ff29390c24b3527959d05fbc8ae");
-		params.add("redirect_uri", "/user/kakao/callback");
+		params.add("redirect_uri", "http://192.168.0.65:90/user/kakao/callback");
 		params.add("code", code);
 		
 		HttpEntity<MultiValueMap<String, String>> reqMes = 

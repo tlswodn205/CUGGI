@@ -20,6 +20,7 @@
 		if(!isLogin){
 			alert("로그인을 하셔야 합니다.");
 			location.href='/user/signIn';
+			return false;
 		}
 		
        	let productId = $('.add-cart').attr('id');

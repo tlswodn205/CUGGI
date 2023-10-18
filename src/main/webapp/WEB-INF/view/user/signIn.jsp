@@ -98,7 +98,7 @@
 			</div>
 			<br>
 			<div>
-				<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=01b88ff29390c24b3527959d05fbc8ae&redirect_uri=http://localhost:90/user/kakao/callback">
+				<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=01b88ff29390c24b3527959d05fbc8ae&redirect_uri=http://192.168.0.65:90/user/kakao/callback">
 				<img src="/image/kakao_login_large_wide.png" width="400px" alt=""></a>
 			</div>
 		</form>
