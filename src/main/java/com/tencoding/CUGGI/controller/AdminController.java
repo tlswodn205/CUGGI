@@ -78,12 +78,12 @@ public class AdminController {
 	
 	
 	@GetMapping("insertOfflineStore")
-	public String insertOfflineStore오프라인스토어추가(Model model) {
+	public String insertOfflineStore(Model model) {
 		return "admin/offlineStore/offlineStoreInsert"; 
 	}
 	
 	@PostMapping("insertOfflineStore")
-	public String insertOfflineStore_proc오프라인스토어추가(InsertOfflineStoreRequestDto insertOfflineStoreRequestDto) {
+	public String insertOfflineStore_proc(InsertOfflineStoreRequestDto insertOfflineStoreRequestDto) {
 		if(insertOfflineStoreRequestDto.getStoreName() == null || insertOfflineStoreRequestDto.getStoreName().isEmpty()) {
 			throw new CustomRestfulException("지점 이름을 입력해주세요", HttpStatus.BAD_REQUEST);
 		}
@@ -108,20 +108,20 @@ public class AdminController {
 	}
 	
 	@GetMapping("updateOfflineStore/{id}")
-	public String updateOfflineStore오프라인스토어수정(@PathVariable("id") int id, Model model) {
+	public String updateOfflineStore(@PathVariable("id") int id, Model model) {
 		OfflineStoreResponseDto offlineStoreResponseDto = adminService.findOfflineStoreById(id);
 		model.addAttribute("offlineStoreResponseDto", offlineStoreResponseDto);
 		return "admin/offlineStore/offlineStoreUpdate";
 	}
 
 	@PutMapping("updateOfflineStore")
-	public String updateOfflineStore_proc오프라인스토어수정(UpdateOfflineStoreRequestDto updateOfflineStoreRequestDto) {
+	public String updateOfflineStore_proc(UpdateOfflineStoreRequestDto updateOfflineStoreRequestDto) {
 		int result = adminService.updateOfflineStore(updateOfflineStoreRequestDto);
 		return "redirect:offlineStoreManagement"; 
 	}
 	
 	@GetMapping("deleteOfflineStore/{id}")
-	public String deleteOfflineStore오프라인스토어삭제(@PathVariable("id") int id) {
+	public String deleteOfflineStore(@PathVariable("id") int id) {
 		int result = adminService.deleteOfflineStore(id);
 		return "redirect:admin	/offlineStoreManagement"; 
 	}
@@ -130,7 +130,7 @@ public class AdminController {
 	
 	// order start
 	@GetMapping("orderListManagement")
-	public String orderListManagent관리자주문내역(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
+	public String orderListManagent(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
 		
 		AdminPageListDto<OrderListResponseDto> OrderadminPageListDto = adminService.OrderList(type, keyword, page,status);
 		
@@ -142,7 +142,7 @@ public class AdminController {
 	
 	// orderId로 받아옴
 	@GetMapping("updateOrderList/{id}")
-	public String updateOrderList주문내역수정(@PathVariable("id") int id, Model model) {
+	public String updateOrderList(@PathVariable("id") int id, Model model) {
 		
 		List<AdminOrderDetailListResponseDto> adminOrderDetailListResponseDto = adminService.findAdminOrderDetailList(id);
 		model.addAttribute("adminOrderDetailListResponseDto", adminOrderDetailListResponseDto);
@@ -158,7 +158,7 @@ public class AdminController {
 	
 	
 	@PostMapping("updateOrder/{orderId}")
-	public String insertPayment결제결과추가(@PathVariable("orderId") int orderId,UpdateOrderListRequestDto updateOrderRequestDto) {
+	public String insertPayment(@PathVariable("orderId") int orderId,UpdateOrderListRequestDto updateOrderRequestDto) {
 		System.out.println("여긴?");
 			
 		adminService.updateOrder(updateOrderRequestDto, orderId);
@@ -170,7 +170,7 @@ public class AdminController {
 	
 	
 	@PostMapping("/cancelPayment/{orderId}")
-	public String cancelPayment취소(@PathVariable("orderId") int orderId, Model model) {
+	public String cancelPayment(@PathVariable("orderId") int orderId, Model model) {
 		
 		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(orderId);
 		model.addAttribute("orderListResponseDto", orderListResponseDto);
@@ -184,13 +184,13 @@ public class AdminController {
 	
 	
 	@GetMapping("/cancelPaymentResult/{orderId}")
-	public String cancelPaymentResult취소완료(@PathVariable("orderId") int orderId) {
+	public String cancelPaymentResult(@PathVariable("orderId") int orderId) {
 		
 		return "admin/order/cancelResult_utf";
 	}
 	
 	@PostMapping("/cancelPaymentResult/{orderId}")
-	public String cancelPaymentResult취소완료1(@PathVariable("orderId") int orderId,Model model) {
+	public String cancelPaymentResult(@PathVariable("orderId") int orderId,Model model) {
 		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(orderId);
 		model.addAttribute("orderListResponseDto", orderListResponseDto);
 		
@@ -206,21 +206,21 @@ public class AdminController {
 	//qna start
 	
 	@GetMapping("/qnaList")
-	public String qnaList문의사항리스트(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
+	public String qnaList(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
 		AdminPageListDto<QnaListResponseDto> adminPageListDto = adminService.qnaList(type, keyword, page, status);
 		model.addAttribute("adminPageListDto", adminPageListDto);
 		return "admin/qna/qnaList";
 	}
 	
 	@GetMapping("/qnaDetail/{id}")
-	public String qnaDetail문의사항상세보기(@PathVariable int id, Model model) {
+	public String qnaDetail(@PathVariable int id, Model model) {
 		QnaAnswerResponseDto qnaDetail = adminService.qnlDetail(id);
 		model.addAttribute("qnaDetail", qnaDetail);
 		return "admin/qna/qnaDetail";
 	}
 	
 	@PostMapping("/qnaAnswer")
-	public String qnaAswer문의사항답변(InsertQnaAnswerDto insertQnaAnswerDto) {
+	public String qnaAswer(InsertQnaAnswerDto insertQnaAnswerDto) {
 		int result = adminService.insertQnaAnswer(insertQnaAnswerDto);
 		return "redirect:/admin/qnaList";
 	}
@@ -323,7 +323,7 @@ public class AdminController {
 	
 	// user start
 	@GetMapping("/userInfoList")
-	public String userInfoList문의사항리스트(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
+	public String userInfoList(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
 		AdminPageListDto<UserInfoListDto> adminPageListDto = adminService.userList(type, keyword, page, status);
 		model.addAttribute("adminPageListDto", adminPageListDto);
 		return "admin/user/userInfoList";
