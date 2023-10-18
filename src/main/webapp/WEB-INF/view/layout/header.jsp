@@ -48,6 +48,7 @@
 			    </c:when>
 			    <c:otherwise>
 			    <div class="login-ok">
+			    	<input type="hidden" id="is-login" value='${principal ne null}'>
 			    	<div><a class="common-black-font" href="/user/updateForm">마이페이지</a></div>
 			    	<div><a class="common-black-font" href="/user/logout">로그아웃</a></div>
 			    </div>

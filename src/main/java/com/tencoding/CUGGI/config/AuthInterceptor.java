@@ -21,15 +21,8 @@ public class AuthInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
-		
-		System.out.println("preHandle() 메서드 호출");
 		HttpSession session = request.getSession(); 
 		
-		User user = new User();
-        user.setId(1);
-        session.setAttribute(Define.PRINCIPAL, user);
-        
 		User principal = (User)session.getAttribute(Define.PRINCIPAL);
 		if(principal == null) {
 			throw new UnAuthorizedException("로그인 먼저 해주세요",

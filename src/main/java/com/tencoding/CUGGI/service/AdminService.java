@@ -181,37 +181,36 @@ public class AdminService {
 
 		AdminPageListDto<OrderListResponseDto> adminPageListDto = new AdminPageListDto<OrderListResponseDto>(PagingResponseDto, kerword, type, status ,orderListResponseDto);
 		
-		
-		String selection = "*,";
-		
-		int i = 0;
-		while(true) {
-			int changeCount = 0;
-			int j = 0;
+		if(orderListResponseDto==null) {
+			String selection = "*,";
+			int i = 0;
 			while(true) {
-				if(orderListResponseDto.get(i).getProductName().charAt(j) == selection.charAt(0)) {
-					changeCount =1;
-					System.out.println(changeCount);
+				int changeCount = 0;
+				int j = 0;
+				while(true) {
+					if(orderListResponseDto.get(i).getProductName().charAt(j) == selection.charAt(0)) {
+						changeCount =1;
+						System.out.println(changeCount);
+					}
+					if((orderListResponseDto.get(i).getProductName().charAt(j) == ',')&&(changeCount ==1)) {
+						String newProductName = ""; 
+						newProductName = orderListResponseDto.get(i).getProductName().substring(0, j) + "<br>" + 
+								orderListResponseDto.get(i).getProductName().substring(j+1, orderListResponseDto.get(i).getProductName().length());
+						orderListResponseDto.get(i).setProductName(newProductName);
+						changeCount=0;
+					}
+					j++;
+					if(j>=orderListResponseDto.get(i).getProductName().length()) {
+						break;
+					}
 				}
-				if((orderListResponseDto.get(i).getProductName().charAt(j) == ',')&&(changeCount ==1)) {
-					String newProductName = ""; 
-					newProductName = orderListResponseDto.get(i).getProductName().substring(0, j) + "<br>" + 
-							orderListResponseDto.get(i).getProductName().substring(j+1, orderListResponseDto.get(i).getProductName().length());
-					orderListResponseDto.get(i).setProductName(newProductName);
-					changeCount=0;
-				}
-				j++;
-				if(j>=orderListResponseDto.get(i).getProductName().length()) {
+				i++;
+				if(i>=orderListResponseDto.size()) {
 					break;
 				}
+				
 			}
-			i++;
-			if(i>=orderListResponseDto.size()) {
-				break;
-			}
-			
 		}
-		
 		return adminPageListDto; 
 	}
 	

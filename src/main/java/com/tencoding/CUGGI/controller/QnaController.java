@@ -15,6 +15,7 @@ import com.tencoding.CUGGI.dto.response.QnaPersonResponseDto;
 import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.model.User;
 import com.tencoding.CUGGI.service.QnaService;
+import com.tencoding.CUGGI.util.Define;
 
 @Controller
 @RequestMapping("/qna")
@@ -33,7 +34,7 @@ public class QnaController {
 	
 	@GetMapping("/insertQna")
 	public String insertQna문의등록(Model model) {
-		User user = (User)session.getAttribute("principal");
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		if(user == null) {
 			throw new CustomRestfulException("로그인을 해주세요.", HttpStatus.BAD_REQUEST);
 		}

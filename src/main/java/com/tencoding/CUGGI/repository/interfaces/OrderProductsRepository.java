@@ -20,4 +20,6 @@ public interface OrderProductsRepository {
 	public OrderDetailProductResponseDto findByDetailPayment(int orderId);
 	public OrderDetailProductResponseDto updatePrice(OrderProducts orderProducts);
 	public OrderProducts findByOrderIdAndProductId(@Param("orderId") int orderId,@Param("productId") int productId);
+	public List<OrderProducts> findByOrderId(int orderId);
+	public int updateByOrderId(OrderProducts orderProducts);
 }

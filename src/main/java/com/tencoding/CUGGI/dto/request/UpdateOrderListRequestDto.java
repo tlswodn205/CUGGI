@@ -1,6 +1,7 @@
 package com.tencoding.CUGGI.dto.request;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.tencoding.CUGGI.repository.model.Order;
 
@@ -33,6 +34,6 @@ public class UpdateOrderListRequestDto {
 		return new Order(id = orderId, this.userId, this.purchaseDate, this.cancelDate, this.createdAt, this.image, this.productName, this.State, this.price, orderId);
 	}
 
-	
+		
   
 }
