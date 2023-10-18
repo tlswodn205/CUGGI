@@ -39,9 +39,9 @@
       <div class="detail-filter">
       	<div>
       		<c:if test="${!empty firstCategofyName}">
-      			<a href="/product/list?firstCategofyId=${firstCategofyId}">${firstCategofyName}</a> /
+      			<a href="/product/list?firstCategofyId=${firstCategofyId}" class="common-black-font">${firstCategofyName}</a> /
       		</c:if>
-      		<a href="/product/list?secondCategoryId=${secondCategoryId}">${secondCategoryName}</a>
+      		<a href="/product/list?secondCategoryId=${secondCategoryId}" class="common-black-font">${secondCategoryName}</a>
       	</div>
         <div>
           <div class="detail-filter-current">정렬기준 : <span>
