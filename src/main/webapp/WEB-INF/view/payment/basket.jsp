@@ -280,7 +280,9 @@ body.new-design.language-ko .baglist-item-availability {
 .payment .patment-body {
 text-align: center;
 }
-
+.quantity {
+    border: inset;
+}
 
 input, textarea{
 	border: none;
