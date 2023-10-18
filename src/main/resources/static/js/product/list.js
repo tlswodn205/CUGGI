@@ -59,7 +59,7 @@
 
   // TODO
   $('.product-all-btn').on('click', function () {
-	let secondCategoryId   =$('#second-category-id').val();
+	let secondCategoryId = $('#second-category-id').val();
     let URL = "/product/reloadList?secondCategoryId="+secondCategoryId+"&startNum="+numberOfProduct;
     console.log($('.product-all-btn').eq(0));
     console.log($('#second-category-id').val());
@@ -70,6 +70,8 @@
                }
            }).done((res) => {
 			   for(key in res){
+				   	 let price = res[key][0].price.toLocaleString('ko-KR');
+				   
 				     let html = ' <div class="product-one" id="'+key+'">';
 				               html += '<div class="slide">';
 				               res[key].forEach((item)=>{
@@ -84,7 +86,6 @@
 				                html += '<p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>';
 				                html += '</div>';
 				               
-				               console.log(typeof res[key][0].price);
 				                $('.detail-main').eq(0).append(html);
 				               
 				                let lastOfProduct = $('.detail-main .slide').last();
@@ -95,9 +96,10 @@
 							    $(lastOfProduct).prepend(lastImg); // 마지막 이미지 처음 앞에 붙이기
 							    $(lastOfProduct).css('transition', 'none'); // 새로고침시 움직임 없애기
 							    $(lastOfProduct).css('left', '-380px'); // 보여줄 이미지 위치 변경
-				}
-            	   numberOfProduct += 20;
+			   }
+               numberOfProduct += 20;
            });
+		$(this).remove();
   });
 
 //

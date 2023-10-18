@@ -1,6 +1,7 @@
 package com.tencoding.CUGGI.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -255,7 +257,7 @@ public class AdminController {
 	}
 	// 상품 수정
 	@PostMapping("/product/{productId}")
-	public String updateAdminProductProc(@PathVariable String productId, 
+	public String updateAdminProductProc(@PathVariable Integer productId, 
 			@RequestParam Map<String, MultipartFile> files, 
 			UpdateProductReqeustDto updateProductReqeustDto) {
 		
@@ -275,7 +277,7 @@ public class AdminController {
 		adminService.updateProduct(updateProductReqeustDto);
 				
 		// 이미지 정보 업데이트
-		adminService.updateProductImage(files);
+		adminService.updateProductImage(files, productId);
 		
 		return "redirect:/admin/product/" + productId;
 	}
@@ -305,6 +307,16 @@ public class AdminController {
 	public String deleteProduct(@PathVariable Integer productId) {
 		adminService.deleteProduct(productId);
 		return "redirect:/admin/products";
+	}
+	
+	// 이미지 삭제
+	@ResponseBody
+	@DeleteMapping("/product/{productImageId}")
+	public Map<String, Integer> deleteImg(@PathVariable Integer productImageId){
+		int result = adminService.deleteImg(productImageId);
+		Map<String, Integer> jsonData = new HashMap<>();
+		jsonData.put("result", result);
+		return jsonData;
 	}
 	
 	// product end

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper
-	namespace="com.tencoding.CUGGI.repository.interfaces.OrderRepository">
-
+<mapper namespace="com.tencoding.CUGGI.repository.interfaces.OrderRepository"> 
 	<insert id="insert">
 		INSERT INTO order_tb(user_id, state, created_at)
 		values(#{userId},"장바구니",now())
@@ -11,7 +9,7 @@
 					SELECT LAST_INSERT_ID()
 				</selectKey>
 	</insert>
-
+  
 	<update id="updateById">
 		UPDATE order_tb SET cancel_date = now(),
 		status="결제 취소
@@ -29,16 +27,16 @@
 		UPDATE order_tb SET state="결제완료", purchase_date = now()
 		WHERE id = #{orderId};
 	</update>
-<!-- 
+<!--  
 	<update id="orderAdminUpdate">
 		UPDATE order_tb SET state="결제취소"
 		WHERE id =
 		#{orderId};
 	</update>
-	 -->
+	-->
 	<update id="orderAdminUpdate">
-		UPDATE order_tb SET state="결제취소"
-		WHERE id = #{orderId};
+		UPDATE order_tb SET state= "결제취소"
+		WHERE id = #{orderId} AND state = "취소요청";
 	</update>
 
 	<delete id="deleteById">
@@ -121,9 +119,6 @@
 		resultType="com.tencoding.CUGGI.repository.model.Order">
 		select *
 		from order_tb o
-		left join order_products_tb op
-		on
-		o.id = op.order_id
 		where o.id = #{id};
 	</select>
 
@@ -213,7 +208,13 @@
 	
 	<select id="findByUserId"
 		resultType="com.tencoding.CUGGI.repository.model.Order">
-		SELECT * FROM order_tb WHERE user_id = #{userId}
+		SELECT * FROM order_tb WHERE user_id = #{userId} AND state="장바구니"
 	</select>
+	
+	<select id="findByOrderAdminDetailCancelList"
+		resultType="com.tencoding.CUGGI.repository.model.Order">
+		SELECT * FROM order_tb WHERE user_id = #{userId} AND state="장바구니"
+	</select>
+	
 
 </mapper>
