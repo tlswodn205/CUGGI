@@ -17,9 +17,6 @@ width: 900px;
 
 }
 
-
-
-
 .product-one-detail {
 	display:flex;
 	text-align: justify;

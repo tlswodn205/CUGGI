@@ -8,5 +8,4 @@ public class CategoryResponseDto {
 	String secondCategoryName;
 	int firstCategoryId;
 	String firstCategoryName;
-	String image;
 }

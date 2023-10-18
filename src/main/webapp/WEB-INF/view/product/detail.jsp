@@ -14,7 +14,7 @@
       </div>
       <div class="detail">
         <h4>${productList[0].productName}</h4>
-        <div>\ ${productList[0].price}</div>
+        <div>&#8361; ${productList[0].price}</div>
         <p>재고보유</p>
         <p>1~3일 이내 발송 가능한 상품입니다.</p>
         <div class="add-cart" id="${productList[0].id}">쇼핑백에 담기</div>
