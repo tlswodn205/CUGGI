@@ -41,10 +41,10 @@
 						    </tbody>
 					    </c:forEach>
 					</table>
-					<a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}">모두</a>
-					 <a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}&status=취소요청">취소요청</a>
-					 <a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}&status=결제취소">결제취소</a>
-					 <a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}&status=결제완료">결제완료</a>
+					<a href="?page=1&type=${OrderadminPageListDto.type}&keyword=${OrderadminPageListDto.keyword}">모두</a>
+					 <a href="?page=1&type=${OrderadminPageListDto.type}&keyword=${OrderadminPageListDto.keyword}&status=취소요청">취소요청</a>
+					 <a href="?page=1&type=${OrderadminPageListDto.type}&keyword=${OrderadminPageListDto.keyword}&status=결제취소">결제취소</a>
+					 <a href="?page=1&type=${OrderadminPageListDto.type}&keyword=${OrderadminPageListDto.keyword}&status=결제완료">결제완료</a>
 					<div class="d-flex justify-content-center">
 						<ul class="pagination">
 							<li class='page-item'>

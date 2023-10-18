@@ -220,13 +220,19 @@ ul {
 				<div>
 					<ul>
 						<li>
-							<a href="/admin/offlineStoreManagement">오프라인매장관리</a>
+							<a href="/admin/userInfoList">유저관리</a>
+						</li>
+						<li>
+					    <a href="/admin/products">상품관리</a>
+						</li>
+						<li>
+					    <a href="/admin/orderListManagement">주문관리</a>
 						</li>
 						<li>
 							<a href="/admin/qnaList">문의사항관리</a>
 						</li>
 						<li>
-					    <a href="/admin/products">상품관리</a>
+							<a href="/admin/offlineStoreManagement">오프라인매장관리</a>
 						</li>
 					</ul>
 				</div>

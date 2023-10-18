@@ -41,7 +41,7 @@ public class MyRestfullExceptionHandler {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
 		sb.append("alert('"+e.getMessage() + "');");
-		sb.append("location.href='http://localhost:90/user/signIn';");
+		sb.append("location.href='/user/signIn';");
 		sb.append("</script>");
 		return sb.toString();
 	}
@@ -51,7 +51,7 @@ public class MyRestfullExceptionHandler {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<script>");
 		sb.append("alert('"+e.getMessage() + "');");
-		sb.append("location.href='http://localhost:90/user/signUp';");
+		sb.append("location.href='/user/signUp';");
 		sb.append("</script>");
 		return sb.toString();
 	}
