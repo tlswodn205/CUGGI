@@ -27,6 +27,7 @@
 								<th>생년월일</th>
 								<th>권한</th>
 								<th>상세보기 및 수정</th>
+								<th>삭제</th>
 							</tr>
 						</thead>
 					    <tbody>
@@ -43,16 +44,18 @@
 								            <td>${user.phoneNumber}</td>
 								            <td>${user.birthday}</td>
 								            <td>${user.level}</td>
-								            <td><input type="button" onclick="location.href='./userInfoDetail/${user.id}'" value="수정 및 상세보기"></td>
+								            <td><input type="button" onclick="location.href='/admin/userInfoDetail/${user.id}'" value="수정 및 상세보기"></td>
+								        	<td> 
+								            	<form action="/admin/deleteUserInfo/${user.id}" method="get">
+								            		<input type="button" value="삭제" onclick="isDelete(this.form)">
+								            	</form>
+						            		</td>
 								        </tr>
 							        </c:forEach>
 						        </c:when>
 					        </c:choose>
 					    </tbody>
 					</table>
-					<a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}">전체보기</a>
-					<a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}&status=확인중">확인중</a>
-					<a href="?page=1&type=${adminPageListDto.type}&keyword=${adminPageListDto.keyword}&status=답변 완료">답변완료</a>
 					<div class="d-flex justify-content-center">
 						<ul class="pagination">
 							<li class='page-item'>

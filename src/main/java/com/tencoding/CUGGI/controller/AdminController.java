@@ -38,7 +38,7 @@ import com.tencoding.CUGGI.dto.response.PaymentResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductListResponseDto;
 import com.tencoding.CUGGI.dto.response.ProductResponseDto;
 import com.tencoding.CUGGI.repository.model.User;
-
+import com.tencoding.CUGGI.dto.response.AdminOrderDetailListResponseDto;
 import com.tencoding.CUGGI.dto.response.AdminPageListDto;
 import com.tencoding.CUGGI.dto.response.AdminProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OfflineStoreListResponseDto;
@@ -133,26 +133,24 @@ public class AdminController {
 	public String orderListManagent관리자주문내역(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
 		
 		AdminPageListDto<OrderListResponseDto> OrderadminPageListDto = adminService.OrderList(type, keyword, page,status);
+		
 		model.addAttribute("OrderadminPageListDto", OrderadminPageListDto);
-
+		
 		
 		return "admin/order/orderManagement";
 	}
 	
+	// orderId로 받아옴
 	@GetMapping("updateOrderList/{id}")
 	public String updateOrderList주문내역수정(@PathVariable("id") int id, Model model) {
-		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(id);
-		model.addAttribute("orderListResponseDto", orderListResponseDto);
+		
+		List<AdminOrderDetailListResponseDto> adminOrderDetailListResponseDto = adminService.findAdminOrderDetailList(id);
+		model.addAttribute("adminOrderDetailListResponseDto", adminOrderDetailListResponseDto);
 		
 		PaymentResponseDto paymentResponseDto = adminService.findPayment(id);
 		model.addAttribute("paymentResponseDto", paymentResponseDto);
-		
-		
-		
-		
-		System.out.println(paymentResponseDto);
-		
-
+							
+		System.out.println(paymentResponseDto);		
 		
 		return "admin/order/orderListUpdate";
 	}
@@ -173,6 +171,7 @@ public class AdminController {
 	
 	@PostMapping("/cancelPayment/{orderId}")
 	public String cancelPayment취소(@PathVariable("orderId") int orderId, Model model) {
+		
 		OrderListResponseDto orderListResponseDto = adminService.findOrderListById(orderId);
 		model.addAttribute("orderListResponseDto", orderListResponseDto);
 		
@@ -334,13 +333,18 @@ public class AdminController {
 	public String userInfoDetail(@PathVariable("id") int id, Model model) {
 		UserInfoDetailDto userInfoDetailDto = adminService.userInfoDetail(id);
 		model.addAttribute("userInfoDetail", userInfoDetailDto);
-		System.out.println(userInfoDetailDto.toString());
 		return "admin/user/userInfoDetail";
 	}
 	
-//	@PostMapping("userInfoDetail")
-//	public String userInfoDetail(UpdateUserDto updateuserDto) {
-//		int result = adminService.userInfoDetail(UpdateUserDto);
-//		return "redirect:userInfo";
-//	}
+	@PostMapping("/userInfoDetail")
+	public String userInfoDetail(UpdateUserDto updateUserDto) {
+		int result = adminService.userInfoDetail(updateUserDto);
+		return "redirect:/admin/userInfoList/";
+	}
+	
+	@GetMapping("deleteUserInfo/{id}")
+	public String deleteUserInfo(@PathVariable("id") int id) {
+		int result = adminService.deleteUserInfo(id);
+		return "redirect:/admin/userInfoList";
+	}
 }

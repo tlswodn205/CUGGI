@@ -38,6 +38,9 @@
 		          <li class="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></li>
 		        </ul>
 		      </div>
+		      <div class="logo-service">
+		      	<span><a class="common-black-line-link" href="/offlineStore">오프라인스토어</a></span>
+		      </div>
 		      <div class="account-area">
 		      	<c:choose>
 		      	<c:when test="${principal == null}">
@@ -50,6 +53,9 @@
 			    <div class="login-ok">
 			    	<div><a class="common-black-font" href="/user/updateForm">마이페이지</a></div>
 			    	<div><a class="common-black-font" href="/user/logout">로그아웃</a></div>
+			    	<c:if test="${principal.level >= 5 }">
+			    	<div><a class="common-black-font" href="/admin">관리자페이지</a></div>
+			    	</c:if>
 			    </div>
 			    </c:otherwise>
 		      	</c:choose>
@@ -94,29 +100,29 @@
 	        </ul>
 	    </nav>
 	    <script type="text/javascript">
-	    // 'request'라는 id를 가진 버튼 클릭 시 실행.
+	    // 헤더 검색
 	    $("#searchInput").keyup(function(){     
-	    		
-	            let test = $('#searchInput').val();
+	            let searchData = $('#searchInput').val().trim();
 	         	// ajax 통신
-	         	if(test) {
+	         	if(searchData) {
 		            $.ajax({
-		                type : "GET",            // HTTP method type(GET, POST) 형식이다.
-		                url : "/product/search?searchData="+test,      // 컨트롤러에서 대기중인 URL 주소이다.
-		                success : function(data){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-		                    // 응답코드 > 0000
+		                type : "GET",            
+		                url : "/product/search?searchData="+encodeURIComponent(searchData),    
+		                success : function(data){ 
 		                    $('.search-productname').text('');
-	    					$('.search-image-area').text('');
-		                    console.log(data);
+	    					        $('.search-image-area').text('');
 		                    	for(var i=0 in data){                            
 		                            $('.search-productname').append('<p><a class="common-black-font" href="/product/detail?productId='+data[i].productId+'">'+data[i].productName+'</a></p>');
 		                            $('.search-image-area').append('<a href="/product/detail?productId='+data[i].productId+'"><img src='+data[i].image+'></a>');
 		                        }     
 		                },
-		                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-		                    alert("통신 실패.")
+		                error : function(XMLHttpRequest, textStatus, errorThrown){ 
+		                    alert("통신 실패.");
 		                }
 		            });
+	         	}else{
+                $('.search-productname').text('');
+					      $('.search-image-area').text('');
 	         	}
 	        });
 	    </script>

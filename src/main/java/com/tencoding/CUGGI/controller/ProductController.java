@@ -147,12 +147,10 @@ public class ProductController {
 	@GetMapping("search")
 	@ResponseBody
 	public List<ProductSearchListResponseDto> SearchProductList(@RequestParam(defaultValue = "") String searchData) {
+		System.out.println(searchData);
 		// 서비스 호출
-		// secondCategoryId = 1; // 임시 변수
 		// 1. 제품 목록 가져오기
 		List<ProductSearchListResponseDto> searchList = productService.searchProductList(searchData);
-		System.out.println(searchList);
-		
 		return searchList;
 	}
 	// 검색 -psg end
