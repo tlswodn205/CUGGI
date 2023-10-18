@@ -19,7 +19,7 @@
 		let isLogin = $('#is-login').val();
 		if(!isLogin){
 			alert("로그인을 하셔야 합니다.");
-			location.href='http://localhost:90/user/signIn';
+			location.href='/user/signIn';
 		}
 		
        	let productId = $('.add-cart').attr('id');

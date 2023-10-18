@@ -34,7 +34,7 @@
   // 상품 detail 이동 이벤트
   $(document).on('click','.product-one',function (e) {
     let productId = $(this).attr('id');
-    location.href = `http://localhost:90/product/detail?productId=${productId}`;
+    location.href = `/product/detail?productId=${productId}`;
   });
   
   // 필터 마우스 오버시 나타내기
