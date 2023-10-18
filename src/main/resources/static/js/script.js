@@ -3,12 +3,18 @@ $('document').ready(function() {
 })
 
 $(".menu").on('click', ()=>{
-    $(".submenu").slideDown("slow")
+    $(".submenu").slideDown("fast")
     $(".submenu").css("display","flex")
     $('.account-area').slideUp("fast");
     $('.search-area').slideUp("fast");
     $('.overlay').addClass('active');
 });
+
+$('.menu > li').on('click', (e)=>{
+	$('.subcategory').removeClass('active')
+	let idx = $('.menu li').index(e.target)
+	$('.subcategory').eq(idx).addClass('active')
+})
 
 $(".close").on('click', (e)=>{
     e.stopPropagation();

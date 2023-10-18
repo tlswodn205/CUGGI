@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.tencoding.CUGGI.dto.response.CategoryResponseDto;
 import com.tencoding.CUGGI.repository.model.SecondCategory;
 import com.tencoding.CUGGI.service.SecondCategoryService;
 import java.util.List;
@@ -31,7 +33,7 @@ public class AopParameter {
     @Before("cut()")
     public void before(JoinPoint joinPoint) {
         // 특정 패키지 내의 컨트롤러 메서드가 실행되기 전에 실행할 로직
-        List<SecondCategory> secondCategoryList = secondCategoryService.selectMenu();
+        List<CategoryResponseDto> secondCategoryList = secondCategoryService.selectMenu();
         
         // 메뉴 데이터 추가
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

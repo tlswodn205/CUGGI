@@ -64,6 +64,7 @@
     }
     .sign-up #search {
        	width: 70px;
+       	border: 1px	solid #000;
        	border-radius: 7px;
     }    
 	.sign-up .submit-btn{

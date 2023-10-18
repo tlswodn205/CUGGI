@@ -23,7 +23,7 @@
 		font-size: 18px;
 		margin: 0 auto; 
 	}
-	.sign-up input {
+	.sign-up input{
 		width: 380px;
 		height: 56px;
 		font-size: 18px;
@@ -33,6 +33,7 @@
 	.sign-up input[type="checkbox"] {
 		width: 15px;
 		height: 15px;
+		margin-bottom: 0px;
 	}
 	.sign-up .submit-btn input {
 		width: 400px;
@@ -53,6 +54,7 @@
     }
     .sign-up #search {
        	width: 70px;
+       	border: 1px	solid #000;
        	border-radius: 7px;
     }    
 	.sign-up .submit-btn{
@@ -62,7 +64,7 @@
 	<main>
 	<div id="title">프로필 생성</div>
 	<div class="sign-up">
-		<form action="/user/signUp" method="post">
+		<form action="/user/signUp" method="post" autocomplete="off">
 			<div id="info">
 				<div>
 					<input type="text" placeholder="아이디" id="username" name="username"
@@ -120,10 +122,12 @@
 					<input type="checkbox" id="check1" name="check1" >
 					<label for="check1">CUGGI가 본인의 개인 정보를 수집 및 이용하는 것에 동의합니다.*</label>
 				</div>
+				<br>
 				<div>
 					<input type="checkbox" id="check2" name="check2" >
 					<label for="check2">CUGGI가 본인의 개인 정보를 제3자 제공 및 국외 이전 하는 것에 동의합니다.*</label>
 				</div>
+				<br>
 				<div>
 					<input type="checkbox" id="check3" name="check3" >
 					<label for="check3">CUGGI의 새로운 활동, 전용 상품, 맞춤형 서비스에 대한 맞춤화된 소식과 최신 정보를 받는 것과, 본인의 관심사에 기반한 맞춤화된 서비스를 제공받는 것에 동의합니다.</label>
