@@ -26,13 +26,17 @@
   });
   
   // 슬라이드 버튼 마우스 오버시 나타내기
-  $(document).on('mouseover mouseout', '.product-one', function () {
-    $(this).find('p').toggleClass('active');
-    $(this).find('.product-hover').toggleClass('active');
+  $(document).on('mouseover', '.product-one', function () {
+    $(this).find('p').addClass('active');
+    $(this).find('.product-hover').addClass('active');
   });
+  $(document).on('mouseout', '.product-one', function () {
+	$(this).find('p').removeClass('active');
+    $(this).find('.product-hover').removeClass('active');
+  })
   
   // 상품 detail 이동 이벤트
-  $(document).on('click','.product-one',function (e) {
+  $(document).on('click','.product-one',function () {
     let productId = $(this).attr('id');
     location.href = `/product/detail?productId=${productId}`;
   });
@@ -57,7 +61,7 @@
     location.href = href;
   });
 
-  // TODO
+  // 모두보기
   $('.product-all-btn').on('click', function () {
 	let secondCategoryId = $('#second-category-id').val();
     let URL = "/product/reloadList?secondCategoryId="+secondCategoryId+"&startNum="+numberOfProduct;

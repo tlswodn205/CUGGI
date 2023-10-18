@@ -280,7 +280,9 @@ body.new-design.language-ko .baglist-item-availability {
 .payment .patment-body {
 text-align: center;
 }
-
+.quantity {
+    border: inset;
+}
 
 input, textarea{
 	border: none;
@@ -469,7 +471,7 @@ function checkPlatform(ua) {
 																			<div class="title">
 																				수량 <input type="number" id="quantity"
 																					class="quantity" value="${orderBasket.quantity}"
-																					min="1">
+																					min="1"> 
 																			</div>
 																		</div>
 																	</div>
@@ -480,7 +482,7 @@ function checkPlatform(ua) {
 																	<div class="edit-action">
 																		<span> <input type="button" value="제거" class="delete" onclick="deleteOrderProduct(${orderBasket.id})"></span>
 																	</div>
-																	<span>상세보기</span>
+																	<span><a href="/product/detail?productId=${orderBasket.productId}">상세보기 클릭</a></span>
 																</div>
 															</div>
 														</div>
