@@ -86,5 +86,19 @@
 		resultType="com.tencoding.CUGGI.repository.model.OrderProducts">
 		SELECT * FROM order_products_tb WHERE order_id =#{orderId} AND product_id = #{productId};
 	</select>
+	
+	<select id="findByOrderId"
+		resultType="com.tencoding.CUGGI.repository.model.OrderProducts">
+		
+SELECT * 
+FROM order_products_tb op
+left join order_tb o
+on  op.order_id = o.id
+where op.order_id = 3; 
+	</select>
+	
+	<update id="updateByOrderId">
+	UPDATE product_tb SET quantity = quantity - #{quantity} where id = #{productId};
+	</update>
 
 </mapper>

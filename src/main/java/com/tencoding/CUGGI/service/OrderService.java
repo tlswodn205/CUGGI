@@ -154,15 +154,24 @@ public class OrderService {
 		if(orderProductsEntity != null) {
 			throw new CustomRestfulException("이미 등록된 상품입니다.", HttpStatus.BAD_REQUEST);
 		}
-		OrderProducts orderProducts = new OrderProducts(userId, product);
+		OrderProducts orderProducts = new OrderProducts(orderEntity.getId(), product);
 		orderProductsRepository.insert(orderProducts);
-  }
+	  }
+	
 	public int deleteBasket(int id) {
 		int result = orderRepository.deleteBasket(id);
 		return result;
 	}
 
+	public int updateProducts(int orderId) {
+		List<OrderProducts> list = orderProductsRepository.findByOrderId(orderId);
+		int result =0;
+		for(int i=0; i<list.size(); i++) {
+			result = orderProductsRepository.updateByOrderId(list.get(i));
+		}
+		
+		return result;
+	}
 	
-
 
 }
