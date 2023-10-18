@@ -62,7 +62,7 @@
 	<main>
 	<div id="title">프로필 생성</div>
 	<div class="sign-up">
-		<form action="/user/signUp" method="post">
+		<form action="/user/signUp" method="post" autocomplete="off">
 			<div id="info">
 				<div>
 					<input type="text" placeholder="아이디" id="username" name="username"
