@@ -35,6 +35,7 @@ public interface OrderRepository {
 	public int deleteBasket(int id);
 	public List<OrderListResponseDto> findByList(int id);
 	public List<AdminOrderDetailListResponseDto> findAdminOrderDetailId(int id);
+	public List<Order> findByOrderAdminDetailCancelList(int orderId);
 
 	
 }

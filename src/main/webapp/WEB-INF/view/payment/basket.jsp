@@ -277,12 +277,20 @@ body.new-design.language-ko .baglist-item-availability {
 .payment-body {
 	text-align: center;
 }
+.payment .patment-body {
+text-align: center;
+}
 
-.payment .payment-body, input {
+
+input, textarea{
 	border: none;
 	outline: none;
-	text-align: center;
+	text-align:left;
+	resize: none;
+	font-family: serif;
+	spellcheck: false;
 }
+
 
 .paybtn {
 	display: block;
@@ -293,7 +301,7 @@ body.new-design.language-ko .baglist-item-availability {
 	font-size: 18px;
 	line-height: 65px;
 	text-align: center;
-	margin-top: 237px;
+	margin-top: 151px;
 }
 </style>
 <script src="https://web.nicepay.co.kr/v3/webstd/js/nicepay-3.0.js"
@@ -434,7 +442,15 @@ function checkPlatform(ua) {
 
 										<div class="order-detail" id="order-detail">
 
+											<c:if test="${empty orderBasketResponseDto}">
+										 	 	<h1>장바구니를 채워주세요</h1>
+											</c:if>
+											
 											<c:forEach var="orderBasket" items="${orderBasketResponseDto}">
+											
+										
+
+										
 												<div id="product-one-${orderBasket.id}" class="product-one-${orderBasket.id} basketTop">
 													<div class="baglist-item-selected group">
 														<div
@@ -475,12 +491,12 @@ function checkPlatform(ua) {
 																type="hidden" class="orderId" id="orderId" readonly value="${orderBasket.orderId}">
 														</div>
 													</div>
-												</div>
+												</div>										
 											</c:forEach>
-											<span><span type="hidden" id="total-price"></span></span>
 										</div>
 									</div>
 							</section>
+							
 						</form>
 					</div>
 					
@@ -498,21 +514,30 @@ function checkPlatform(ua) {
 									<tr>
 										<th valign="middle"><span>구매자명</span></th>
 										<td valign="middle"><input type="text" id="BuyerName"
-											name="BuyerName" readonly value="신재우"></td>
+											name="BuyerName" readonly value="${person.name}"></td>
 									</tr>
 									<tr>
 										<th>구매자 이메일</th>
 										<td><input type="text" id="BuyerEmail" name="BuyerEmail"
-											readonly value="tlswodn205@naver.com"></td>
+											readonly value="${person.email}"></td>
 									</tr>
 									<tr>
 										<th><span>구매자 연락처</span></th>
 										<td><input type="text" id="BuyerTel" name="BuyerTel"
-											readonly value="01025383724"></td>
+											readonly value="${person.phoneNumber}"></td>
+									</tr>
+									<tr>
+										<th><span>구매자 주소</span></th>
+										<td><textarea id="address" name="address"readonly>${person.address}</textarea></td>
+									</tr>
+									<tr>
+										<th><span>구매자 상세주소</span></th>
+										<td><input type="text" id="addressDetail" name="addressDetail"
+											readonly value="${person.addressDetail}"></td>
 									</tr>
 									<th><span>총금액</span></th>
-										<td><input type="text" id="Amt" name="Amt" readonly value=""></td>
-
+										<td><input type="text" id="total-price" readonly value=""></td>
+										<td><input type="hidden" id="Amt" name="Amt" readonly value=""></td>
 									<tr>
 										<th><span> <!-- (모바일 결제창 전용)PC 결제창 사용시 필요 없음 -->
 										</span></th>
@@ -550,6 +575,9 @@ function checkPlatform(ua) {
 			</div>
 		</div>
 	</div>
+	
+	
+	
 </main>
 <script>
 
@@ -565,7 +593,7 @@ function reloadTotalPrice(){
 	for(let i=0; i < quantitys.length; i++ ) {
 		 totalprice += quantitys[i].value*prices[i].value;
 	}
-	
+	$("#total-price").val(totalprice.toLocaleString('ko-KR'))
 	$("#Amt").val(totalprice); 
 }
 

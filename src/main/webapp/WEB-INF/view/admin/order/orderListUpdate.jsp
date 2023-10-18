@@ -21,7 +21,8 @@
 					        
 					        <tr>
 					            <td>고객아이디</td>
-					            <td><input type="text" id="userId" name="userId"  value="${adminOrderDetailListResponseDto[0].userId}" readonly></td>
+					            <td><input type="text" id="userId" name="userId"  value="${adminOrderDetailListResponseDto[0].userId}" readonly>
+					            <input type="button" onclick='window.location.href="/admin/userInfoDetail/${adminOrderDetailListResponseDto[0].userId}";' value="정보확인"></td>
 					        </tr>					        					      
 					        
 					        <tr>

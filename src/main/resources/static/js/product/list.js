@@ -1,7 +1,6 @@
 /* 상품목록 스크립트 */
  var numberOfProduct = 20;
  
- $(() => {
   // 무한슬라이드를 위한 이미지태그 복사(31231순으로 만들어주기위해)
   $('.slide').each(function () {
     let firstImg = $(this).find('img:first').clone(); // 처음 이미지 복사
@@ -53,7 +52,7 @@
   });
   
   // 필터 클릭시 정렬
-  $('.option-list').on('click', function () {
+  $(document).on('click', '.option-list',function () {
     let href = $(this).children('a').attr('href');
     location.href = href;
   });
@@ -78,17 +77,16 @@
 				               res[key].forEach((item)=>{
 				               		html += '<img src="'+item.image+'" alt="" />';
 							   })
-				               html += '</div>';
-				               html += '<div class="product-hover">';
-				               html += `<div>${res[key][0].productName}</div>`;
-				               html += `<div>&#8361;${price}</div>`;
-				               html += '</div>';
-				               html += '<p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>';
-				               html += '<p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>';
-				               html += '</div>';
+					            html += '</div>';
+								html += '<div class="product-hover">';
+			          			html += '<div>'+res[key][0].productName+'</div>';
+	            				html += '<div>&#8361;'+res[key][0].price.toLocaleString('ko-KR')+'</div>';
+				                html += '</div>';
+				                html += '<p class="btnPrev"><i class="fa-solid fa-less-than"></i></p>';
+				                html += '<p class="btnNext"><i class="fa-solid fa-greater-than"></i></p>';
+				                html += '</div>';
 				               
-				               
-				               $('.detail-main').eq(0).append(html);
+				                $('.detail-main').eq(0).append(html);
 				               
 				                let lastOfProduct = $('.detail-main .slide').last();
 							    let firstImg = $(lastOfProduct).find('img:first').clone(); // 처음 이미지 복사
@@ -103,7 +101,6 @@
            });
 		$(this).remove();
   });
-});
 
 //
 //

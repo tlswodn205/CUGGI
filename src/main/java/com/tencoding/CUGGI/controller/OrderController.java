@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +27,13 @@ import com.tencoding.CUGGI.dto.request.NicepayRequestDto;
 import com.tencoding.CUGGI.dto.response.NicepayResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderDetailProductResponseDto;
 import com.tencoding.CUGGI.dto.response.OrderListResponseDto;
+import com.tencoding.CUGGI.handler.exception.CustomRestfulException;
 import com.tencoding.CUGGI.repository.model.Order;
 import com.tencoding.CUGGI.repository.model.OrderProducts;
+import com.tencoding.CUGGI.repository.model.Person;
 import com.tencoding.CUGGI.repository.model.User;
 import com.tencoding.CUGGI.service.OrderService;
+import com.tencoding.CUGGI.service.PersonService;
 import com.tencoding.CUGGI.service.UserService;
 import com.tencoding.CUGGI.util.DataEncrypt;
 import com.tencoding.CUGGI.util.Define;
@@ -44,6 +48,9 @@ public class OrderController {
 
 	@Autowired
 	HttpSession session;
+	
+	@Autowired
+	PersonService personService;
 
 	@GetMapping("/orderList")
 	public String orderList주문내역( Model model) {
@@ -63,9 +70,7 @@ public class OrderController {
 
 	@GetMapping("/orderDetail/{id}")
 	public String orderDetail주문상세내역(@PathVariable("id") int id,Model model) {
-							
-		
-		
+									
 		
 		// 상세보기 상품
 		List<OrderDetailProductResponseDto> orderDetailList = orderService.readOrderDetailList(id);
@@ -103,6 +108,7 @@ public class OrderController {
 	@PostMapping("/orderDetail/{id}")
 	public String orderDetailUpdate취소완료로수정(@PathVariable("id") int id, UpdateOrderListRequestDto updateOrderListRequestDto) {
 		
+			
 		int result = orderService.orderDetailUpdate(updateOrderListRequestDto);
 		return "redirect:/order/orderDetail/" + id; 		
 	}
@@ -112,6 +118,10 @@ public class OrderController {
 	public String insertPayment결제결과추가(@PathVariable("orderId") int orderId, InsertPaymentRequestDto insertPaymentRequestDto,UpdateOrderListRequestDto updateOrderRequestDto) {
 		orderService.insertPayment(insertPaymentRequestDto,orderId);	
 		orderService.updateOrder(updateOrderRequestDto, orderId);
+		
+		
+		
+		orderService.updateProducts(orderId);
 		return "redirect:/order/orderDetail/"+orderId; 
 	}
 	
@@ -129,6 +139,9 @@ public class OrderController {
 	public String basket장바구니(Model model) {
 		
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		
+		Person person = personService.findByuserId(user.getId());
+		model.addAttribute("person",person);
 		
 		List<OrderBasketResponseDto> orderBasketResponseDto = orderService.readOrderBasketList(user.getId());
 		if(orderBasketResponseDto.isEmpty()) {
@@ -153,16 +166,18 @@ public class OrderController {
 	}
 	
 	@PostMapping("/paymentResult")
-	public String paymentResult결제완료화면() {	
-		 
+	public String paymentResult결제완료화면() {			 
 		return"/payment/payResult_utf";
 	} 
 	
 	@GetMapping("/addProduct/{productId}")
-	public void addProductAtBasket(@PathVariable() int productId) {
-		User user = new User();
-		user.setId(1);
+	@ResponseBody
+	public int addProductAtBasket(@PathVariable() int productId) {
+		
+		User user = (User) session.getAttribute(Define.PRINCIPAL);
+		
 		orderService.addProductAtBasket(productId, user.getId());
+		return 1;
 	}
 	
 }
