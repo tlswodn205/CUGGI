@@ -3,6 +3,39 @@
 
 <%@ include file ="/WEB-INF/view/layout/header.jsp" %>
 <style>
+	.locator-div{
+		display: flex;
+		margin-top:20px;
+		margin-bottom:20px;
+	}
+	
+	.locator-div{
+		font-size: 16px;
+	}
+	
+	.locator-div .locator{
+	 	padding: 5px;
+		background: #fff;
+		border: 0;
+		font-weight: bold;
+		appearance: none;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+	}
+	
+	.locator-div .locator:focus{
+	  outline: 0;
+	}
+		
+	.locator-div .locator option{
+	  outline: 0;
+	  padding: 5px;
+	}
+	
+	.locator-div .locator option:selected{
+		background: #000;
+		font-color: #fff;
+	}
 	.offline-store{
 		padding: 20px;
 		width : 760px;
@@ -115,12 +148,15 @@
 </style>
 <main>
     <div class="main-column" id="main-column">
-    	<select id="locator" class="locator" >
-			<option value="">모두보기</option>
-			<c:forEach var="locator" items="${locator}">
-				<option value=${locator}>${locator}</option>
-			</c:forEach>
-    	</select>
+    	<div class="locator-div">
+	    	<span>지역 선택</span>
+	    	<select id="locator" class="locator" >
+				<option value="">모두보기</option>
+				<c:forEach var="locator" items="${locator}">
+					<option value=${locator}>${locator}</option>
+				</c:forEach>
+	    	</select>
+    	</div>
 		<c:forEach var="offlineStore" items="${offlineStoreList}">
 			<div id="offline-store-${offlineStore.id}" class = "offline-store">
 				<input type ="hidden" id="store-name" name="storeName" value="${offlineStore.storeName}">
