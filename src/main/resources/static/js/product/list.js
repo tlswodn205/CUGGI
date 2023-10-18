@@ -59,10 +59,16 @@
 
   // TODO
   $('.product-all-btn').on('click', function () {
-	let secondCategoryId = $('#second-category-id').val();
-    let URL = "/product/reloadList?secondCategoryId="+secondCategoryId+"&startNum="+numberOfProduct;
-    console.log($('.product-all-btn').eq(0));
-    console.log($('#second-category-id').val());
+	let currentUrl =  new URLSearchParams(location.search);
+	let firstCategoryId = currentUrl.get('firstCategoryId');
+	let secondCategoryId = currentUrl.get('secondCategoryId');
+	let URL ="";
+	if(firstCategoryId){
+    	URL = "/product/reloadList?secondCategoryId="+firstCategoryId+"&startNum="+numberOfProduct;
+    }
+    if(secondCategoryId){
+    	URL = "/product/reloadList?secondCategoryId="+secondCategoryId+"&startNum="+numberOfProduct;
+	}
            $.ajax(URL, {
                type: "get",
                headers: {
