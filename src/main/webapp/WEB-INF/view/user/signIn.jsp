@@ -104,9 +104,9 @@
 		</form>
 		<br>
 		<div>
-			<a href="http://localhost:90/user/signUp">회원가입</a>
-			<a href="http://localhost:90/user/findId">아이디 찾기</a>
-			<a href="http://localhost:90/user/findPassword">비밀번호 찾기</a>
+			<a href="/user/signUp">회원가입</a>
+			<a href="/user/findId">아이디 찾기</a>
+			<a href="/user/findPassword">비밀번호 찾기</a>
 		</div>
 	</div>
 	</main>
