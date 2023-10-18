@@ -31,12 +31,10 @@
                    "Content-Type": "application/json"
                }
            }).done((res) => {
-			   if(res==1){
 				   let moveBasket = confirm("장바구니로 이동하시겠습니까?");
 				   if(moveBasket){
 					   window.location.href="/order/basket";
 				   }
-			   }
            });
 	});
 
