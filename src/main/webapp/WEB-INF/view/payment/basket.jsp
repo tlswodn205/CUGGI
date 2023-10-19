@@ -197,6 +197,7 @@ body.new-design.language-ko .baglist-item-availability {
 
 #quantity {
 	width: 40px;
+	border: revert;
 }
 
 .baglist-item-availability {

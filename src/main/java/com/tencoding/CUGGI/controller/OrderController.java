@@ -53,7 +53,7 @@ public class OrderController {
 	PersonService personService;
 
 	@GetMapping("/orderList")
-	public String orderList주문내역( Model model) {
+	public String orderList( Model model) {
 		
 		
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
@@ -69,7 +69,7 @@ public class OrderController {
 	}
 
 	@GetMapping("/orderDetail/{id}")
-	public String orderDetail주문상세내역(@PathVariable("id") int id,Model model) {
+	public String orderDetail(@PathVariable("id") int id,Model model) {
 									
 		
 		// 상세보기 상품
@@ -106,7 +106,7 @@ public class OrderController {
 	}
 	
 	@PostMapping("/orderDetail/{id}")
-	public String orderDetailUpdate취소완료로수정(@PathVariable("id") int id, UpdateOrderListRequestDto updateOrderListRequestDto) {
+	public String orderDetailUpdate(@PathVariable("id") int id, UpdateOrderListRequestDto updateOrderListRequestDto) {
 		
 			
 		int result = orderService.orderDetailUpdate(updateOrderListRequestDto);
@@ -115,7 +115,7 @@ public class OrderController {
 	
 
 	@PostMapping("insertpayment/{orderId}")
-	public String insertPayment결제결과추가(@PathVariable("orderId") int orderId, InsertPaymentRequestDto insertPaymentRequestDto,UpdateOrderListRequestDto updateOrderRequestDto) {
+	public String insertPayment(@PathVariable("orderId") int orderId, InsertPaymentRequestDto insertPaymentRequestDto,UpdateOrderListRequestDto updateOrderRequestDto) {
 		orderService.insertPayment(insertPaymentRequestDto,orderId);	
 		orderService.updateOrder(updateOrderRequestDto, orderId);
 		
@@ -127,7 +127,7 @@ public class OrderController {
 	
 	@GetMapping("deleteBasket/{id}")
 	@ResponseBody
-	public Integer deleteOfflineStore오프라인스토어삭제(@PathVariable("id") int id) {
+	public Integer deleteOfflineStore(@PathVariable("id") int id) {
 	
 		int result = orderService.deleteBasket(id);
 		return result; 
@@ -136,7 +136,7 @@ public class OrderController {
 	
 	
 	@GetMapping("/basket")
-	public String basket장바구니(Model model) {
+	public String basket(Model model) {
 		
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		
@@ -166,7 +166,7 @@ public class OrderController {
 	}
 	
 	@PostMapping("/paymentResult")
-	public String paymentResult결제완료화면() {			 
+	public String paymentResult() {			 
 		return"/payment/payResult_utf";
 	} 
 	
