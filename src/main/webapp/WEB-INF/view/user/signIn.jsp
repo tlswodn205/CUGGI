@@ -5,7 +5,7 @@
 	<div id="body">
 		<div id="title">나의 CUGGI 계정</div>
 		<div id="subTitle">로그인</div>
-		<form action="/user/signIn" method="post">
+		<form action="/user/signIn" method="post" autocomplete="off">
 			<div id="login">
 				<input type="text" id="username" name="username" placeholder="아이디*">
 				<input type="password" id="password" name="password" placeholder="비밀번호*">

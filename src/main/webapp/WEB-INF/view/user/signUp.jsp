@@ -136,7 +136,7 @@
 	$('#usernameCheck').on('click', function(){
 		let username = $('#username').val();
 		
-		if(username == null){
+		if(username.length == 0){
 			alert("아이디를 입력해주세요");
 			return false;
 		}
@@ -173,7 +173,7 @@
 		let email = $('#email').val();
 		let URL = "/user/duplicateCheck?email="+email;
 		
-		if(email == null){
+		if(email.length == 0){
 			alert("이메일을 입력해주세요");
 			return false;
 		}
