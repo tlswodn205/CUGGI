@@ -134,4 +134,20 @@ public class UserService {
 		userRepository.updateById(userEntity);
 		
 	}
+
+	public int duplicateCheck(String email, String username) {
+		int result =1;
+		User user =  new User();
+		if(email !=null ) {
+			user = userRepository.findByEmail(email);
+		}
+		if(username !=null) {
+			user = userRepository.findByUsername(username);
+		}
+		
+		if(user != null) {
+			result=0;
+		}
+		return result;
+	}
 }

@@ -281,4 +281,16 @@ public class UserController {
 		
 		return "/user/showPassword";
 	}
+	
+	@GetMapping("/duplicateCheck")
+	@ResponseBody
+	public int duplicateCheck(@RequestParam(required = false) String email, @RequestParam(required = false) String username) {
+
+		if((email == null && username==null)) {
+			throw new CustomRestfulException("값을 입력해주세요.", HttpStatus.BAD_REQUEST);
+		}
+		int result = userService.duplicateCheck(email, username);
+		return result;
+	}
+	
 }

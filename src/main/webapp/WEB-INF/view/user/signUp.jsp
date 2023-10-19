@@ -48,12 +48,12 @@
         border-radius: 0px;
         cursor: pointer;
     }
-    .sign-up #address {
-   		width: 308px;
+    .sign-up .narrow-input {
+   		width: 278px;
    		height: 56px;
     }
-    .sign-up #search {
-       	width: 70px;
+    .sign-up .input-btn {
+       	width: 100px;
        	border: 1px	solid #000;
        	border-radius: 7px;
     }    
@@ -69,7 +69,10 @@
 				<div>
 					<input type="text" placeholder="아이디" id="username" name="username"
 						value="${signUpDto.username}"
-						<c:if test="${signUpDto != null}">readonly</c:if>>
+						<c:if test="${signUpDto != null}">readonly</c:if><c:if test="${signUpDto == null}">class="narrow-input"</c:if>>
+					<c:if test="${signUpDto == null}">
+						<input type="button" class="input-btn" value="중복체크" id="usernameCheck">
+					</c:if>
 				</div>
 				<div>
 				
@@ -99,14 +102,15 @@
 					<input type="text" placeholder="이름" id="name" name="name">
 				</div>
 				<div>
-					<input type="address" placeholder="주소" id="address" readonly name="address">
-					<input type="button" onclick="openZipSearch()" value="검색" id="search">
+					<input type="address" placeholder="주소" id="address" class="narrow-input" readonly name="address">
+					<input type="button" class="input-btn" onclick="openZipSearch()" value="검색" id="search">
 				</div>
 				<div>
 					<input type="text" placeholder="상세주소" id="address_detail" name="address_detail">
 				</div>
 				<div>
-					<input type="email" placeholder="이메일" id="email" name="email">
+					<input type="email" placeholder="이메일" class="narrow-input" id="email" name="email">
+					<input type="button" class="input-btn" value="중복체크" id="emailCheck">
 				</div>
 				<div>
 					<input type="text" placeholder="연락처" id="phone_number"
@@ -180,12 +184,91 @@
 <script
 	src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	let usernameCheck = 1;
+	
+	let emailCheck = 0;
+	
+
+	$('#usernameCheck').on('click', function(){
+		let username = $('#username').val();
+		
+		if(username == null){
+			alert("아이디를 입력해주세요");
+			return false;
+		}
+		
+		let URL = "/user/duplicateCheck?username="+username;
+		
+
+        $.ajax(URL, {
+            type: "get",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).done((res)=>{
+        	if(res){
+        		usernameCheck = 1;
+        		alert("사용가능한 아이디 입니다");
+        	}else{
+        		alert("사용중인 아이디 입니다");
+        	}
+        });
+	})
+	
+	
+	
+	$('#usernameCheck').on('ready', function(){
+		usernameCheck=0;
+	})
+	
+	$('#username').on('change', function(){
+		usernameCheck=0;
+	})
+	
+	$('#emailCheck').on('click', function(){
+		let email = $('#email').val();
+		let URL = "/user/duplicateCheck?email="+email;
+		
+		if(email == null){
+			alert("이메일을 입력해주세요");
+			return false;
+		}
+
+        $.ajax(URL, {
+            type: "get",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).done((res)=>{
+        	if(res){
+        		emailCheck = 1;
+        		alert("사용가능한 이메일 입니다");
+        	}else{
+        		alert("사용중인 이메일 입니다");
+        	}
+        });
+	})
+	
+	$('#email').on('change', function(){
+		emailCheck=0;
+	})
+	
 
 	document.getElementById('birthday').value = new Date().toISOString().substring(0,10);
 	
 	function signUp(form) {
 		let check1 = document.getElementById('check1');
 		let check2 = document.getElementById('check2');
+		
+		if(!usernameCheck){
+			alert("아이디 중복 체크해주세요");
+			return false;
+		}
+				
+		if(!emailCheck){
+			alert("이메일 중복 체크해주세요");
+			return false;
+		}
 		
 		if(check1.checked == false || check2.checked == false) {
 			alert("필수항목에 체크해주세요");
