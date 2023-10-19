@@ -756,7 +756,6 @@ main#product-list .product-all-btn {
 	width: 380px;
 	height: 56px;
 	font-size: 18px;
-	margin-bottom: 30px;
 	padding: 0 10px;
 }
 #userId {
@@ -820,6 +819,11 @@ main#product-list .product-all-btn {
 #line_text {
    	font-size:18px;
 }
+
+#login #password {
+	margin-bottom: 30px;
+}
+
 .sign-up #info {
 		display: flex;
 		align-items: center;
@@ -850,6 +854,7 @@ main#product-list .product-all-btn {
 .sign-up input[type="checkbox"] {
 	width: 15px;
 	height: 15px;
+	margin-bottom: 0px;
 }
 .sign-up input[type="submit"] {
 	width: 400px;
