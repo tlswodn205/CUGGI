@@ -33,16 +33,9 @@
 	</select>	
 	
 	<select id="findByMenu" resultType = "com.tencoding.CUGGI.dto.response.CategoryResponseDto">
-		select sc.id, sc.second_category_name, sc.first_category_id, fc.first_category_name, pit.image
-		from second_category_tb sc
-		left join first_category_tb fc
-		on sc.first_category_id = fc.id
-        left join product_tb pt
-        on pt.second_category_id = sc.id
-        left join product_image_tb pit
-        on pt.id = pit.product_id
-        where pit.is_thumbnail = 0
-        group by second_category_name 
-        order by sc.id asc;
+		select  sct.id, sct.first_category_id,sct.second_category_name, fct.first_category_name
+		from second_category_tb sct
+		left join first_category_tb fct
+		on fct.id = sct.first_category_id
 	</select>	
 </mapper>

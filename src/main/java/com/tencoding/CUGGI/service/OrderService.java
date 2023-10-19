@@ -41,11 +41,9 @@ public class OrderService {
 
 	public List<OrderListResponseDto> readOrderList(int id) {
 		List<OrderListResponseDto> list = orderRepository.findByList(id);
-		System.out.println("리스트 수량확인 : " + list.toString());
 		
 		String selection = "*,";
-		
-		if(list.size()>0) {
+		if(list.size() > 0) {
 			int i = 0;
 			while(true) {
 				int changeCount = 0;

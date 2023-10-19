@@ -143,7 +143,7 @@
 		left join  product_tb pt
 		on pt.id = pit.product_id
 		where pt.product_name like CONCAT('%',#{searchData},'%') and pit.is_thumbnail=1
-        group by pt.second_category_id,pit.product_id, pt.product_name, pit.image
+        group by pit.product_id
         limit 9
 	</select>
 </mapper>

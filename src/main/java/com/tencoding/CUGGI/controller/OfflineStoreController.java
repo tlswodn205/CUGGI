@@ -27,7 +27,7 @@ public class OfflineStoreController {
 	HttpSession session;
 	
 	@GetMapping("")
-	public String offLineStore오프라인(Model model) {
+	public String offLineStore(Model model) {
 		List<OfflineStoreListResponseDto> offlineStoreResponseDtoList = offlineStoreService.OfflineStoreList();
 		List<String> locator = offlineStoreService.OfflineStoreLocator();
 		model.addAttribute("offlineStoreList", offlineStoreResponseDtoList);
@@ -37,7 +37,7 @@ public class OfflineStoreController {
 	
 	@PostMapping("/location")
 	@ResponseBody
-	public List<OfflineStoreListResponseDto> offLineStore오프라인(Model model, @RequestBody String location) {
+	public List<OfflineStoreListResponseDto> offLineStore(Model model, @RequestBody String location) {
 		List<OfflineStoreListResponseDto> offlineStoreResponseDtoList = offlineStoreService.OfflineStoreList(location);
 		return offlineStoreResponseDtoList;
 	}

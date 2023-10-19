@@ -2,80 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="/WEB-INF/view/layout/header.jsp"%>
-
-<style>
-	#title {
-		display: flex;
-		justify-content: center;
-		font-size: 50px;
-		font-weight: bold;
-		padding: 5%;
-	}
-	
-	.sign-up #info {
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		justify-content: center;
-	}	
-	.sign-up #agree {
-		width: 400px;
-		font-size: 18px;
-		margin: 0 auto; 
-	}
-	.sign-up input {
-		width: 380px;
-		height: 56px;
-		font-size: 18px;
-		margin-bottom: 20px;
-		padding: 0px 10px;
-	}
-	.sign-up input[type="checkbox"] {
-		width: 15px;
-		height: 15px;
-	}
-	.sign-up input[type="submit"] {
-		width: 400px;
-		background-color: black;
-		color: white;
-		margin-top: 30px;
-	}
-	.sign-up input[type="submit"]:hover {
-        background-color: white;
-        color: black;
-        border-radius: 0px;
-        cursor: pointer;
-    }
-	.sign-up #delete {
-		width: 400px;
-		background-color: white;
-		color: black;
-
-	}
-	.sign-up #delete:hover {
-        background-color: black;
-        color: white;
-        border-radius: 0px;
-        cursor: pointer;
-    }
-    .sign-up #address {
-   		width: 308px;
-   		height: 56px;
-    }
-    .sign-up #search {
-       	width: 70px;
-       	border: 1px	solid #000;
-       	border-radius: 7px;
-    }    
-	.sign-up .submit-btn{
-		text-align: center;
-	}
-	.sign-out {
-		text-align: center;
-	}
-	
-</style>
 	<main>
+	<div id="body">
 	<div id="title">프로필 수정</div>
 	<div class="sign-up">
 		<form action="/user/updateUser" method="post">
@@ -124,6 +52,7 @@
 			</div>
 			<br>
 		</form>
+	</div>
 	</div>
 	</main>
 
