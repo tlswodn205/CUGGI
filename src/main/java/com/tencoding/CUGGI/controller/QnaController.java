@@ -28,12 +28,12 @@ public class QnaController {
 	HttpSession session;
 	
 	@GetMapping("/qnaList")
-	public String qnaList문의리스트() {
+	public String qnaList() {
 		return "qna/qnaList";
 	}
 	
 	@GetMapping("/insertQna")
-	public String insertQna문의등록(Model model) {
+	public String insertQna(Model model) {
 		User user = (User) session.getAttribute(Define.PRINCIPAL);
 		if(user == null) {
 			throw new CustomRestfulException("로그인을 해주세요.", HttpStatus.BAD_REQUEST);
