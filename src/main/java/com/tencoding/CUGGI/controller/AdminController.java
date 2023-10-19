@@ -322,7 +322,7 @@ public class AdminController {
 	// product end
 	
 	// user start
-	@GetMapping("/userInfoList")
+	@GetMapping(value={"","/userInfoList"})
 	public String userInfoList(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
 		AdminPageListDto<UserInfoListDto> adminPageListDto = adminService.userList(type, keyword, page, status);
 		model.addAttribute("adminPageListDto", adminPageListDto);
