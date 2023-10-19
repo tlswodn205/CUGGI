@@ -7,25 +7,25 @@
 	            <div class="main-img">
 	            	<img alt="트래블" src="/images/image/travel.jpg">
 	            	<div class="main-content">
-	            		<button class="main-btn" onclick="location.href='/product/list?secondCategoryId=1'">컬렉션 만나보기</button>
+	            		<button class="main-btn" onclick="location.href='/product/list?firstCategoryId=1'">컬렉션 만나보기</button>
 	            	</div>
 	            </div>
 	            <div class="main-img">
 	            	<img alt="핸드백" src="/images/image/handbag.webp">
 	            	<div class="main-content">
-	            		<button class="main-btn"  onclick="location.href='/product/list?secondCategoryId=6'">컬렉션 만나보기</button>
+	            		<button class="main-btn"  onclick="location.href='/product/list?firstCategoryId=2'">컬렉션 만나보기</button>
 	            	</div>
 	            </div>
 	            <div class="main-img">
 	            	<img alt="지갑" src="/images/image/wallet.webp">
 	            	<div class="main-content">
-	            		<button class="main-btn"  onclick="location.href='/product/list?secondCategoryId=12'">컬렉션 만나보기</button>
+	            		<button class="main-btn"  onclick="location.href='/product/list?firstCategoryId=3'">컬렉션 만나보기</button>
 	            	</div>
 	            </div>
 	            <div class="main-img">
 	            		<img alt="쥬얼리&시계" src="/images/image/jewelry.jpg" />
 	            		<div class="main-content">
-	            			<button class="main-btn"  onclick="location.href='/product/list?secondCategoryId=15'">컬렉션 만나보기</button>
+	            			<button class="main-btn"  onclick="location.href='/product/list?firstCategoryId=4'">컬렉션 만나보기</button>
 	            		</div>
 	            </div>
             </div>

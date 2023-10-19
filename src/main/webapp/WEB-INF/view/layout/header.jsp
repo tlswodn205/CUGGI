@@ -42,7 +42,7 @@
 		        </ul>
 		      </div>
 		      <div class="logo-service">
-		      	<span><a class="common-black-line-link" href="/offlineStore"></a></span>
+		      	<span><a class="common-black-line-link" href="/offlineStore">오프라인스토어</a></span>
 		      </div>
 		      <div class="account-area">
 		      	<c:choose>
