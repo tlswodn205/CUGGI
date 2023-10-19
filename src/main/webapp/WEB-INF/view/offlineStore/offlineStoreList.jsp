@@ -7,6 +7,9 @@
 		display: flex;
 		margin-top:20px;
 		margin-bottom:20px;
+		width: 800px;
+		justify-content: right;
+		gap: 1rem;
 	}
 	
 	.locator-div{
@@ -16,7 +19,6 @@
 	.locator-div .locator{
 	 	padding: 5px;
 		background: #fff;
-		border: 0;
 		font-weight: bold;
 		appearance: none;
 		-moz-appearance: none;
@@ -58,59 +60,35 @@
 		display: flex;
 	    justify-content: space-between;
 	}
-	
+/*	
 	.offline-store .offline-store-container div{
 		margin-bottom: 10px;
 	}
-	
+*/
 	.offline-store .store-name{
 		font-size: 20px;
 		font-weight: bold;
 	}
 	
 	.offline-store .load-map{
-		background: inherit ; 
-		border:none; 
-		box-shadow:none; 
-		border-radius:0; 
-		padding:0; 
-		overflow:visible; 
-		cursor:pointer;
-		letter-spacing : 1px;
-		margin-right : 20px;
+		width: 100px;
+		height: 70px;
+		background-color: black;
+		color: white;
+   		border: 1px	solid #000;
+   		border-radius: 7px;
+   		cursor: pointer;
 	}
 	
 	.offline-store .load-map:hover {
-    	animation: animateButtonBackgroundEven 0.5s forwards;
+    	background-color: white;
+		color: black;
 	}
 /*
 	.offline-store:nth-child(even) .load-map:hover {
     	animation: animateButtonBackgroundEven 0.5s forwards;
 	}
 */
-	@keyframes animateButtonBackgroundEven {
-	    0% {
-	        background-color: #ccc;
-	    }
-	    16% {
-	        background-color: #ddd;
-	    }
-	    33% {
-	        background-color: #eee;
-	    }
-	    50% {
-	        background-color: #fff;
-	    }
-	    67% {
-	        background-color: #eee;
-	    }
-	    84% {
-	        background-color: #ddd;
-	    }	    
-	    100% {
-	        background-color: #ccc;
-	    }
-	}
 
 /*	
 	.offline-store:nth-child(odd) .load-map:hover {

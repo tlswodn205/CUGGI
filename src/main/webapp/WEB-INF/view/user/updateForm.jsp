@@ -5,7 +5,7 @@
 	<main>
 	<div id="body">
 	<div id="title">프로필 수정</div>
-	<div class="sign-up">
+	<div class="update">
 		<form action="/user/updateUser" method="post">
 			<div id="info">
 				<div>
@@ -26,8 +26,8 @@
 					<input type="text" placeholder="이름" id="name" name="name" value="${updateUserDto.name}">
 				</div>
 				<div>
-					<input type="address" placeholder="주소" id="address" readonly value="${updateUserDto.address}"  name="address" >
-					<input type="button" onclick="openZipSearch()" value="검색" id="search">
+					<input type="address" placeholder="주소" id="address" readonly value="${updateUserDto.address}"  name="address" class="narrow-input">
+					<input type="button" onclick="openZipSearch()" value="검색" id="search" class="input-btn">
 				</div>
 				<div>
 					<input type="text" placeholder="상세주소" id="address_detail" value="${updateUserDto.addressDetail}" name="addressDetail">

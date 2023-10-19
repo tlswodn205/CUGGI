@@ -826,11 +826,11 @@ main#product-list .product-all-btn {
 		flex-direction: column;
 		justify-content: center;
 	}	
-.sign-up .narrow-input {
+.sign-up .narrow-input, .sign-up #username,.sign-up #email {
 	width: 278px;
 	height: 56px;
 }
-.sign-up .input-btn {
+.sign-up .input-btn[type="button"] {
    	width: 100px;
    	border: 1px	solid #000;
    	border-radius: 7px;
@@ -876,10 +876,63 @@ main#product-list .product-all-btn {
     cursor: pointer;
 }
 
-.sign-up .submit-btn{
+.sign-up .submit-btn input[type="button"]{
 	text-align: center;
+	background: black;
+	color: white;
+	cursor: pointer;
 }
-.sign-out {
+
+.sign-up .submit-btn input[type="button"]:hover{
+	background: white;
+	color: black;
+}
+
+.update #info {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+}	
+.update input {
+	width: 380px;
+	height: 56px;
+	font-size: 18px;
+	margin-bottom: 20px;
+	padding: 0px 10px;
+}
+.update .submit-btn [type='submit']{
+	width: 400px;
 	text-align: center;
+	background: black;
+	color: white;
+}
+.update .narrow-input {
+	width: 278px;
+	height: 56px;
+}
+
+.update .input-btn[type="button"] {
+   	width: 100px;
+   	border: 1px	solid #000;
+   	border-radius: 7px;
+}
+.update input[type="submit"]:hover {
+    background-color: white;
+    color: black;
+    border-radius: 0px;
+    cursor: pointer;
+}
+.update #delete {
+	width: 400px;
+	background-color: white;
+	color: black;
+
+}
+.update #delete:hover {
+    background-color: black;
+    color: white;
+    border-radius: 0px;
+    cursor: pointer;
 }
 /** 20231018 ksy **/
