@@ -701,3 +701,13 @@ main#product-list .product-all-btn {
   border-radius: 3px;
   cursor: pointer;
 }
+
+.sign-up .narrow-input {
+	width: 278px;
+	height: 56px;
+}
+.sign-up .input-btn {
+   	width: 100px;
+   	border: 1px	solid #000;
+   	border-radius: 7px;
+}    
