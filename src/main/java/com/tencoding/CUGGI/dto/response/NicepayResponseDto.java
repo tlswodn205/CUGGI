@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class NicepayResponseDto {
 	String ediDate;	
 	String hashString;
-	final String returnURL = "http://localhost:90/order/paymentResult"; // 결과페이지(절대경로) - 모바일 결제창 전용
+	final String returnURL = "/order/paymentResult"; // 결과페이지(절대경로) - 모바일 결제창 전용
 	
 	public NicepayResponseDto(NicepayRequestDto nicepayRequestDto){	
 		DataEncrypt sha256Enc = new DataEncrypt();

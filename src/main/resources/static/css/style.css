@@ -20,6 +20,7 @@ body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 body > .body-container{
@@ -98,16 +99,19 @@ header nav .menu>li {
 	cursor: pointer;
 }
 
+
 header nav .submenu {
 	background-color: white;
 	width: 100%;
 	position: absolute;
-	top: 214%; /*kjh*/
+	top: 186%; /*kjh*/
 	padding: 0;
 	display: none;
 	flex-direction: column;
 	align-items: center;
+	border-bottom: 1px solid #ececec;
 }
+
 
 header nav .submenu-div{
 	display: flex;
@@ -115,17 +119,45 @@ header nav .submenu-div{
 }
 
 header nav .subcategory {
+	display: none;
+	gap: 15rem;
+	margin-bottom: 25px;
+}
+
+header nav .subcategory.active{
 	display: flex;
-	gap: 7rem;
+	animation: fade-in 1.5s;
+  	animation-fill-mode: forwards;
+}
+
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+header nav .subcategory .sub-image{
+	display: flex;
+	flex-direction: column;
+	margin-top: 25px;
+	gap: 1rem;
 }
 
 header nav .submenu li {
-	margin: 40px 0;
+	margin: 25px 0;
 	white-space: nowrap;
 }
 
 header nav .submenu li > a{
 	color: black;
+}
+
+header nav .subcategory > .sub-image img{
+	width: 200px;	
 }
 
 header nav .close {
@@ -216,7 +248,7 @@ main .product-one:hover img {
 }
 
 footer {
-    min-height: 100px;
+    min-height: 110px;
 }
 
 footer .footer-content {
@@ -224,6 +256,7 @@ footer .footer-content {
     font-size: 10px;
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
 footer .footer-content .qna-content{

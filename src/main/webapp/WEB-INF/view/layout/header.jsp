@@ -20,7 +20,10 @@
       referrerpolicy="no-referrer"
     />
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-  <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap" rel="stylesheet">
+  	<link rel="stylesheet" href="/css/style.css">
   
 </head>
 
@@ -39,7 +42,7 @@
 		        </ul>
 		      </div>
 		      <div class="logo-service">
-		      	<span><a class="common-black-line-link" href="/offlineStore">오프라인스토어</a></span>
+		      	<span><a class="common-black-line-link" href="/offlineStore"></a></span>
 		      </div>
 		      <div class="account-area">
 		      	<c:choose>
@@ -54,8 +57,10 @@
 			    	<input type="hidden" id="is-login" value='${principal ne null}'>
 			    	<div><a class="common-black-font" href="/user/updateForm">마이페이지</a></div>
 			    	<div><a class="common-black-font" href="/user/logout">로그아웃</a></div>
+			    	<div><a class="common-black-font" href="/order/orderList">주문내역</a></div>
+			    	
 			    	<c:if test="${principal.level >= 5 }">
-			    	<div><a class="common-black-font" href="/admin">관리자페이지</a></div>
+			    	<div><a class="common-black-font" href="/admin/">관리자페이지</a></div>
 			    	</c:if>
 			    </div>
 			    </c:otherwise>
@@ -81,27 +86,35 @@
 	            <li>지갑</li>
 	            <li>쥬얼리&시계</li>
 	            <div class="submenu">
-		                	<span class="close">X</span>
-		                	<div class="subcategory">
-			                <ul>
-			                <c:forEach items="${secondCategoryList}" var="secondCategory" varStatus="loop">
-			                <c:if test="${not loop.first && secondCategory.firstCategoryId ne previousItem.firstCategoryId}">
-			                </ul>
-			                <ul>
-			                </c:if>
-			                <li><a href="/product/list?secondCategoryId=${secondCategory.id}">${secondCategory.secondCategoryName}</a></li>
-			                <c:if test="${loop.last}">
-			                </ul>
-			                </c:if>
-			                <c:set var="previousItem" value="${secondCategory}" />
-			                </c:forEach>
-			                </ul>
+                	<span class="close">X</span>
+						
+						<c:forEach var="item" items="${secondCategoryList}" varStatus="loop">
+						<c:if test="${loop.first}">
+						<div class="subcategory">
+                		<div class="sub-image"><a href="/product/list?firstCategoryId=${item.firstCategoryId}"><img src="/images/image/menu${item.firstCategoryId}.jpg"></a></div>
+                		<ul>
+						</c:if>
+						<c:if test="${not loop.first && item.firstCategoryId ne previousItem}">
+							</ul>
+							</div>
+							<div class="subcategory">
+							<div class="sub-image"><a href="/product/list?firstCategoryId=${item.firstCategoryId}"><img src="/images/image/menu${item.firstCategoryId}.jpg"></a></div>
+							<ul>
+						</c:if>
+							<li><a href="/product/list?secondCategoryId=${item.id}">${item.secondCategoryName}</a></li>
+							
+							<c:set var="previousItem" value="${item.firstCategoryId}" />
+		            	
+		            	</c:forEach>
+		            	</ul>
 		            	</div>
-	            </div>
 	        </ul>
 	    </nav>
+	    
+
+	    
 	    <script type="text/javascript">
-	    // 헤더 검색
+	    // 헤더 검색	    
 	    $("#searchInput").keyup(function(){     
 	            let searchData = $('#searchInput').val().trim();
 	         	// ajax 통신

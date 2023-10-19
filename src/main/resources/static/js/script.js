@@ -3,12 +3,18 @@ $('document').ready(function() {
 })
 
 $(".menu").on('click', ()=>{
-    $(".submenu").slideDown("slow")
+    $(".submenu").slideDown("fast")
     $(".submenu").css("display","flex")
     $('.account-area').slideUp("fast");
     $('.search-area').slideUp("fast");
     $('.overlay').addClass('active');
 });
+
+$('.menu > li').on('click', (e)=>{
+	$('.subcategory').removeClass('active')
+	let idx = $('.menu li').index(e.target)
+	$('.subcategory').eq(idx).addClass('active')
+})
 
 $(".close").on('click', (e)=>{
     e.stopPropagation();
@@ -20,7 +26,6 @@ $(".close").on('click', (e)=>{
 // 검색 영역 토글 이벤트
 $('.searchBtn').on('click', function () {
   $('.search-area').slideToggle();
-  $('#searchInput').focus();
   $('.account-area').slideUp("fast");
   $(".submenu").slideUp("fast");
 });
@@ -50,3 +55,23 @@ $('#searchForm').on('submit', function (e) {
 });
 
 // TODO 검색어 입력시 ajax 로 유사단어 출력
+// 문의사항 유효성, submit이벤트
+// 문의사항 유효성, submit이벤트
+$('#insertQna button').on('click', function() {
+	let title = $("#insertQna #title")
+	let content = $("#insertQna #content")
+
+	if (!title.val().trim()) {
+		alert('1자 이상의 제목을 입력하세요.');
+		title.focus();
+		return false;
+	}
+	
+	if(content.val().trim().length < 10) {
+		alert('10자 이상의 검색어를 입력하세요.');
+		content.focus();
+		return false;
+	}
+	
+	$('#insertQna').submit();
+})

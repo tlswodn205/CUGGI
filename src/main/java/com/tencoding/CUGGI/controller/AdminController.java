@@ -69,7 +69,7 @@ public class AdminController {
 	
 	//offlinestore start
 	
-	@GetMapping(""+"offlineStoreManagement")
+	@GetMapping("offlineStoreManagement")
 	public String offlineStoreManagement(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page, Model model) {
 		AdminPageListDto<OfflineStoreListResponseDto> adminPageListDto = adminService.OfflineStoreList(type, keyword, page);
 		model.addAttribute("adminPageListDto", adminPageListDto);

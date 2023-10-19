@@ -19,7 +19,8 @@
 		let isLogin = $('#is-login').val();
 		if(!isLogin){
 			alert("로그인을 하셔야 합니다.");
-			location.href='http://localhost:90/user/signIn';
+			location.href='/user/signIn';
+			return false;
 		}
 		
        	let productId = $('.add-cart').attr('id');
@@ -31,12 +32,10 @@
                    "Content-Type": "application/json"
                }
            }).done((res) => {
-			   if(res==1){
 				   let moveBasket = confirm("장바구니로 이동하시겠습니까?");
 				   if(moveBasket){
 					   window.location.href="/order/basket";
 				   }
-			   }
            });
 	});
 

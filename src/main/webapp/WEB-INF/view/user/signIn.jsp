@@ -98,15 +98,15 @@
 			</div>
 			<br>
 			<div>
-				<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=01b88ff29390c24b3527959d05fbc8ae&redirect_uri=http://localhost:90/user/kakao/callback">
+				<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=01b88ff29390c24b3527959d05fbc8ae&redirect_uri=http://192.168.0.65:90/user/kakao/callback">
 				<img src="/image/kakao_login_large_wide.png" width="400px" alt=""></a>
 			</div>
 		</form>
 		<br>
 		<div>
-			<a href="http://localhost:90/user/signUp">회원가입</a>
-			<a href="http://localhost:90/user/findId">아이디 찾기</a>
-			<a href="http://localhost:90/user/findPassword">비밀번호 찾기</a>
+			<a href="/user/signUp">회원가입</a>
+			<a href="/user/findId">아이디 찾기</a>
+			<a href="/user/findPassword">비밀번호 찾기</a>
 		</div>
 	</div>
 	</main>
