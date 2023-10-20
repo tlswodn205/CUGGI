@@ -10,9 +10,10 @@
 		<form action="/user/signUp" method="post" autocomplete="off">
 			<div id="info">
 				<div>
-					<input type="text" placeholder="아이디" id="username" name="username"
+					<input type=${signUpDto != null ? "hidden": "text"} placeholder="아이디" id="username" name="username"
+				
 						value="${signUpDto.username}"
-						<c:if test="${signUpDto != null}">readonly</c:if><c:if test="${signUpDto == null}">class="narrow-input"</c:if>>
+						<c:if test="${signUpDto != null}">readonly</c:if>>
 					<c:if test="${signUpDto == null}">
 						<input type="button" class="input-btn" value="중복체크" id="usernameCheck">
 					</c:if>
