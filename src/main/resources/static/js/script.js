@@ -59,7 +59,7 @@ $('#searchForm').on('submit', function (e) {
 // 문의사항 유효성, submit이벤트
 // 문의사항 유효성, submit이벤트
 $('#insertQna button').on('click', function() {
-	let title = $("#insertQna #title")
+	let title = $("#insertQna input[name='title']")
 	let content = $("#insertQna #content")
 
 	if (!title.val().trim()) {

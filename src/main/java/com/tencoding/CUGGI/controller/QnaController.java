@@ -44,7 +44,9 @@ public class QnaController {
 	}
 	
 	@PostMapping("/insertQna")
-	public String insertQnaProc문의등록(QnaFormRequestDto qnaFormRequestDto) {
+	public String insertQnaProc(QnaFormRequestDto qnaFormRequestDto) {
+		User user = (User)session.getAttribute(Define.PRINCIPAL);
+		qnaFormRequestDto.setUserId(user.getId());
 		qnaService.qnaInsert(qnaFormRequestDto);
 		return "redirect:/";
 	}

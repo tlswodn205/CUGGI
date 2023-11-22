@@ -727,6 +727,7 @@ main#product-list .product-all-btn {
 #subTitle {
 	font-size: 30px;
 	margin-bottom: 30px;
+    text-align: center;
 }
 #deleteBtn {
 	width: 400px;
