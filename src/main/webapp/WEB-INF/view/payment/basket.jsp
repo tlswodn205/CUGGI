@@ -338,7 +338,7 @@ function deleteOrderProduct(id){
 //결제창 최초 요청시 실행됩니다.
 function nicepayStart(){
 	
-	let totalprice = $("#Amt").val(); 
+	let totalprice = $("#Amt").val();
 	
 	
 	$("#Moid").val($("#orderId").val()); 
@@ -595,7 +595,7 @@ function reloadTotalPrice(){
 		 totalprice += quantitys[i].value*prices[i].value;
 	}
 	$("#total-price").val(totalprice.toLocaleString('ko-KR'))
-	$("#Amt").val(totalprice); 
+	$("#Amt").val(totalprice);
 }
 
 

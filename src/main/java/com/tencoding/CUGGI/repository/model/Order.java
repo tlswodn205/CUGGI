@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 public class Order {
 	int id;
-	int userId;	
+	int userId;
 	Timestamp purchaseDate;
 	Timestamp cancelDate;
 	Timestamp createdAt;
@@ -24,4 +24,5 @@ public class Order {
 	String state;
 	int price;
 	int orderId;
+
 }

@@ -2,6 +2,7 @@ package com.tencoding.CUGGI.service;
 
 import javax.annotation.Resource;
 
+import com.tencoding.CUGGI.repository.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class QnaService {
 	}
 
 	public void qnaInsert(QnaFormRequestDto qnaFormRequestDto) {
-		qnaFormRequestDto.setUserId(1);
+
 		int result = qnaRepository.insert(qnaFormRequestDto);
 		mail.sendSimpleEmail(qnaFormRequestDto);
 		if(result != 1) {

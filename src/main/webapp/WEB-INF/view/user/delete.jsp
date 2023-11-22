@@ -5,19 +5,15 @@
 	<div id="body">
 		<div id="title">회원 탈퇴</div>
 		<div id="subTitle">
-			<p>
-				회원 탈퇴를 하면
-				서비스를 더 이상 이용하실 수 없습니다.
-				<br>
-				회원 탈퇴를 진행하시겠습니까?
-			</p>
-		</div>
+			<div>회원 탈퇴를 하면 서비스를 더 이상 이용하실 수 없습니다.</div>
+			<div>회원 탈퇴를 진행하시겠습니까?</div>
+		</div><br>
 		<form action="/user/delete" method="post">
 			<div id="delete">
 				<c:if test="${iskakaoUser == false}">
 				<input type="password" placeholder="비밀번호*" id="password" name="password">
 				</c:if>
-			</div>
+			</div> <br>
 			<button type="submit" id="deleteBtn">회원 탈퇴</button>
 		</form>
 	</div>

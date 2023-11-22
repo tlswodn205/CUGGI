@@ -9,7 +9,7 @@
 				이메일을 입력해주세요
 			</p>
 		</div>
-		<form action="/user/findId" method="post">
+		<form action="/user/showId" method="post">
 			<div>
 				<input type="email" placeholder="email*" id="email"
 					name="email">
@@ -18,4 +18,4 @@
 		</form>
 	</div>
 	</main>
-<%@ include file="/WEB-INF/view/layout/footer.jsp"%>
+<%@ include file="/WEB-INF/view/layout/footer.jsp"%>s

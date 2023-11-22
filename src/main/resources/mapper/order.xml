@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tencoding.CUGGI.repository.interfaces.OrderRepository"> 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencoding.CUGGI.repository.interfaces.OrderRepository">
 	<insert id="insert">
 		INSERT INTO order_tb(user_id, state, created_at)
 		values(#{userId},"장바구니",now())
-				<selectKey resultType="int" keyProperty="number" order="AFTER"> <!-- 입력후 co_no를 리턴함 -->
-					SELECT LAST_INSERT_ID()
-				</selectKey>
+		<selectKey resultType="int" keyProperty="number" order="AFTER"> <!-- 입력후 co_no를 리턴함 -->
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
-  
+
 	<update id="updateById">
 		UPDATE order_tb SET cancel_date = now(),
-		status="결제 취소
-		완료"
+							status="결제 취소
+      완료"
 		WHERE id =
-		#{id};
+			  #{id};
 	</update>
 
 	<update id="orderDetailUpdate">
@@ -27,13 +27,13 @@
 		UPDATE order_tb SET state="결제완료", purchase_date = now()
 		WHERE id = #{orderId};
 	</update>
-<!--  
-	<update id="orderAdminUpdate">
-		UPDATE order_tb SET state="결제취소"
-		WHERE id =
-		#{orderId};
-	</update>
-	-->
+	<!--
+       <update id="orderAdminUpdate">
+          UPDATE order_tb SET state="결제취소"
+          WHERE id =
+          #{orderId};
+       </update>
+       -->
 	<update id="orderAdminUpdate">
 		UPDATE order_tb SET state= "결제취소"
 		WHERE id = #{orderId} AND state = "취소요청";
@@ -44,107 +44,107 @@
 	</delete>
 
 	<delete id="deleteBasket">
-		DELETE FROM order_products_tb 
+		DELETE FROM order_products_tb
 		WHERE id=#{id}
 
 	</delete>
 
 	<select id="findById"
-		resultType="com.tencoding.CUGGI.repository.model.Order">
+			resultType="com.tencoding.CUGGI.repository.model.Order">
 		SELECT * FROM order_tb WHERE id = #{id}
 	</select>
 
 	<select id="findByAll"
-		resultType="com.tencoding.CUGGI.repository.model.Order">
+			resultType="com.tencoding.CUGGI.repository.model.Order">
 		SELECT * FROM order_tb
 	</select>
 
 	<select id="findByBasketList"
-		resultType="com.tencoding.CUGGI.dto.response.OrderBasketResponseDto">
+			resultType="com.tencoding.CUGGI.dto.response.OrderBasketResponseDto">
 		select op.id, op.quantity, p.price as price,
-        p.product_name, s.second_category_name, pi.image,pi.product_id as productId, o.id as orderId, pi.is_thumbnail as isThumbnail
-        from order_products_tb op
-        left join order_tb o
-        on o.id = op.order_id
-        left join product_tb p
-        on p.id = op.product_id
-        left join second_category_tb s
-        on p.second_category_id = s.id
-        left join
-        product_image_tb pi
-        on p.id = pi.product_id
-        where o.user_id = #{id}
-        and pi.is_thumbnail = 1
-        and o.state = '장바구니'
-        group by pi.is_thumbnail,op.product_id;
+			   p.product_name, s.second_category_name, pi.image,pi.product_id as productId, o.id as orderId, pi.is_thumbnail as isThumbnail
+		from order_products_tb op
+				 left join order_tb o
+						   on o.id = op.order_id
+				 left join product_tb p
+						   on p.id = op.product_id
+				 left join second_category_tb s
+						   on p.second_category_id = s.id
+				 left join
+			 product_image_tb pi
+			 on p.id = pi.product_id
+		where o.user_id = #{id}
+		  and pi.is_thumbnail = 1
+		  and o.state = '장바구니'
+		group by pi.is_thumbnail,op.product_id;
 	</select>
 
 
-<select id="findByList"
-		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
+	<select id="findByList"
+			resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
 		select o.created_at , ot.product_name ,p.product_feature,
-		(select group_concat(concat(ot.product_name," * ",ot.quantity )) from order_products_tb ot where ot.order_id= o.id group by ot.order_id) as productName, pi.image, o.id, o.state, (select sum(opt.price * opt.quantity)  from order_tb ot left join order_products_tb opt on opt.order_id = ot.id  where ot.id= o.id  group by ot.id ) as price
+			   (select group_concat(concat(ot.product_name," * ",ot.quantity )) from order_products_tb ot where ot.order_id= o.id group by ot.order_id) as productName, pi.image, o.id, o.state, (select sum(opt.price * opt.quantity)  from order_tb ot left join order_products_tb opt on opt.order_id = ot.id  where ot.id= o.id  group by ot.id ) as price
 		from order_tb o
-		left
-		join
-		order_products_tb ot
-		on o.id = ot.order_id
-		left join product_tb p
-		on
-		ot.product_id = p.id
-		left join product_image_tb pi
-		on p.id =
-		pi.product_id
+				 left
+					 join
+			 order_products_tb ot
+			 on o.id = ot.order_id
+				 left join product_tb p
+						   on
+							   ot.product_id = p.id
+				 left join product_image_tb pi
+						   on p.id =
+							  pi.product_id
 		where o.user_id = #{id}
-		and o.state = '취소요청'
-		or o.state =
-		'결제완료'
-		or o.state =
-		'결제취소'
-        group by o.id;
+			and o.state = '취소요청'
+		   or o.state =
+			  '결제완료'
+		   or o.state =
+			  '결제취소'
+		group by o.id;
 	</select>
 
 	<select id="findByListAdmin"
-		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
+			resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
 		select o.id, o.created_at,
-		o.user_id, op.product_name,
-		op.price,o.cancel_date
+			   o.user_id, op.product_name,
+			   op.price,o.cancel_date
 		from order_tb o
-		left join order_products_tb op
-		on
-		o.id = op.order_id;
+				 left join order_products_tb op
+						   on
+							   o.id = op.order_id;
 	</select>
 
 	<select id="findByDetailId"
-		resultType="com.tencoding.CUGGI.repository.model.Order">
+			resultType="com.tencoding.CUGGI.repository.model.Order">
 		select *
 		from order_tb o
 		where o.id = #{id};
 	</select>
 
 	<select id="findAdminOrderDetailId"
-		resultType="com.tencoding.CUGGI.dto.response.AdminOrderDetailListResponseDto">
-		   select o.id as id,
-        o.purchase_date,
-        o.user_id, 
-        op.product_name,
-        (select price*quantity from order_products_tb where order_id = o.id AND product_id = op.product_id)  as price,
-        p.tid,
-        o.state,
-        op.quantity
+			resultType="com.tencoding.CUGGI.dto.response.AdminOrderDetailListResponseDto">
+		select o.id as id,
+			   o.purchase_date,
+			   o.user_id,
+			   op.product_name,
+			   (select price*quantity from order_products_tb where order_id = o.id AND product_id = op.product_id)  as price,
+			   p.tid,
+			   o.state,
+			   op.quantity
 		from order_tb o
-		left join order_products_tb op
-		on o.id = op.order_id
-        left join payment_tb p
-        on o.id = p.order_id 
+				 left join order_products_tb op
+						   on o.id = op.order_id
+				 left join payment_tb p
+						   on o.id = p.order_id
 		where o.id = #{id};
 	</select>
-	
-	
-	
+
+
+
 
 	<select id="findPaging"
-		resultType="com.tencoding.CUGGI.dto.response.PagingResponseDto">
+			resultType="com.tencoding.CUGGI.dto.response.PagingResponseDto">
 		SELECT totalCount, totalPage, currentPage,
 		CASE
 		WHEN currentPage = 1
@@ -175,9 +175,9 @@
 	</select>
 
 	<select id="findByKeywordAndCurrentPage"
-		resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
+			resultType="com.tencoding.CUGGI.dto.response.OrderListResponseDto">
 		SELECT o.*,
-		 p.name,
+		p.name,u.username as username,
 		(select group_concat(concat(ot.product_name," * ",ot.quantity )) from order_products_tb ot where ot.order_id= o.id group by ot.order_id) as productName,
 		(select sum(opt.price * opt.quantity) as price from order_tb ot left join order_products_tb opt on opt.order_id = ot.id where ot.id= o.id group by ot.id) as price
 		FROM order_tb o
@@ -191,6 +191,12 @@
 		ON
 		p.user_id =
 		o.user_id
+
+		LEFT JOIN user_tb u
+		ON
+		p.user_id =
+		u.id
+
 		WHERE state != "장바구니"
 		<if test="type == 'id' and keyword != null">
 			AND o.id = #{keyword}
@@ -205,16 +211,16 @@
 		ORDER BY id DESC
 		LIMIT #{startNum}, 10
 	</select>
-	
+
 	<select id="findByUserId"
-		resultType="com.tencoding.CUGGI.repository.model.Order">
+			resultType="com.tencoding.CUGGI.repository.model.Order">
 		SELECT * FROM order_tb WHERE user_id = #{userId} AND state="장바구니"
 	</select>
-	
+
 	<select id="findByOrderAdminDetailCancelList"
-		resultType="com.tencoding.CUGGI.repository.model.Order">
+			resultType="com.tencoding.CUGGI.repository.model.Order">
 		SELECT * FROM order_tb WHERE user_id = #{userId} AND state="장바구니"
 	</select>
-	
+
 
 </mapper>
