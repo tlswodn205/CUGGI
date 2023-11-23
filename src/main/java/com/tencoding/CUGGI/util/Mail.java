@@ -192,7 +192,7 @@ public class Mail {
             sendTo[1] = "CuggiAteam@gmail.com";
             helper.setTo(sendTo);
             helper.setFrom("CuggiATeam@gmail.com");
-            helper.setSubject("고객님의 문의사항이 접수되었습니다.");
+            helper.setSubject("고객님의 문의사항에 답변이 완료되었습니다.");
             
             helper.setText(content, true); //html 타입이므로, 두번째 파라미터에 true 설정
         };

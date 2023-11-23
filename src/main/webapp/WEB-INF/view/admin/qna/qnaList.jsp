@@ -9,7 +9,7 @@
 			<div class="d-flex flex-row justify-content-start mb-4">
 				<input type="hidden" id="status" value="${adminPageListDto.status}">
 				<select id="type" name="type" class="form-select w-auto me-2">
-					<option value="id" ${adminPageListDto.type eq "id" ? "selected":""}>이름</option>
+					<option value="name" ${adminPageListDto.type eq "name" ? "selected":""}>이름</option>
 				</select>
 				<input type="text" class="form-control w-25 me-2" id="keyword" placeholder="검색" value="${adminPageListDto.keyword}">
 				<input type="button" class="btn btn-outline-secondary me-auto" id="search-btn" value="검색하기" onclick="search()">
