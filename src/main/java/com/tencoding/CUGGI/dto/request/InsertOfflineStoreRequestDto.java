@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class InsertOfflineStoreRequestDto {
 	String storeName;
-	Integer storeNumber;
+	String storeNumber;
 	String storeAddress;
 	String storeAddressDetail;
 	

@@ -123,7 +123,7 @@ public class AdminController {
 	@GetMapping("deleteOfflineStore/{id}")
 	public String deleteOfflineStore(@PathVariable("id") int id) {
 		int result = adminService.deleteOfflineStore(id);
-		return "redirect:admin/offlineStoreManagement";
+		return "redirect:/admin/offlineStoreManagement";
 	}
 
 	//offlinestore end
