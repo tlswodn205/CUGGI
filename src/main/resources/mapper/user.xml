@@ -95,6 +95,5 @@
 			and u.username like CONCAT('%',#{keyword},'%')
 		</if>
 		) ost;
-
 	</select>
 </mapper>

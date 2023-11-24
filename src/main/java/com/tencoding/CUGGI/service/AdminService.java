@@ -463,7 +463,6 @@ public class AdminService {
 		if(page <= 0) {
 			page = 1;
 		}
-
 		PagingResponseDto PagingResponseDto = userRepository.findPaging(type, kerword, page, status);
 		int startNum = (page-1)*10;
 		List<UserInfoListDto> userList = userRepository.findByKeywordAndCurrentPage(type, kerword, startNum, status);
