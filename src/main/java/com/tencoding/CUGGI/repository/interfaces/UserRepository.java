@@ -2,6 +2,7 @@ package com.tencoding.CUGGI.repository.interfaces;
 
 import java.util.List;
 
+import com.tencoding.CUGGI.dto.response.PagingResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,5 +26,7 @@ public interface UserRepository {
 	public User findByUsernameAndEmail(@Param("username") String username, @Param("email") String email);
 	public List<UserInfoListDto> findByKeywordAndCurrentPage(@Param("type")String type, @Param("keyword")String keyword, @Param("startNum")Integer startNum, @Param("status")String status);
 	public UserInfoDetailDto findByIdAtAdmin(int id);
+
+	public PagingResponseDto findPaging(@Param("type")String type, @Param("keyword")String keyword, @Param("page")Integer page, @Param("status")String status);
 
 }

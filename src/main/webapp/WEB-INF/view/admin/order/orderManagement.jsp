@@ -59,7 +59,7 @@
 					</c:choose>
 				</li>
 				<c:forEach var ="num" begin = "${OrderadminPageListDto.startPageNum}" end="${OrderadminPageListDto.lastPageNum}">
-					<li class='page-item'><a class='page-link' href="?page=${num}${empty OrderadminPageListDto.keyword ? "": "&keyword="+= adminPageListDto.keyword}${empty adminPageListDto.type ? "": "&type="+= adminPageListDto.type}${empty adminPageListDto.status ? "": "&status="+= adminPageListDto.status}">${num}</a></li>
+					<li class='page-item ${page eq num ? 'active' : ''}'><a class='page-link' href="?page=${num}${empty OrderadminPageListDto.keyword ? "": "&keyword="+= adminPageListDto.keyword}${empty adminPageListDto.type ? "": "&type="+= adminPageListDto.type}${empty adminPageListDto.status ? "": "&status="+= adminPageListDto.status}">${num}</a></li>
 				</c:forEach>
 				<li class='page-item'>
 					<c:choose>

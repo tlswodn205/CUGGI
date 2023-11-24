@@ -73,6 +73,7 @@ public class AdminController {
 	public String offlineStoreManagement(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page, Model model) {
 		AdminPageListDto<OfflineStoreListResponseDto> adminPageListDto = adminService.OfflineStoreList(type, keyword, page);
 		model.addAttribute("adminPageListDto", adminPageListDto);
+		model.addAttribute("page", page);
 		return "admin/offlineStore/offlineStoreManagement"; 
 	}	
 	
@@ -102,7 +103,7 @@ public class AdminController {
 		}
 		
 		adminService.insertOfflineStore(insertOfflineStoreRequestDto);
-		
+
 
 		return "redirect:offlineStoreManagement"; 
 	}
@@ -135,6 +136,7 @@ public class AdminController {
 		AdminPageListDto<OrderListResponseDto> OrderadminPageListDto = adminService.OrderList(type, keyword, page,status);
 		
 		model.addAttribute("OrderadminPageListDto", OrderadminPageListDto);
+		model.addAttribute("page", page);
 		
 		
 		return "admin/order/orderManagement";
@@ -209,6 +211,7 @@ public class AdminController {
 	public String qnaList(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
 		AdminPageListDto<QnaListResponseDto> adminPageListDto = adminService.qnaList(type, keyword, page, status);
 		model.addAttribute("adminPageListDto", adminPageListDto);
+		model.addAttribute("page", page);
 		return "admin/qna/qnaList";
 	}
 	
@@ -326,6 +329,7 @@ public class AdminController {
 	public String userInfoList(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword,@RequestParam(defaultValue = "1") Integer page,@RequestParam(required = false) String status, Model model) {
 		AdminPageListDto<UserInfoListDto> adminPageListDto = adminService.userList(type, keyword, page, status);
 		model.addAttribute("adminPageListDto", adminPageListDto);
+        model.addAttribute("page", page);
 		return "admin/user/userInfoList";
 	}
 	
