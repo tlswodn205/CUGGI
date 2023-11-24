@@ -25,7 +25,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addInterceptor(authInterceptor)
 		.addPathPatterns("/order/**");
 		
-		registry.addInterceptor(amdinInterceptor).addPathPatterns("/admin/**");
+		registry.addInterceptor(amdinInterceptor).addPathPatterns("/admins/**");
 	}
 
 	@Bean

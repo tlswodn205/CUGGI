@@ -2,7 +2,7 @@
 
 <%-- <%@ include file ="/WEB-INF/view/admin/layout/header.jsp" %>
 				<div class="list-table-form">
-					<h2>회원정보 관리 페이지</h2>
+					<h2>회원정보 관리 페이지${adminPageListDto.status}</h2>
 					<div class="top-menu">
 						<div>
 					    <input type="hidden" id="status" value="${adminPageListDto.status}">
@@ -43,7 +43,6 @@
 								            <td>${user.email}</td>
 								            <td>${user.phoneNumber}</td>
 								            <td>${user.birthday}</td>
-								            <td>${user.level}</td>
 								            <td><input type="button" onclick="location.href='/admin/userInfoDetail/${user.id}'" value="수정 및 상세보기"></td>
 								        	<td>
 								            	<form action="/admin/deleteUserInfo/${user.id}" method="get">

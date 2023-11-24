@@ -8,7 +8,7 @@ import lombok.Data;
 public class UpdateOfflineStoreRequestDto {
 	int id;
 	String storeName;
-	Integer storeNumber;
+	String storeNumber;
 	String storeAddress;
 	String storeAddressDetail;
 	
