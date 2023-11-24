@@ -91,7 +91,7 @@
 		<if test="type == 'name' and keyword != null">
 			and p.name like CONCAT('%',#{keyword},'%')
 		</if>
-		<if test="type == 'id' and keyword != null">
+		<if test="type == 'username' and keyword != null">
 			and u.username like CONCAT('%',#{keyword},'%')
 		</if>
 		) ost;
