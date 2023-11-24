@@ -14,7 +14,7 @@
 				</tr>
 				<tr>
 					<td>지점 번호</td>
-					<td><input class="form-control" type="text" id="store-number" name="storeNumber" placeholder="지점 번호를 입력하세요."></td>
+					<td><input class="form-control" type="text" id="store-number" name="storeNumber" placeholder="지점 번호를 입력하세요." value="1577-1921"></td>
 				</tr>
 				<tr>
 					<td>지점 주소</td>

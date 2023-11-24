@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class OfflineStoreListResponseDto {
 	int id;
 	String storeName;
-	int storeNumber;
+	String storeNumber;
 	String storeAddress;
 	String storeAddressDetail;
 	
