@@ -10,7 +10,7 @@ import lombok.Data;
 public class OfflineStoreResponseDto {
 	int id;
 	String storeName;
-	int storeNumber;
+	String storeNumber;
 	String storeAddress;
 	String storeAddressDetail;
 	

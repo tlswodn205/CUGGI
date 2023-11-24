@@ -16,7 +16,7 @@ import lombok.Setter;
 public class OfflineStore {
 	int id;
 	String storeName;
-	int storeNumber;
+	String storeNumber;
 	String storeAddress;
 	String storeAddressDetail;
 	Timestamp createdAt;
